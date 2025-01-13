@@ -1,0 +1,10 @@
+nbproject/private/
+/build/
+/dist/
+/nbproject/private/
+/*.jar
+/*.html
+/*.jnlp
+/dist/web-files/*
+/build/built-jar.properties
+dist/Tic-Tac-Toe-Game-Client_ITI.html
