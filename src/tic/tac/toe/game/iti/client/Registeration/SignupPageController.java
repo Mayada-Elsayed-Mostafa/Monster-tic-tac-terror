@@ -71,19 +71,19 @@ public class SignupPageController {
 
     @FXML
     private void haveanAcountHTHandler(ActionEvent event) {
-//        try {
-//            FXMLLoader loader = new FXMLLoader(getClass().getResource("LoginPage.fxml"));
-//            Parent root = loader.load();
-//
-//            LoginPageController controller = loader.getController();
-//            controller.setStage(stage);
-//
-//            stage.setScene(new Scene(root));
-//            stage.setTitle("LoginPage");
-//        } catch (IOException e) {
-//            Alert alert = new Alert(Alert.AlertType.ERROR, "An error occured, please try again", ButtonType.OK);
-//            alert.showAndWait();
-//        }
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("LoginPage.fxml"));
+            Parent root = loader.load();
+
+            LoginPageController controller = loader.getController();
+            controller.setStage(stage);
+
+            stage.setScene(new Scene(root));
+            stage.setTitle("LoginPage");
+        } catch (IOException e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR, "An error occured, please try again", ButtonType.OK);
+            alert.showAndWait();
+        }
     }
 
     private void showAlert(String title, String message) {

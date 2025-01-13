@@ -11,6 +11,8 @@ package tic.tac.toe.game.iti.client.ServerSide;
  */
 public class MassageType {
     public static final String LOGIN_MSG="login";
+    public static final String LOGINSUCCESS_MSG="login successful";
+    public static final String LOGINFAIL_MSG="login failed";
     public static final String REGISTER_MSG="register";
     public static final String UPDATE_LIST_MSG="update";
     public static final String SERVER_CLOSE_MSG="server close";
