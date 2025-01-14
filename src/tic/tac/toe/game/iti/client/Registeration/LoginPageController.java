@@ -1,6 +1,7 @@
 package tic.tac.toe.game.iti.client.Registeration;
 
 import java.io.IOException;
+import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.event.ActionEvent;
@@ -9,24 +10,24 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TextInputDialog;
 import javafx.stage.Stage;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
 import tic.tac.toe.game.iti.client.HomePageController;
 import tic.tac.toe.game.iti.client.ServerSide.MassageType;
 import tic.tac.toe.game.iti.client.ServerSide.ServerHandler;
+import tic.tac.toe.game.iti.client.WelcomeController;
 import tic.tac.toe.game.iti.client.player.Player;
 
 public class LoginPageController {
 
     private Stage stage;
-    @FXML
-    private Button loginBtn;
+
     @FXML
     private TextField username;
     @FXML
@@ -34,7 +35,10 @@ public class LoginPageController {
     @FXML
     private Hyperlink creatAccount;
 
+    String ip;
+
     public void setStage(Stage stage) {
+        showAlertForIPAdress();
         this.stage = stage;
     }
 
@@ -108,4 +112,47 @@ public class LoginPageController {
             alert.showAndWait();
         }
     }
+
+    public void showAlertForIPAdress() {
+        TextInputDialog ipTI = new TextInputDialog();
+        ipTI.setTitle("IP Address");
+        ipTI.setHeaderText("Enter the IP Address...");
+
+        Optional<String> ipInput = ipTI.showAndWait();
+
+        if (ipInput.isPresent() && !ipInput.get().trim().isEmpty()) {
+            ip = ipInput.get().toString();
+            //will be use it when the server setup
+//            try {
+//                ServerHandler.setSocket(ip);
+//            } catch (IOException ex) {
+//                Alert alert = new Alert(Alert.AlertType.WARNING, "Unable to connect to the server. Please try again later.", ButtonType.OK);
+//                alert.setTitle("Connection Error");
+//                alert.showAndWait();
+//                backToWelcomeScreen();
+//            }
+        } else {
+            Alert a = new Alert(Alert.AlertType.WARNING, "Please Enter IP to continue...", ButtonType.OK);
+            a.showAndWait();
+            showAlertForIPAdress();
+        }
+
+    }
+
+    private void backToWelcomeScreen() {
+
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("Welcome.fxml"));
+            Parent root = loader.load();
+
+            WelcomeController controller = loader.getController();
+            controller.setStage(stage);
+
+            stage.setScene(new Scene(root));
+            stage.setTitle("Welcome Page");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 }
