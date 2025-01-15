@@ -10,6 +10,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
+import tic.tac.toe.game.iti.client.Registeration.LoginPageController;
 import tic.tac.toe.game.iti.client.Singlemode.SinglemodeController;
 
 public class WelcomeController {
@@ -30,18 +31,18 @@ public class WelcomeController {
 
     @FXML
     public void goToOnlineGame() {
-//        try {
-//            FXMLLoader loader = new FXMLLoader(getClass().getResource("LoginPage.fxml"));
-//            Parent root = loader.load();
-//
-//            LoginPageController controller = loader.getController();
-//            controller.setStage(stage);
-//
-//            stage.setScene(new Scene(root));
-//            stage.setTitle("Login Page");
-//        } catch (IOException ex) {
-//            Logger.getLogger(WelcomePageController.class.getName()).log(Level.SEVERE, null, ex);
-//        }
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("Registeration/LoginPage.fxml"));
+            Parent root = loader.load();
+
+            LoginPageController controller = loader.getController();
+            controller.setStage(stage);
+
+            stage.setScene(new Scene(root));
+            stage.setTitle("Login Page");
+        } catch (IOException ex) {
+            Logger.getLogger(WelcomeController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     @FXML
