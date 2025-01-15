@@ -9,7 +9,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.PasswordField;
@@ -25,8 +24,7 @@ import tic.tac.toe.game.iti.client.player.Player;
 public class LoginPageController {
 
     private Stage stage;
-    @FXML
-    private Button loginBtn;
+
     @FXML
     private TextField username;
     @FXML
@@ -108,4 +106,5 @@ public class LoginPageController {
             alert.showAndWait();
         }
     }
+
 }
