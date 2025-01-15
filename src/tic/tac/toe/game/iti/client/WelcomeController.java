@@ -10,6 +10,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
+import tic.tac.toe.game.iti.client.Registeration.LoginPageController;
+import tic.tac.toe.game.iti.client.Singlemode.SinglemodeController;
 
 public class WelcomeController {
 
@@ -29,18 +31,18 @@ public class WelcomeController {
 
     @FXML
     public void goToOnlineGame() {
-//        try {
-//            FXMLLoader loader = new FXMLLoader(getClass().getResource("LoginPage.fxml"));
-//            Parent root = loader.load();
-//
-//            LoginPageController controller = loader.getController();
-//            controller.setStage(stage);
-//
-//            stage.setScene(new Scene(root));
-//            stage.setTitle("Login Page");
-//        } catch (IOException ex) {
-//            Logger.getLogger(WelcomePageController.class.getName()).log(Level.SEVERE, null, ex);
-//        }
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("Registeration/LoginPage.fxml"));
+            Parent root = loader.load();
+
+            LoginPageController controller = loader.getController();
+            controller.setStage(stage);
+
+            stage.setScene(new Scene(root));
+            stage.setTitle("Login Page");
+        } catch (IOException ex) {
+            Logger.getLogger(WelcomeController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     @FXML
@@ -64,18 +66,18 @@ public class WelcomeController {
 
     @FXML
     private void singleModeHandeler(ActionEvent event) {
-//        try {
-//            FXMLLoader loader = new FXMLLoader(getClass().getResource("Singlemode.fxml"));
-//            Parent root = loader.load();
-//
-//            SinglemodeController controller = loader.getController();
-//            controller.setStage(stage);
-//
-//            stage.setScene(new Scene(root));
-//            stage.setTitle("Single Mode Page");
-//        } catch (IOException ex) {
-//            Logger.getLogger(SinglemodeController.class.getName()).log(Level.SEVERE, "Error loading Singlemode.fxml", ex);
-//        }
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("Singlemode/Singlemode.fxml"));
+            Parent root = loader.load();
+
+            SinglemodeController controller = loader.getController();
+            controller.setStage(stage);
+
+            stage.setScene(new Scene(root));
+            stage.setTitle("Single Mode Page");
+        } catch (IOException ex) {
+            Logger.getLogger(SinglemodeController.class.getName()).log(Level.SEVERE, "Error loading Singlemode.fxml", ex);
+        }
 
     }
 }
