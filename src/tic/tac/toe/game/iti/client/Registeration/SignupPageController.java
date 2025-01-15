@@ -1,4 +1,4 @@
-package Registeration;
+package tic.tac.toe.game.iti.client.Registeration;
 
 import java.io.DataOutputStream;
 import java.io.IOException;
