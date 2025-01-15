@@ -38,7 +38,11 @@ public class LoginPageController {
     String ip;
 
     public void setStage(Stage stage) {
-        showAlertForIPAdress();
+        try {
+            showAlertForIPAdress();
+        } catch (RuntimeException r){
+            System.out.println("Runtime Exception");
+        }
         this.stage = stage;
     }
 
@@ -123,14 +127,14 @@ public class LoginPageController {
         if (ipInput.isPresent() && !ipInput.get().trim().isEmpty()) {
             ip = ipInput.get().toString();
             //will be use it when the server setup
-//            try {
-//                ServerHandler.setSocket(ip);
-//            } catch (IOException ex) {
-//                Alert alert = new Alert(Alert.AlertType.WARNING, "Unable to connect to the server. Please try again later.", ButtonType.OK);
-//                alert.setTitle("Connection Error");
-//                alert.showAndWait();
-//                backToWelcomeScreen();
-//            }
+            try {
+                ServerHandler.setSocket(ip);
+            } catch (IOException ex) {
+                Alert alert = new Alert(Alert.AlertType.WARNING, "Unable to connect to the server. Please try again later.", ButtonType.OK);
+                alert.setTitle("Connection Error");
+                alert.showAndWait();
+                backToWelcomeScreen();
+            }
         } else {
             Alert a = new Alert(Alert.AlertType.WARNING, "Please Enter IP to continue...", ButtonType.OK);
             a.showAndWait();
@@ -139,7 +143,7 @@ public class LoginPageController {
 
     }
 
-    private void backToWelcomeScreen() {
+    public void backToWelcomeScreen() {
 
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("Welcome.fxml"));
