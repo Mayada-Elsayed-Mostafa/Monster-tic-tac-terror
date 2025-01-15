@@ -14,6 +14,8 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import org.json.simple.JSONObject;
+import tic.tac.toe.game.iti.client.Registeration.LoginPageController;
 
 
 
@@ -22,7 +24,6 @@ public class SignupPageController {
     Stage stage;
     @FXML
     private TextField userNameTF;
-    private TextField emailTF;
     @FXML
     private TextField passwordTF1;
     @FXML
@@ -39,16 +40,17 @@ public class SignupPageController {
     @FXML
     private void signupHandler(ActionEvent event) {
         String username = userNameTF.getText();
-        String email = emailTF.getText();
         String password = passwordTF1.getText();
         String confirmPassword = confirmTF1.getText();
 
-        if (username.isEmpty() || email.isEmpty() || password.isEmpty() || confirmPassword.isEmpty()) {
+        if (username.isEmpty() ||  password.isEmpty() || confirmPassword.isEmpty()) {
             showAlert("Error", "All fields are required.");
             return;
-        }
-
-        if (!password.equals(confirmPassword)) {
+        }else if (username.length() < 3) {
+            showAlert( "Invalid", "Your username must be at least 3 characters");
+        } else if (password.length() < 6) {
+            showAlert( "Invalid", "Your password must be at least 6 characters");
+        }else if (!password.equals(confirmPassword)) {
             showAlert("Error", "Passwords do not match.");
             return;
         }
@@ -57,33 +59,38 @@ public class SignupPageController {
          try (Socket socket = new Socket("localhost", 5000);
              DataOutputStream dos = new DataOutputStream(socket.getOutputStream())) {
 
-            String data = username + ","  + password;
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("username", username);
+            jsonObject.put("password", password);
 
-            dos.writeUTF(data);
+            String jsonString = jsonObject.toString();
+
+            dos.writeUTF(jsonString);
             dos.flush();
-            showAlert("Success", "Data sent to server. Await confirmation.");
+
+            showAlert("Success","Data Saved");
         } catch (Exception e) {
             e.printStackTrace();
-            showAlert("Error", "Unable to connect to server: " + e.getMessage());
+            showAlert("Error", "connect to server" + e.getMessage());
         }
     }
     
 
     @FXML
     private void haveanAcountHTHandler(ActionEvent event) {
-//        try {
-//            FXMLLoader loader = new FXMLLoader(getClass().getResource("LoginPage.fxml"));
-//            Parent root = loader.load();
-//
-//            LoginPageController controller = loader.getController();
-//            controller.setStage(stage);
-//
-//            stage.setScene(new Scene(root));
-//            stage.setTitle("LoginPage");
-//        } catch (IOException e) {
-//            Alert alert = new Alert(Alert.AlertType.ERROR, "An error occured, please try again", ButtonType.OK);
-//            alert.showAndWait();
-//        }
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("LoginPage.fxml"));
+            Parent root = loader.load();
+
+            LoginPageController controller = loader.getController();
+            controller.setStage(stage);
+
+            stage.setScene(new Scene(root));
+            stage.setTitle("LoginPage");
+        } catch (IOException e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR, "please try again", ButtonType.OK);
+            alert.showAndWait();
+        }
     }
 
     private void showAlert(String title, String message) {
