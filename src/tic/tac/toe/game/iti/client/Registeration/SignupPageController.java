@@ -1,4 +1,4 @@
-package Registeration;
+package tic.tac.toe.game.iti.client.Registeration;
 
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -12,6 +12,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Hyperlink;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import org.json.simple.JSONObject;
@@ -27,9 +28,9 @@ public class SignupPageController {
     @FXML
     private TextField userNameTF;
     @FXML
-    private TextField passwordTF1;
+    private PasswordField passwordTF1;
     @FXML
-    private TextField confirmTF1;
+    private PasswordField confirmTF1;
     @FXML
     private Button signupBtn;
     @FXML
@@ -50,8 +51,11 @@ public class SignupPageController {
             return;
         } else if (username.length() < 3) {
             showAlert("Invalid", "Your username must be at least 3 characters");
+            return;
         } else if (password.length() < 6) {
             showAlert("Invalid", "Your password must be at least 6 characters");
+            return;
+
         } else if (!password.equals(confirmPassword)) {
             showAlert("Error", "Passwords do not match.");
             return;
