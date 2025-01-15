@@ -9,20 +9,13 @@ import javafx.stage.Stage;
 public class TicTacToeGameITIClient extends Application {
 
     @Override
-    public void start(Stage primaryStage) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("Welcome.fxml"));
-            Parent root = loader.load();
+    public void start(Stage stage) throws Exception {
+        Parent root = FXMLLoader.load(getClass().getResource("FXMLDocument.fxml"));
 
-            WelcomeController controller = loader.getController();
-            controller.setStage(primaryStage);
+        Scene scene = new Scene(root);
 
-            primaryStage.setScene(new Scene(root));
-            primaryStage.setTitle("Welcome Page");
-            primaryStage.show();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        stage.setScene(scene);
+        stage.show();
     }
 
     public static void main(String[] args) {
