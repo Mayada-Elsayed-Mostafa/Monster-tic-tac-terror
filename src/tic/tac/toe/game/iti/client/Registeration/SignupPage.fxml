@@ -4,6 +4,7 @@
 <?import javafx.scene.control.Hyperlink?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
@@ -25,15 +26,15 @@
       </Button>
       <Label alignment="CENTER" contentDisplay="CENTER" layoutX="153.0" layoutY="330.0" maxHeight="24.0" minHeight="24.0" text="Already have an account?  " textAlignment="CENTER" textFill="#d2cece" />
       <Hyperlink fx:id="haveanAcountHT" alignment="CENTER" contentDisplay="CENTER" layoutX="330.0" layoutY="329.0" maxHeight="27.0" minHeight="24.0" onAction="#haveanAcountHTHandler" prefHeight="27.0" prefWidth="84.0" text="Login here" textAlignment="CENTER" />
-      <TextField fx:id="passwordTF1" layoutX="97.0" layoutY="151.0" prefHeight="34.0" prefWidth="400.0" promptText="Enter your Password...">
+      <PasswordField  fx:id="passwordTF1" layoutX="97.0" layoutY="151.0" prefHeight="34.0" prefWidth="400.0" promptText="Enter your Password...">
          <font>
             <Font size="14.0" />
          </font>
-      </TextField>
-      <TextField fx:id="confirmTF1" layoutX="100.0" layoutY="210.0" prefHeight="34.0" prefWidth="400.0" promptText="Confirm password...">
+      </PasswordField >
+      <PasswordField  fx:id="confirmTF1" layoutX="100.0" layoutY="210.0" prefHeight="34.0" prefWidth="400.0" promptText="Confirm password...">
          <font>
             <Font size="14.0" />
          </font>
-      </TextField>
+      </PasswordField >
    </children>
 </Pane>
