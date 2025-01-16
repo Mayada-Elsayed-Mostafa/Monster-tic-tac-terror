@@ -61,10 +61,15 @@ public class SignupPageController {
         }
 
         try {
-
+            Player p = new Player(username, password);
             JSONObject jsonObject = new JSONObject();
+            JSONObject player = new JSONObject();
+            player.put("username", p.getUserName());
+            player.put("password", p.getPassword());
+            player.put("status", p.getStatus());
+            player.put("score", p.getScore());
             jsonObject.put("type", MassageType.REGISTER_MSG);
-            jsonObject.put("data", new Player(username, password));
+            jsonObject.put("data", player.toJSONString());
 
             String jsonString = jsonObject.toString();
 
