@@ -55,7 +55,6 @@ public class SignupPageController {
         } else if (password.length() < 6) {
             showAlert("Invalid", "Your password must be at least 6 characters");
             return;
-
         } else if (!password.equals(confirmPassword)) {
             showAlert("Error", "Passwords do not match.");
             return;
