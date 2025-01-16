@@ -25,6 +25,7 @@ import tic.tac.toe.game.iti.client.player.Player;
 public class LoginPageController {
 
     private Stage stage;
+    
     @FXML
     private Button loginBtn;
     @FXML

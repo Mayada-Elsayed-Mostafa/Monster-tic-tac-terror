@@ -19,7 +19,6 @@ import javafx.scene.control.TextInputDialog;
 import javafx.stage.Stage;
 import javax.swing.plaf.ColorUIResource;
 
-
 public class GameController {
 
     Stage stage;
@@ -95,7 +94,7 @@ public class GameController {
                 if (player2Name.equals(winner)) {
                     score2 += 10;
                     score2Number.setText(String.valueOf(score2));
-                } else {
+                } else if (player1Name.equals(winner)) {
                     score1 += 10;
                     score1Number.setText(String.valueOf(score1));
                 }
