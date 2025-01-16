@@ -58,4 +58,15 @@ public class ServerHandler {
         });
         listner.start();
     }
+    public static void closeSocket() throws IOException{
+        JSONObject object=new JSONObject();
+        object.put("type", MassageType.CLIENT_CLOSE_MSG);
+        ServerHandler.massageOut.writeUTF(object.toJSONString());
+        ServerHandler.isFinished=true;
+        ServerHandler.massageIn.close();
+        ServerHandler.massageOut.close();
+        ServerHandler.socket.close();
+        ServerHandler.socket=null;
+    }
+                   
 }
