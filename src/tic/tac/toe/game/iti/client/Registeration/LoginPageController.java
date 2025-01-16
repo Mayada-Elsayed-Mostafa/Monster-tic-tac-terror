@@ -70,6 +70,7 @@ public class LoginPageController {
                 Logger.getLogger(LoginPageController.class.getName()).log(Level.SEVERE, null, ex);
             }
             while (ServerHandler.msg == null) {
+                System.out.print("");
             }
             JSONObject data = (JSONObject) JSONValue.parse(ServerHandler.msg);
             if (data.get("type").equals(MassageType.LOGINSUCCESS_MSG)) {
@@ -84,7 +85,7 @@ public class LoginPageController {
 
     private void navigateToHome(Object data) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("HomePage.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/tic/tac/toe/game/iti/client/HomePage.fxml"));
             Parent root = loader.load();
 
             HomePageController controller = loader.getController();
