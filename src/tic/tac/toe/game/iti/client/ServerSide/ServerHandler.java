@@ -11,8 +11,15 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
+import javafx.application.Platform;
+import org.json.simple.JSONArray;
+import tic.tac.toe.game.iti.client.HomePageController;
+import tic.tac.toe.game.iti.client.player.Player;
 
 /**
  *
@@ -24,12 +31,14 @@ public class ServerHandler {
     public static Socket socket;
     public static String msg=null;
     public static boolean isFinished=false;
+    public static boolean isLoggedIn = false;
     
     public static void setSocket(String ip) throws IOException{
         ServerHandler.socket=new Socket(ip, 5005);
         ServerHandler.massageIn=new DataInputStream(ServerHandler.socket.getInputStream());
         ServerHandler.massageOut=new DataOutputStream(ServerHandler.socket.getOutputStream());
-        Thread listner=new Thread(new Runnable() {
+        Thread listner;
+        listner = new Thread(new Runnable() {
             @Override
             public void run() {
                 while(!ServerHandler.isFinished){
@@ -40,12 +49,26 @@ public class ServerHandler {
                         {
                             
                         }
-                        else if(respone.get("type").equals(MassageType.UPDATE_LIST_MSG))
+                        else if(respone.get("type").equals(MassageType.UPDATE_LIST_MSG) && isLoggedIn)
                         {
-                            
+                            JSONArray array = (JSONArray) respone.get("data");
+                            ArrayList<Player> dtoPlayers = new ArrayList<Player>();
+                            for(int i = 0; i < array.size(); i++){
+                                JSONObject obj = (JSONObject) JSONValue.parse((String)array.get(i));
+                                dtoPlayers.add(new Player((String)obj.get("username"), "", "", ((Long)obj.get("score")).intValue()));
+                            }
+                            Platform.runLater(new Runnable() {
+                                @Override
+                                public void run() {
+                                    HomePageController.updateAvailablePlayers(dtoPlayers);
+                                }
+                            });
                         }
                         else if(respone.get("type").equals(MassageType.CHALLENGE_ACCESSEPT_MSG))
                         {
+                            
+                        }
+                        else if(respone.get("type").equals(MassageType.UPDATE_LIST_MSG)){
                             
                         }
                         else
@@ -56,5 +79,17 @@ public class ServerHandler {
                 }
             }
         });
+        listner.start();
     }
+    public static void closeSocket() throws IOException{
+        JSONObject object=new JSONObject();
+        object.put("type", MassageType.CLIENT_CLOSE_MSG);
+        ServerHandler.massageOut.writeUTF(object.toJSONString());
+        ServerHandler.isFinished=true;
+        ServerHandler.massageIn.close();
+        ServerHandler.massageOut.close();
+        ServerHandler.socket.close();
+        ServerHandler.socket=null;
+    }
+                   
 }

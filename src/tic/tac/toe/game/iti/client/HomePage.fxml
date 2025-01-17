@@ -14,7 +14,7 @@
    <top>
       <AnchorPane prefHeight="70.0" prefWidth="600.0" BorderPane.alignment="CENTER">
          <children>
-            <Button layoutX="14.0" layoutY="13.0" mnemonicParsing="false" onAction="#ha" style="-fx-background-color: white; -fx-border-color: #946E3D; -fx-border-width: 2px; -fx-border-radius: 5px; -fx-padding: 5px 10px; -fx-font-weight: bold; -fx-font-size: 18px;" text="Logout" textFill="#946e3d" />
+            <Button layoutX="14.0" layoutY="13.0" mnemonicParsing="false" style="-fx-background-color: white; -fx-border-color: #946E3D; -fx-border-width: 2px; -fx-border-radius: 5px; -fx-padding: 5px 10px; -fx-font-weight: bold; -fx-font-size: 18px;" text="Logout" textFill="#946e3d" />
             <Button alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="456.0" layoutY="15.0" mnemonicParsing="false" style="-fx-background-color: #946E3D; -fx-border-width: 2px; -fx-border-radius: 5px; -fx-padding: 5px 10px; -fx-font-weight: bold; -fx-font-size: 18px;" text="Records " textFill="WHITE">
                <graphic>
                   <ImageView fitHeight="25.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true" style="-fx-scale-x: 2; -fx-scale-y: 2;">
@@ -44,6 +44,13 @@
                <BorderPane.margin>
                   <Insets top="10.0" />
                </BorderPane.margin>
+               <children>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="User" textAlignment="CENTER" wrappingWidth="190.56640625">
+                     <font>
+                        <Font size="36.0" />
+                     </font>
+                  </Text>
+               </children>
             </VBox>
          </left>
          <center>
@@ -51,6 +58,13 @@
                <BorderPane.margin>
                   <Insets top="10.0" />
                </BorderPane.margin>
+               <children>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Score" textAlignment="CENTER" wrappingWidth="117.189453125">
+                     <font>
+                        <Font size="36.0" />
+                     </font>
+                  </Text>
+               </children>
             </VBox>
          </center>
          <right>
@@ -58,6 +72,16 @@
                <BorderPane.margin>
                   <Insets top="10.0" />
                </BorderPane.margin>
+               <children>
+                  <Button mnemonicParsing="false" prefHeight="50.0" prefWidth="117.0" text="Challenge">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets left="35.0" right="40.0" />
+                     </VBox.margin>
+                  </Button>
+               </children>
             </VBox>
          </right>
       </BorderPane>
