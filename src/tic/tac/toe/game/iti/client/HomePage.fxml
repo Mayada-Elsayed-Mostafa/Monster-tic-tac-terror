@@ -14,7 +14,7 @@
    <top>
       <AnchorPane prefHeight="70.0" prefWidth="600.0" BorderPane.alignment="CENTER">
          <children>
-            <Button layoutX="14.0" layoutY="13.0" mnemonicParsing="false" onAction="#ha" style="-fx-background-color: white; -fx-border-color: #946E3D; -fx-border-width: 2px; -fx-border-radius: 5px; -fx-padding: 5px 10px; -fx-font-weight: bold; -fx-font-size: 18px;" text="Logout" textFill="#946e3d" />
+            <Button layoutX="14.0" layoutY="13.0" mnemonicParsing="false" style="-fx-background-color: white; -fx-border-color: #946E3D; -fx-border-width: 2px; -fx-border-radius: 5px; -fx-padding: 5px 10px; -fx-font-weight: bold; -fx-font-size: 18px;" text="Logout" textFill="#946e3d" />
             <Button alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="456.0" layoutY="15.0" mnemonicParsing="false" style="-fx-background-color: #946E3D; -fx-border-width: 2px; -fx-border-radius: 5px; -fx-padding: 5px 10px; -fx-font-weight: bold; -fx-font-size: 18px;" text="Records " textFill="WHITE">
                <graphic>
                   <ImageView fitHeight="25.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true" style="-fx-scale-x: 2; -fx-scale-y: 2;">

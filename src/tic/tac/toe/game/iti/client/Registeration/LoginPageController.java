@@ -9,6 +9,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.PasswordField;
@@ -24,7 +25,9 @@ import tic.tac.toe.game.iti.client.player.Player;
 public class LoginPageController {
 
     private Stage stage;
-
+    
+    @FXML
+    private Button loginBtn;
     @FXML
     private TextField username;
     @FXML
@@ -53,14 +56,21 @@ public class LoginPageController {
         } else if (_password.length() < 6) {
             showAlert(Alert.AlertType.WARNING, "Invalid", "Your password must be at least 6 characters");
         } else {
+            Player p = new Player(_username, _password);
+            JSONObject player = new JSONObject();
+            player.put("username", p.getUserName());
+            player.put("password", p.getPassword());
+            player.put("status", p.getStatus());
+            player.put("score", p.getScore());
             loginData.put("type", MassageType.LOGIN_MSG);
-            loginData.put("data", new Player(_username, _password));
+            loginData.put("data", player.toJSONString());
             try {
                 ServerHandler.massageOut.writeUTF(loginData.toJSONString());
             } catch (IOException ex) {
                 Logger.getLogger(LoginPageController.class.getName()).log(Level.SEVERE, null, ex);
             }
             while (ServerHandler.msg == null) {
+                System.out.print("");
             }
             JSONObject data = (JSONObject) JSONValue.parse(ServerHandler.msg);
             if (data.get("type").equals(MassageType.LOGINSUCCESS_MSG)) {
@@ -73,10 +83,9 @@ public class LoginPageController {
         }
     }
 
-    @FXML
     private void navigateToHome(Object data) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("HomePage.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/tic/tac/toe/game/iti/client/HomePage.fxml"));
             Parent root = loader.load();
 
             HomePageController controller = loader.getController();
@@ -106,5 +115,4 @@ public class LoginPageController {
             alert.showAndWait();
         }
     }
-
 }
