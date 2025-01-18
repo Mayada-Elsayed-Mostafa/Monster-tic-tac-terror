@@ -98,6 +98,7 @@ public class ServerHandler {
 
                                 alert.showAndWait();
                                 OnlineGameController.navigateToGame(responseMsg);
+
                             });
                         } else if (respone.get("type").equals(MassageType.UPDATE_LIST_MSG)) {
 

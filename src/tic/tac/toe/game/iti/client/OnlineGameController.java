@@ -248,7 +248,6 @@ public class OnlineGameController{
             }
         });
         listener.start();
-        
     }
 
     public void handleEndGame(){
