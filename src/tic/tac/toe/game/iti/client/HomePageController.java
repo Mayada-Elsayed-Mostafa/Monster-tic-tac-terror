@@ -1,10 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package tic.tac.toe.game.iti.client;
 
+import java.util.List;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import java.io.IOException;
 import java.util.List;
 import java.util.logging.Level;
@@ -24,34 +22,32 @@ import tic.tac.toe.game.iti.client.ServerSide.MassageType;
 import tic.tac.toe.game.iti.client.ServerSide.ServerHandler;
 import tic.tac.toe.game.iti.client.player.Player;
 
-/**
- *
- * @author HAZEM-LAB
- */
 public class HomePageController {
-    
+
     private Stage stage;
-    
+
     @FXML
     private VBox usernames;
     @FXML
     private VBox scores;
     @FXML
     private VBox challenges;
-    
+
     private static VBox sUserNames;
     private static VBox sScores;
     private static VBox sChallenges;
-    
+    @FXML
+    private Button sendRequest_BTN;
+
     public void setStage(Stage stage) {
         this.stage = stage;
         sUserNames = usernames;
         sScores = scores;
         sChallenges = challenges;
     }
-    
-    public void handleLogout(ActionEvent event){
-        JSONObject output=new JSONObject();
+
+    public void handleLogout(ActionEvent event) {
+        JSONObject output = new JSONObject();
         output.put("type", MassageType.LOGOUT_MSG);
         try {
             ServerHandler.massageOut.writeUTF(output.toJSONString());
@@ -59,40 +55,49 @@ public class HomePageController {
             Logger.getLogger(HomePageController.class.getName()).log(Level.SEVERE, null, ex);
         }
         try {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("Registeration/LoginPage.fxml"));
-                Parent root = loader.load();
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("Registeration/LoginPage.fxml"));
+            Parent root = loader.load();
 
-                LoginPageController controller = loader.getController();
-                controller.setStage(stage);
+            LoginPageController controller = loader.getController();
+            controller.setStage(stage);
 
-                stage.setScene(new Scene(root));
-                stage.setTitle("Login Page");
-            } catch (IOException ex) {
-                Logger.getLogger(WelcomeController.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            stage.setScene(new Scene(root));
+            stage.setTitle("Login Page");
+        } catch (IOException ex) {
+            Logger.getLogger(WelcomeController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
-    
-    public static void updateAvailablePlayers(List<Player> players){
+
+    public static void updateAvailablePlayers(List<Player> players) {
         sUserNames.getChildren().clear();
         sScores.getChildren().clear();
         sChallenges.getChildren().clear();
-        
-        for(Player player : players){
+
+        for (Player player : players) {
             Label user = new Label(player.getUserName());
             sUserNames.getChildren().add(user);
-            
+
             Label score = new Label(String.valueOf(player.getScore()));
             sScores.getChildren().add(score);
-            
-            Button challengeBtn = new Button("Challenge");
+
+            Button challengeBtn = new Button("Send Request");
             challengeBtn.setOnAction(event -> {
-                handleChallenge(player);
+                sendRequestHandler(player);
             });
             sChallenges.getChildren().add(challengeBtn);
         }
     }
-    
-    private static void handleChallenge(Player player) {
-        
+
+    private static void sendRequestHandler(Player player) {
+        JSONObject challengeRequest = new JSONObject();
+        challengeRequest.put("type", MassageType.CHALLENGE_REQUEST_MSG);
+        challengeRequest.put("data", player.getUserName());
+
+        try {
+            ServerHandler.massageOut.writeUTF(challengeRequest.toJSONString());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
+
 }
