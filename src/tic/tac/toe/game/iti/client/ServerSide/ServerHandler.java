@@ -97,7 +97,8 @@ public class ServerHandler {
                                 alert.setContentText(opponentUsername + " is ready to play.");
 
                                 alert.showAndWait();
-                                OnlineGameController.navigateToGame(msg);
+                                OnlineGameController.navigateToGame(responseMsg);
+
                             });
                         } else if (respone.get("type").equals(MassageType.UPDATE_LIST_MSG)) {
 
