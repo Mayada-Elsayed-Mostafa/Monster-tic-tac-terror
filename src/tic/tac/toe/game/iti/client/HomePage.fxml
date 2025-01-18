@@ -44,6 +44,13 @@
                <BorderPane.margin>
                   <Insets top="10.0" />
                </BorderPane.margin>
+               <children>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="User" textAlignment="CENTER" wrappingWidth="190.56640625">
+                     <font>
+                        <Font size="36.0" />
+                     </font>
+                  </Text>
+               </children>
             </VBox>
          </left>
          <center>
@@ -51,6 +58,13 @@
                <BorderPane.margin>
                   <Insets top="10.0" />
                </BorderPane.margin>
+               <children>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Score" textAlignment="CENTER" wrappingWidth="117.189453125">
+                     <font>
+                        <Font size="36.0" />
+                     </font>
+                  </Text>
+               </children>
             </VBox>
          </center>
          <right>
@@ -58,6 +72,16 @@
                <BorderPane.margin>
                   <Insets top="10.0" />
                </BorderPane.margin>
+               <children>
+                  <Button mnemonicParsing="false" prefHeight="50.0" prefWidth="117.0" text="Challenge">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets left="35.0" right="40.0" />
+                     </VBox.margin>
+                  </Button>
+               </children>
             </VBox>
          </right>
       </BorderPane>
