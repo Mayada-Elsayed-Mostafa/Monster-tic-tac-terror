@@ -112,6 +112,7 @@ public class LoginPageController {
             stage.setScene(new Scene(root));
             stage.setTitle("Home Page");
         } catch (IOException e) {
+            e.printStackTrace();
             Alert alert = new Alert(Alert.AlertType.ERROR, "An error occured, please try again", ButtonType.OK);
             alert.showAndWait();
         }
