@@ -73,9 +73,9 @@
                   <Insets top="10.0" />
                </BorderPane.margin>
                <children>
-                  <Button mnemonicParsing="false" prefHeight="50.0" prefWidth="117.0" text="Challenge">
+                  <Button mnemonicParsing="false" prefHeight="50.0" prefWidth="117.0" text="Send Request">
                      <font>
-                        <Font size="18.0" />
+                        <Font size="14.0" />
                      </font>
                      <VBox.margin>
                         <Insets left="35.0" right="40.0" />
