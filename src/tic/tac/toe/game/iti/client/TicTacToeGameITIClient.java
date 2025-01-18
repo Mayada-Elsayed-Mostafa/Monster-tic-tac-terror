@@ -22,6 +22,7 @@ public class TicTacToeGameITIClient extends Application {
 
             WelcomeController controller = loader.getController();
             controller.setStage(primaryStage);
+            ServerHandler.stage = primaryStage;
             primaryStage.setOnCloseRequest((event) -> {
                 if(ServerHandler.socket!=null){
                     try {

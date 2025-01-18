@@ -12,14 +12,19 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import javafx.application.Platform;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.stage.Stage;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import org.json.simple.JSONArray;
 import tic.tac.toe.game.iti.client.HomePageController;
+import tic.tac.toe.game.iti.client.OnlineGameController;
 import tic.tac.toe.game.iti.client.player.Player;
 
 public class ServerHandler {
 
+    public static Stage stage;
     public static DataInputStream massageIn;
     public static DataOutputStream massageOut;
     public static Socket socket;
@@ -94,9 +99,11 @@ public class ServerHandler {
                                 alert.setContentText(opponentUsername + " is ready to play.");
 
                                 alert.showAndWait();
-                                //startGame(opponentUsername);
+                                OnlineGameController.navigateToGame(msg);
                             });
                         } else if (respone.get("type").equals(MassageType.UPDATE_LIST_MSG)) {
+
+                        } else if (respone.get("type").equals(MassageType.CHALLENGE_ACCESSEPT_MSG)) {
 
                         } else {
                             ServerHandler.msg = responseMsg;
@@ -121,5 +128,5 @@ public class ServerHandler {
         ServerHandler.socket.close();
         ServerHandler.socket = null;
     }
-
+    
 }
