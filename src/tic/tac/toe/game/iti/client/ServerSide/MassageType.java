@@ -5,6 +5,7 @@ public class MassageType {
     public static final String LOGIN_MSG = "login";
     public static final String LOGINSUCCESS_MSG = "login successful";
     public static final String LOGINFAIL_MSG = "login failed";
+    public static final String LOGOUT_MSG = "logout";
     public static final String REGISTER_MSG = "register";
     public static final String REGISTER_SUCCESS_MSG = "register succeccful";
     public static final String REGISTER_FAIL_MSG = "register failed";
