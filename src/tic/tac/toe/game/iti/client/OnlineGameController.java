@@ -56,16 +56,18 @@ public class OnlineGameController{
     
     public void setStage(Stage stage,String msg) {
         this.stage = stage;
-        cells=new Button[]{cell_1_btn, cell_2_btn, cell_3_btn, cell_4_btn, cell_5_btn, cell_6_btn, cell_7_btn, cell_8_btn, cell_9_btn};
+        cells = new Button[]{cell_1_btn, cell_2_btn, cell_3_btn, cell_4_btn, cell_5_btn, cell_6_btn, cell_7_btn, cell_8_btn, cell_9_btn};
         startGame(msg);
     }
     public static void navigateToGame(String msg){
         try {
-            FXMLLoader loader = new FXMLLoader(TicTacToeGameITIClient.class.getResource("OnlineGame.fxml"));
+            FXMLLoader loader = new FXMLLoader(TicTacToeGameITIClient.class.getClass().getResource("/tic/tac/toe/game/iti/client/OnlineGame.fxml"));
             Parent root = loader.load();
             
             OnlineGameController controller = loader.getController();
             controller.setStage(ServerHandler.stage, msg);
+            ServerHandler.stage.setScene(new Scene(root));
+            ServerHandler.stage.setTitle("Online Game");
         } catch (IOException ex) {
             Logger.getLogger(OnlineGameController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -84,10 +86,10 @@ public class OnlineGameController{
                         break;
                     }
                 }
-                
                 clickedButton.setStyle("-fx-text-fill: #D4A5A5;");
                 clickedButton.setText("X");
                 clickedButton.setDisable(true);
+                isMyTurn =! isMyTurn;
                 moveCount++;
                 JSONObject play = new JSONObject();
                 play.put("type", MassageType.PLAY_MSG);
@@ -137,7 +139,6 @@ public class OnlineGameController{
         if (board[0][2].equals(board[1][1]) && board[1][1].equals(board[2][0]) && !board[0][2].isEmpty()) {
             return true;
         }
-
         return false;
     }
 
@@ -146,7 +147,6 @@ public class OnlineGameController{
         LocalDateTime now = LocalDateTime.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd_HH-mm-ss");
         String formattedDateTime = now.format(formatter);
-        
     }
 
     @FXML
@@ -188,16 +188,21 @@ public class OnlineGameController{
     }
 
     public void startGame(String msg) {
-        JSONObject object = (JSONObject) JSONValue.parse(msg);
+        JSONObject mainObject = (JSONObject) JSONValue.parse(msg);
+        JSONObject object = (JSONObject) JSONValue.parse((String)mainObject.get("data"));
         player1Name = (String) object.get("player1");
         player2Name = (String) object.get("player2");
+        namesLabel.setText(player1Name+" vs "+player2Name);
         boolean start = (boolean) object.get("isStarted");
         doIStart = start;
         isMyTurn = start;
         Thread listener=new Thread(() -> {
-            while(!isGameFinished){
-                while (ServerHandler.msg == null) {
+            while(!isGameFinished && ServerHandler.socket != null){
+                while (ServerHandler.msg == null ) {
                     try {
+                        if(ServerHandler.socket==null){
+                            return;
+                        }
                         Thread.sleep(100);  // Prevents busy-waiting
                     } catch (InterruptedException e) {
                         e.printStackTrace();
@@ -207,9 +212,11 @@ public class OnlineGameController{
                 String msgType = (String) data.get("type");
                 if(msgType.equals(MassageType.PLAY_MSG)){
                     int cellNumber = ((Long) data.get("data")).intValue();
-                    cells[cellNumber].setDisable(true);
-                    cells[cellNumber].setStyle("-fx-text-fill: #D4A5A5;");
-                    cells[cellNumber].setText("O");
+                    Platform.runLater(() -> {
+                        cells[cellNumber].setDisable(true);
+                        cells[cellNumber].setStyle("-fx-text-fill: #D4A5A5;");
+                        cells[cellNumber].setText("O");
+                    });
                     isMyTurn = !isMyTurn;
                     moveCount++;
                     
@@ -226,17 +233,21 @@ public class OnlineGameController{
                             handleEndGame();
                         });
                     }
+                    ServerHandler.msg = null;
                 }
                 else if(msgType.equals(MassageType.WITHDRAW_GAME_MSG)){
                     //win video
                     score1 += 10;
-                    Alert check = new Alert(Alert.AlertType.INFORMATION,"Your opponent has withdrawn");
-                    check.showAndWait();
-                    endGame();  //no server interaction
+                    Platform.runLater(() -> {
+                        Alert check = new Alert(Alert.AlertType.INFORMATION,"Your opponent has withdrawn");
+                        check.showAndWait();
+                        endGame();  //no server interaction
+                    });
+                    ServerHandler.msg = null;
                 }
             }
         });
-        
+        listener.start();
     }
 
     public void handleEndGame(){
