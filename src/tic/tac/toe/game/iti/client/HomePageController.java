@@ -5,13 +5,23 @@
  */
 package tic.tac.toe.game.iti.client;
 
+import java.io.IOException;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import org.json.simple.JSONObject;
+import tic.tac.toe.game.iti.client.Registeration.LoginPageController;
+import tic.tac.toe.game.iti.client.ServerSide.MassageType;
+import tic.tac.toe.game.iti.client.ServerSide.ServerHandler;
 import tic.tac.toe.game.iti.client.player.Player;
 
 /**
@@ -41,7 +51,25 @@ public class HomePageController {
     }
     
     public void handleLogout(ActionEvent event){
-        
+        JSONObject output=new JSONObject();
+        output.put("type", MassageType.LOGOUT_MSG);
+        try {
+            ServerHandler.massageOut.writeUTF(output.toJSONString());
+        } catch (IOException ex) {
+            Logger.getLogger(HomePageController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("Registeration/LoginPage.fxml"));
+                Parent root = loader.load();
+
+                LoginPageController controller = loader.getController();
+                controller.setStage(stage);
+
+                stage.setScene(new Scene(root));
+                stage.setTitle("Login Page");
+            } catch (IOException ex) {
+                Logger.getLogger(WelcomeController.class.getName()).log(Level.SEVERE, null, ex);
+            }
     }
     
     public static void updateAvailablePlayers(List<Player> players){
