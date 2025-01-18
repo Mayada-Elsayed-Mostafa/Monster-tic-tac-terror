@@ -1,10 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package tic.tac.toe.game.iti.client.ServerSide;
-
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue; 
 import java.io.DataInputStream;
@@ -17,15 +11,16 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import javafx.application.Platform;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.stage.Stage;
 import org.json.simple.JSONArray;
 import tic.tac.toe.game.iti.client.HomePageController;
+import tic.tac.toe.game.iti.client.OnlineGameController;
 import tic.tac.toe.game.iti.client.player.Player;
 
-/**
- *
- * @author HAZEM-LAB
- */
 public class ServerHandler {
+    public static Stage stage;
     public static DataInputStream massageIn; 
     public static DataOutputStream massageOut;
     public static Socket socket;
@@ -71,6 +66,11 @@ public class ServerHandler {
                         else if(respone.get("type").equals(MassageType.UPDATE_LIST_MSG)){
                             
                         }
+                        else if(respone.get("type").equals(MassageType.START_GAME_MSG)){
+                            Platform.runLater(() -> {
+                                OnlineGameController.navigateToGame(msg);
+                            });
+                        }
                         else
                             ServerHandler.msg=responseMsg;
                     } catch (IOException ex) {
@@ -91,5 +91,5 @@ public class ServerHandler {
         ServerHandler.socket.close();
         ServerHandler.socket=null;
     }
-                   
+           
 }
