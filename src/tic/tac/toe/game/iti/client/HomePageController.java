@@ -1,5 +1,8 @@
 package tic.tac.toe.game.iti.client;
 
+import java.util.List;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import java.io.IOException;
 import java.util.List;
 import java.util.logging.Level;
