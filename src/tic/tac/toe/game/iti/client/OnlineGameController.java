@@ -216,23 +216,24 @@ public class OnlineGameController{
                         cells[cellNumber].setDisable(true);
                         cells[cellNumber].setStyle("-fx-text-fill: #D4A5A5;");
                         cells[cellNumber].setText("O");
+                        isMyTurn = !isMyTurn;
+                        moveCount++;
+
+                        if(checkWinner()){
+                            //lose video
+                            score2 += 10;
+
+                            handleEndGame();
+
+                        }
+                        else if(moveCount == 9){
+                            //tie video
+
+                            handleEndGame();
+
+                        }
                     });
-                    isMyTurn = !isMyTurn;
-                    moveCount++;
                     
-                    if(checkWinner()){
-                        //lose video
-                        score2 += 10;
-                        Platform.runLater(() -> {
-                            handleEndGame();
-                        });
-                    }
-                    else if(moveCount == 9){
-                        //tie video
-                        Platform.runLater(() -> {
-                            handleEndGame();
-                        });
-                    }
                     ServerHandler.msg = null;
                 }
                 else if(msgType.equals(MassageType.WITHDRAW_GAME_MSG)){
