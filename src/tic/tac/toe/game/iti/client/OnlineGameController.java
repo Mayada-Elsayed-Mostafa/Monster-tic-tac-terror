@@ -234,6 +234,7 @@ public class OnlineGameController{
                         }
                     });
                     
+
                     ServerHandler.msg = null;
                 }
                 else if(msgType.equals(MassageType.WITHDRAW_GAME_MSG)){
