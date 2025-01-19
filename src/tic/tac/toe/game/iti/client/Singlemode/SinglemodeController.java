@@ -18,9 +18,8 @@ import javafx.scene.control.Button;
 import javafx.stage.Stage;
 
 public class SinglemodeController implements Initializable {
-    
-        private Stage stage;
 
+    private Stage stage;
 
     @FXML
     private Button easyBtn;
@@ -32,7 +31,7 @@ public class SinglemodeController implements Initializable {
     public void setStage(Stage stage) {
         this.stage = stage;
     }
-    
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
@@ -40,34 +39,30 @@ public class SinglemodeController implements Initializable {
 
     @FXML
     private void goToEasyGame(ActionEvent event) {
-     try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("Easymode.fxml"));
-            Parent root = loader.load();
-
-            stage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
-
-            stage.setScene(new Scene(root));
-            stage.setTitle("Easy mode");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        loadGame("Easy");
+    }
+    
+    @FXML
+    private void goToIntermediateGame(ActionEvent event) {
+        loadGame("Intermediate");
     }
 
     @FXML
     private void goToHardGame(ActionEvent event) {
-        
+        loadGame("Hard");
     }
-
-    @FXML
-    private void goToIntermediateGame(ActionEvent event) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("Intermediatemode.fxml"));
+    
+    private void loadGame(String difficulty){
+        try{
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("Easymode.fxml"));
             Parent root = loader.load();
 
-            stage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
+            EasymodeController controller = loader.getController();
+            controller.setStage(stage);
+            controller.setDifficulty(difficulty);
 
             stage.setScene(new Scene(root));
-            stage.setTitle("Intermediat mode");
+            stage.setTitle(difficulty + " Mode");
         } catch (IOException e) {
             e.printStackTrace();
         }

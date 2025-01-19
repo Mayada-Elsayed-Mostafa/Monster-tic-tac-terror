@@ -87,5 +87,10 @@
                 <Font name="System Bold" size="14.0" />
             </font>
         </Button>
+      <Button fx:id="endButton1" alignment="CENTER" contentDisplay="CENTER" layoutX="454.0" layoutY="356.0" mnemonicParsing="false" onAction="#endHandeler" prefHeight="35.0" prefWidth="129.0" style="-fx-background-color: E4E0E1;" text="End Game" textAlignment="CENTER" textFill="#493628">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Button>
     </children>
 </Pane>
