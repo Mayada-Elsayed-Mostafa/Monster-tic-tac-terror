@@ -27,7 +27,7 @@ import tic.tac.toe.game.iti.client.ServerSide.MassageType;
 import tic.tac.toe.game.iti.client.ServerSide.ServerHandler;
 import static tic.tac.toe.game.iti.client.ServerSide.ServerHandler.stage;
 
-public class OnlineGameController{
+public class OnlineGameController extends Controller{
 
     Stage stage;
     private int myScore, opponentScore = 0;
@@ -107,11 +107,9 @@ public class OnlineGameController{
                     displayVideo("/Assets/winner.mp4");
                     //win video
                     myScore += 10;
-                    handleEndGame();
                 }
                 else if(moveCount == 9){
                     displayVideo("/Assets/tie.mp4");
-                    handleEndGame();
                 }
             }
         }
@@ -238,11 +236,9 @@ public class OnlineGameController{
                         if(checkWinner()){
                             displayVideo("/Assets/loser.mp4");
                             opponentScore += 10;
-                            handleEndGame();
                         }
                         else if(moveCount == 9){
                             displayVideo("/Assets/tie.mp4");
-                            handleEndGame();
                         }
                     });
                     ServerHandler.msg = null;
@@ -270,7 +266,7 @@ public class OnlineGameController{
             VideoController controller = loader.getController();
             controller.setStage(stage);
             controller.setPreviousScene(stage.getScene());
-            controller.setOnlineGameController(this);
+            controller.setController(this);
             controller.setVideoUrl(videoUrl);
 
             stage.setScene(new Scene(root));
@@ -280,7 +276,7 @@ public class OnlineGameController{
         }
     }
 
-    public void handleEndGame(){
+    public void askReplay(){
             ButtonType restart = new ButtonType("Restart");
             ButtonType endGame = new ButtonType("End the game");
             Alert check = new Alert(Alert.AlertType.CONFIRMATION,"Restart game?",restart,endGame);
