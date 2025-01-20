@@ -15,6 +15,7 @@ public class VideoController implements Initializable {
     private Stage stage;
     private Scene previousScene;
     private GameController gameController;
+    private OnlineGameController onlineGameController;
     private String title;
     private String videoUrl;
 
@@ -29,6 +30,10 @@ public class VideoController implements Initializable {
 
     public void setGameController(GameController controller) {
         this.gameController = controller;
+    }
+    
+    public void setOnlineGameController(OnlineGameController controller) {
+        this.onlineGameController = controller;
     }
     
     public void setTitle(String title) {

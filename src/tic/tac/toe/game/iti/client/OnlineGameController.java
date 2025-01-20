@@ -100,12 +100,12 @@ public class OnlineGameController{
                     Logger.getLogger(OnlineGameController.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 if(checkWinner()){
-                    //win video
+                    displayVideo("/Assets/winner.mp4");
                     score1 += 10;
                     handleEndGame();
                 }
                 else if(moveCount == 9){
-                    //tie video
+                    displayVideo("/Assets/tie.mp4");
                     handleEndGame();
                 }
             }
@@ -221,24 +221,27 @@ public class OnlineGameController{
                     moveCount++;
                     
                     if(checkWinner()){
-                        //lose video
+                        
                         score2 += 10;
                         Platform.runLater(() -> {
+                            displayVideo("/Assets/loser.mp4");
                             handleEndGame();
                         });
                     }
                     else if(moveCount == 9){
-                        //tie video
+                        
                         Platform.runLater(() -> {
+                            displayVideo("/Assets/tie.mp4");
                             handleEndGame();
                         });
                     }
                     ServerHandler.msg = null;
                 }
                 else if(msgType.equals(MassageType.WITHDRAW_GAME_MSG)){
-                    //win video
+                    
                     score1 += 10;
                     Platform.runLater(() -> {
+                        displayVideo("/Assets/winner.mp4");
                         Alert check = new Alert(Alert.AlertType.INFORMATION,"Your opponent has withdrawn");
                         check.showAndWait();
                         endGame();  //no server interaction
@@ -248,6 +251,24 @@ public class OnlineGameController{
             }
         });
         listener.start();
+    }
+    
+    private void displayVideo(String videoUrl) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("video.fxml"));
+            Parent root = loader.load();
+
+            VideoController controller = loader.getController();
+            controller.setStage(stage);
+            controller.setPreviousScene(stage.getScene());
+            controller.setOnlineGameController(this);
+            controller.setVideoUrl(videoUrl);
+
+            stage.setScene(new Scene(root));
+        } catch (IOException e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR, "An error occurred, please try again", ButtonType.OK);
+            alert.showAndWait();
+        }
     }
 
     public void handleEndGame(){
