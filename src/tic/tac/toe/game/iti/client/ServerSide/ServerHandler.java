@@ -90,24 +90,21 @@ public class ServerHandler {
                         } else if (respone.get("type").equals(MassageType.CHALLENGE_START_MSG)) {
                             JSONObject gameData = (JSONObject) JSONValue.parse((String) respone.get("data"));
                             String opponentUsername;
-                            if((boolean) gameData.get("isStarted")){
-                                opponentUsername = (String) gameData.get("player2");
-                            } else{
+                            if(!(boolean) gameData.get("isStarted")){
                                 opponentUsername = (String) gameData.get("player1");
+                                Platform.runLater(() -> {
+                                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                                    alert.setTitle("Challenge Accepted");
+                                    alert.setHeaderText("Your challenge has been accepted!");
+                                    alert.setContentText(opponentUsername + " is ready to play.");
+
+                                    alert.showAndWait();
+                                    OnlineGameController.navigateToGame(responseMsg);
+                                });
                             }
 
-                            Platform.runLater(() -> {
-                                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                                alert.setTitle("Challenge Accepted");
-                                alert.setHeaderText("Your challenge has been accepted!");
-                                alert.setContentText(opponentUsername + " is ready to play.");
-
-                                alert.showAndWait();
-                                OnlineGameController.navigateToGame(responseMsg);
-
-                            });
+                            
                         } else if (respone.get("type").equals(MassageType.UPDATE_LIST_MSG)) {
-
                         }
                         else if(respone.get("type").equals(MassageType.CHALLENGE_ACCESSEPT_MSG))
                         {
@@ -116,6 +113,10 @@ public class ServerHandler {
                         else
                             ServerHandler.msg = responseMsg;
                     } catch (IOException ex) {
+                        ServerHandler.isFinished = true;
+                        ServerHandler.massageIn=null;
+                        ServerHandler.massageOut=null;
+                        ServerHandler.socket = null;
                         Logger.getLogger(ServerHandler.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
@@ -133,6 +134,9 @@ public class ServerHandler {
         ServerHandler.massageIn.close();
         ServerHandler.massageOut.close();
         ServerHandler.socket.close();
+        ServerHandler.massageIn=null;
+        ServerHandler.massageOut=null;
         ServerHandler.socket = null;
+        
     }
 }

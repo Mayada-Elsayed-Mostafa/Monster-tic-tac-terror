@@ -106,10 +106,33 @@ public class OnlineGameController{
                 if(checkWinner()){
                     //win video
                     myScore += 10;
+                    JSONObject betweenGameMsg=new JSONObject();
+                    betweenGameMsg.put("type", MassageType.IN_BETWEEN_GAME_MSG);
+                    JSONObject result=new JSONObject();
+                    result.put("result", "win");
+                    result.put("winner", isX?player1Name:player2Name);
+                    betweenGameMsg.put("data", result.toJSONString());
+                    
+                    try {
+                        ServerHandler.massageOut.writeUTF(betweenGameMsg.toJSONString());
+                    } catch (IOException ex){
+                        Logger.getLogger(OnlineGameController.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                     handleEndGame();
+                    
                 }
                 else if(moveCount == 9){
                     //tie video
+                    JSONObject betweenGameMsg=new JSONObject();
+                    betweenGameMsg.put("type", MassageType.IN_BETWEEN_GAME_MSG);
+                    JSONObject result=new JSONObject();
+                    result.put("result", "tie");
+                    betweenGameMsg.put("data", result.toJSONString());
+                    try {
+                        ServerHandler.massageOut.writeUTF(betweenGameMsg.toJSONString());
+                    } catch (IOException ex){
+                        Logger.getLogger(OnlineGameController.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                     handleEndGame();
                 }
             }
@@ -230,12 +253,14 @@ public class OnlineGameController{
                     Platform.runLater(() -> {
                         cells[cellNumber].setDisable(true);
                         cells[cellNumber].setStyle("-fx-text-fill: #D4A5A5;");
+
                         cells[cellNumber].setText(opponentChar);
                         isMyTurn = !isMyTurn;
                         moveCount++;
 
                         if(checkWinner()){
                             //lose video
+
                             opponentScore += 10;
                             handleEndGame();
                         }
@@ -282,7 +307,7 @@ public class OnlineGameController{
     }
 
     private void endGame() {
-        // Update the scores for each player in the DB and dashboard
+        // Update the scores for each player in the dashboard
     }
     
 }
