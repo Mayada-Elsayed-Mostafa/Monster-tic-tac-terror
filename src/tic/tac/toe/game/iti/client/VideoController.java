@@ -35,7 +35,7 @@ public class VideoController implements Initializable {
     public void setOnlineGameController(OnlineGameController controller) {
         this.onlineGameController = controller;
     }
-    
+   
     public void setTitle(String title) {
         this.title = title;
     }

@@ -30,13 +30,17 @@ import static tic.tac.toe.game.iti.client.ServerSide.ServerHandler.stage;
 public class OnlineGameController{
 
     Stage stage;
-    private int score1, score2 = 0;
+    private int myScore, opponentScore = 0;
+    private Label myLabel, opponentLabel;
     private int moveCount = 0;
     private String[][] board = new String[3][3];
-    private boolean isMyTurn = true;
+    private boolean isMyTurn = false;
     private String player1Name = "Player 1";
     private String player2Name = "Player 2";
     public boolean doIStart = false;
+    public boolean isX = false;
+    public String myChar = "X";
+    public String opponentChar = "O";
     private boolean isGameFinished = false;
     private Button[] cells;
     String textOfFile = "";
@@ -87,7 +91,7 @@ public class OnlineGameController{
                     }
                 }
                 clickedButton.setStyle("-fx-text-fill: #D4A5A5;");
-                clickedButton.setText("X");
+                clickedButton.setText(myChar);
                 clickedButton.setDisable(true);
                 isMyTurn =! isMyTurn;
                 moveCount++;
@@ -101,7 +105,8 @@ public class OnlineGameController{
                 }
                 if(checkWinner()){
                     displayVideo("/Assets/winner.mp4");
-                    score1 += 10;
+                    //win video
+                    myScore += 10;
                     handleEndGame();
                 }
                 else if(moveCount == 9){
@@ -166,6 +171,7 @@ public class OnlineGameController{
     }
 
     public void resetGame() {
+        // Update the score of the winner
         cell_1_btn.setText("");
         cell_2_btn.setText("");
         cell_3_btn.setText("");
@@ -192,15 +198,25 @@ public class OnlineGameController{
         JSONObject object = (JSONObject) JSONValue.parse((String)mainObject.get("data"));
         player1Name = (String) object.get("player1");
         player2Name = (String) object.get("player2");
-        namesLabel.setText(player1Name+" vs "+player2Name);
+        namesLabel.setText(player1Name + " vs " + player2Name);
         boolean start = (boolean) object.get("isStarted");
         doIStart = start;
         isMyTurn = start;
+        isX = start;
+        if(!isX){
+            myChar = "O";
+            opponentChar = "X";
+            myLabel = score2Number;
+            opponentLabel = score1Number;
+        } else{
+            myLabel = score1Number;
+            opponentLabel = score2Number;
+        }
         Thread listener=new Thread(() -> {
             while(!isGameFinished && ServerHandler.socket != null){
                 while (ServerHandler.msg == null ) {
                     try {
-                        if(ServerHandler.socket==null){
+                        if(ServerHandler.socket == null){
                             return;
                         }
                         Thread.sleep(100);  // Prevents busy-waiting
@@ -215,31 +231,24 @@ public class OnlineGameController{
                     Platform.runLater(() -> {
                         cells[cellNumber].setDisable(true);
                         cells[cellNumber].setStyle("-fx-text-fill: #D4A5A5;");
-                        cells[cellNumber].setText("O");
-                    });
-                    isMyTurn = !isMyTurn;
-                    moveCount++;
-                    
-                    if(checkWinner()){
-                        
-                        score2 += 10;
-                        Platform.runLater(() -> {
+                        cells[cellNumber].setText(opponentChar);
+                        isMyTurn = !isMyTurn;
+                        moveCount++;
+
+                        if(checkWinner()){
                             displayVideo("/Assets/loser.mp4");
+                            opponentScore += 10;
                             handleEndGame();
-                        });
-                    }
-                    else if(moveCount == 9){
-                        
-                        Platform.runLater(() -> {
+                        }
+                        else if(moveCount == 9){
                             displayVideo("/Assets/tie.mp4");
                             handleEndGame();
-                        });
-                    }
+                        }
+                    });
                     ServerHandler.msg = null;
                 }
                 else if(msgType.equals(MassageType.WITHDRAW_GAME_MSG)){
-                    
-                    score1 += 10;
+                    myScore += 10;
                     Platform.runLater(() -> {
                         displayVideo("/Assets/winner.mp4");
                         Alert check = new Alert(Alert.AlertType.INFORMATION,"Your opponent has withdrawn");
@@ -291,7 +300,7 @@ public class OnlineGameController{
     }
 
     private void endGame() {
-        
+        // Update the scores for each player in the DB and dashboard
     }
     
 }

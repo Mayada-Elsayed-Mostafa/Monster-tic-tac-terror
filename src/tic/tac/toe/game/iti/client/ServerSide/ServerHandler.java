@@ -88,7 +88,13 @@ public class ServerHandler {
                                 });
                             });
                         } else if (respone.get("type").equals(MassageType.CHALLENGE_START_MSG)) {
-                            String opponentUsername = (String) respone.get("data");
+                            JSONObject gameData = (JSONObject) JSONValue.parse((String) respone.get("data"));
+                            String opponentUsername;
+                            if((boolean) gameData.get("isStarted")){
+                                opponentUsername = (String) gameData.get("player2");
+                            } else{
+                                opponentUsername = (String) gameData.get("player1");
+                            }
 
                             Platform.runLater(() -> {
                                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
