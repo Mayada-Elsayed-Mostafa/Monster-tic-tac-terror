@@ -1,6 +1,7 @@
 package tic.tac.toe.game.iti.client.Singlemode;
 
 import java.io.FileWriter;
+import java.io.IOException;
 import java.net.URL;
 import java.util.Random;
 import java.util.ResourceBundle;
@@ -10,13 +11,17 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import tic.tac.toe.game.iti.client.Controller;
+import tic.tac.toe.game.iti.client.VideoController;
 import tic.tac.toe.game.iti.client.WelcomeController;
 
-public class EasymodeController implements Initializable {
+public class EasymodeController extends Controller implements Initializable {
 
     Stage stage;
     FileWriter fw = null;
@@ -131,9 +136,16 @@ public class EasymodeController implements Initializable {
             makeMove(row, col, currentPlayer);
             if (checkWinner(currentPlayer)) {
                 gameStatus.setText(currentPlayer + " Wins!");
+                if(currentPlayer == 'X'){
+                    displayVideo("/Assets/winner.mp4");
+                }else{
+                    displayVideo("/Assets/loser.mp4");
+                }
+                
                 gameOver = true;
             } else if (isBoardFull()) {
                 gameStatus.setText("It's a Draw!");
+                displayVideo("/Assets/tie.mp4");
                 gameOver = true;
             } else {
                 currentPlayer = (currentPlayer == 'X') ? 'O' : 'X';
@@ -182,7 +194,7 @@ public class EasymodeController implements Initializable {
         if (difficulty.equals("Easy")) {
             move = getRandomMove();
         } else if (difficulty.equals("Intermediate")) {
-            move = random.nextInt(10) < 7 ? getOptimalMove() : getRandomMove();
+            move = random.nextInt(2) < 1 ? getOptimalMove() : getRandomMove();
         } else {
             move = getOptimalMove();
         }
@@ -250,9 +262,40 @@ public class EasymodeController implements Initializable {
         }
         return bestScore;
     }
+    
+    private void displayVideo(String videoUrl) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("video.fxml"));
+            Parent root = loader.load();
+
+            VideoController controller = loader.getController();
+            controller.setStage(stage);
+            controller.setPreviousScene(stage.getScene());
+            controller.setController(this);
+            controller.setVideoUrl(videoUrl);
+
+            stage.setScene(new Scene(root));
+        } catch (IOException e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR, "An error occurred, please try again", ButtonType.OK);
+            alert.showAndWait();
+        }
+    }
+    
+    @Override
+    public void askReplay() {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Do you want to play again?", ButtonType.YES, ButtonType.NO);
+        alert.setTitle("Play Again?");
+        alert.showAndWait().ifPresent(response -> {
+            if (response == ButtonType.YES) {
+                initializeGame();
+            } else {
+                endHandeler();
+            }
+        });
+    }
 
     @FXML
-    private void endHandeler(ActionEvent event) {
+    private void endHandeler() {
         try {
             if (fw != null) {
                 fw.close();
@@ -265,7 +308,7 @@ public class EasymodeController implements Initializable {
 
             stage.setScene(new Scene(root));
             stage.setTitle("Welcome Page");
-        } catch (Exception e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
