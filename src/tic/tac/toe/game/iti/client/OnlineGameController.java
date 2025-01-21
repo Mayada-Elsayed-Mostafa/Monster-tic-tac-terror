@@ -27,7 +27,7 @@ import tic.tac.toe.game.iti.client.ServerSide.MassageType;
 import tic.tac.toe.game.iti.client.ServerSide.ServerHandler;
 import static tic.tac.toe.game.iti.client.ServerSide.ServerHandler.stage;
 
-public class OnlineGameController extends Controller{
+public class OnlineGameController extends Controller {
 
     Stage stage;
     private int myScore, opponentScore = 0;
@@ -44,7 +44,7 @@ public class OnlineGameController extends Controller{
     private boolean isGameFinished = false;
     private Button[] cells;
     String textOfFile = "";
-    
+
     @FXML
     private Button cell_1_btn, cell_2_btn, cell_3_btn, cell_4_btn, cell_5_btn, cell_6_btn, cell_7_btn, cell_8_btn, cell_9_btn;
     @FXML
@@ -57,17 +57,18 @@ public class OnlineGameController extends Controller{
     private Label score2Number;
     @FXML
     private Label namesLabel;
-    
-    public void setStage(Stage stage,String msg) {
+
+    public void setStage(Stage stage, String msg) {
         this.stage = stage;
         cells = new Button[]{cell_1_btn, cell_2_btn, cell_3_btn, cell_4_btn, cell_5_btn, cell_6_btn, cell_7_btn, cell_8_btn, cell_9_btn};
         startGame(msg);
     }
-    public static void navigateToGame(String msg){
+
+    public static void navigateToGame(String msg) {
         try {
             FXMLLoader loader = new FXMLLoader(TicTacToeGameITIClient.class.getClass().getResource("/tic/tac/toe/game/iti/client/OnlineGame.fxml"));
             Parent root = loader.load();
-            
+
             OnlineGameController controller = loader.getController();
             controller.setStage(ServerHandler.stage, msg);
             ServerHandler.stage.setScene(new Scene(root));
@@ -78,14 +79,14 @@ public class OnlineGameController extends Controller{
     }
 
     @FXML
-    public void handleCellClick(ActionEvent event){
+    public void handleCellClick(ActionEvent event) {
         Button clickedButton = (Button) event.getSource();
 
-        if (clickedButton.getText().isEmpty()){
-            if (isMyTurn){
+        if (clickedButton.getText().isEmpty()) {
+            if (isMyTurn) {
                 int cellNumber = 0;
-                for(int i = 0; i < cells.length; i++){
-                    if(clickedButton == cells[i]){
+                for (int i = 0; i < cells.length; i++) {
+                    if (clickedButton == cells[i]) {
                         cellNumber = i;
                         break;
                     }
@@ -93,23 +94,34 @@ public class OnlineGameController extends Controller{
                 clickedButton.setStyle("-fx-text-fill: #D4A5A5;");
                 clickedButton.setText(myChar);
                 clickedButton.setDisable(true);
-                isMyTurn =! isMyTurn;
+                isMyTurn = !isMyTurn;
                 moveCount++;
                 JSONObject play = new JSONObject();
                 play.put("type", MassageType.PLAY_MSG);
                 play.put("data", cellNumber);
                 try {
                     ServerHandler.massageOut.writeUTF(play.toJSONString());
-                } catch (IOException ex){
+                } catch (IOException ex) {
                     Logger.getLogger(OnlineGameController.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                if(checkWinner()){
+                if (checkWinner()) {
                     displayVideo("/Assets/winner.mp4");
-                    //win video
                     myScore += 10;
-                }
-                else if(moveCount == 9){
+                    myLabel.setText(myScore + "");
+                } else if (moveCount == 9) {
                     displayVideo("/Assets/tie.mp4");
+                    //tie video
+                    JSONObject betweenGameMsg = new JSONObject();
+                    betweenGameMsg.put("type", MassageType.IN_BETWEEN_GAME_MSG);
+                    JSONObject result = new JSONObject();
+                    result.put("result", "tie");
+                    betweenGameMsg.put("data", result.toJSONString());
+                    try {
+                        ServerHandler.massageOut.writeUTF(betweenGameMsg.toJSONString());
+                    } catch (IOException ex) {
+                        Logger.getLogger(OnlineGameController.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    handleEndGame();
                 }
             }
         }
@@ -169,7 +181,13 @@ public class OnlineGameController extends Controller{
     }
 
     public void resetGame() {
-        // Update the score of the winner
+        if(doIStart){
+            doIStart = false;
+            isMyTurn = false;
+        }else{
+            doIStart = true;
+            isMyTurn = true;
+        }
         cell_1_btn.setText("");
         cell_2_btn.setText("");
         cell_3_btn.setText("");
@@ -189,11 +207,47 @@ public class OnlineGameController extends Controller{
         cell_8_btn.setDisable(false);
         cell_9_btn.setDisable(false);
         moveCount = 0;
+       
+    }
+
+    public void restartRequest() {   //sends restart request to the server
+        JSONObject restart = new JSONObject();
+        restart.put("type", MassageType.RESTART_REQUEST_MSG);
+        try {
+            ServerHandler.massageOut.writeUTF(restart.toJSONString());
+        } catch (IOException ex) {
+            Logger.getLogger(OnlineGameController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public void restartResponse() {   //sends restart request to the server
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Play again?");
+        alert.setContentText("Do you want to play again?");
+
+        ButtonType acceptButton = new ButtonType("Accept");
+        ButtonType rejectButton = new ButtonType("Reject");
+
+        alert.getButtonTypes().setAll(acceptButton, rejectButton);
+
+        alert.showAndWait().ifPresent(response -> {
+            JSONObject reply = new JSONObject();
+            if (response == acceptButton) {
+                reply.put("type", MassageType.RESTART_ACCEPT_MSG);
+            } else {
+                reply.put("type", MassageType.RESTART_REJECT_MSG);
+            }
+            try {
+                ServerHandler.massageOut.writeUTF(reply.toJSONString());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
     }
 
     public void startGame(String msg) {
         JSONObject mainObject = (JSONObject) JSONValue.parse(msg);
-        JSONObject object = (JSONObject) JSONValue.parse((String)mainObject.get("data"));
+        JSONObject object = (JSONObject) JSONValue.parse((String) mainObject.get("data"));
         player1Name = (String) object.get("player1");
         player2Name = (String) object.get("player2");
         namesLabel.setText(player1Name + " vs " + player2Name);
@@ -201,20 +255,20 @@ public class OnlineGameController extends Controller{
         doIStart = start;
         isMyTurn = start;
         isX = start;
-        if(!isX){
+        if (!isX) {
             myChar = "O";
             opponentChar = "X";
             myLabel = score2Number;
             opponentLabel = score1Number;
-        } else{
+        } else {
             myLabel = score1Number;
             opponentLabel = score2Number;
         }
-        Thread listener=new Thread(() -> {
-            while(!isGameFinished && ServerHandler.socket != null){
-                while (ServerHandler.msg == null ) {
+        Thread listener = new Thread(() -> {
+            while (!isGameFinished && ServerHandler.socket != null) {
+                while (ServerHandler.msg == null) {
                     try {
-                        if(ServerHandler.socket == null){
+                        if (ServerHandler.socket == null) {
                             return;
                         }
                         Thread.sleep(100);  // Prevents busy-waiting
@@ -224,40 +278,53 @@ public class OnlineGameController extends Controller{
                 }
                 JSONObject data = (JSONObject) JSONValue.parse(ServerHandler.msg);
                 String msgType = (String) data.get("type");
-                if(msgType.equals(MassageType.PLAY_MSG)){
+                if (msgType.equals(MassageType.PLAY_MSG)) {
                     int cellNumber = ((Long) data.get("data")).intValue();
                     Platform.runLater(() -> {
                         cells[cellNumber].setDisable(true);
                         cells[cellNumber].setStyle("-fx-text-fill: #D4A5A5;");
+
                         cells[cellNumber].setText(opponentChar);
                         isMyTurn = !isMyTurn;
                         moveCount++;
 
-                        if(checkWinner()){
+                        if (checkWinner()) {
                             displayVideo("/Assets/loser.mp4");
                             opponentScore += 10;
-                        }
-                        else if(moveCount == 9){
+                            opponentLabel.setText(opponentScore + "");
+                        } else if (moveCount == 9) {
                             displayVideo("/Assets/tie.mp4");
                         }
                     });
                     ServerHandler.msg = null;
-                }
-                else if(msgType.equals(MassageType.WITHDRAW_GAME_MSG)){
-                    myScore += 10;
+                } else if (msgType.equals(MassageType.WITHDRAW_GAME_MSG)) {
+
                     Platform.runLater(() -> {
+                        myScore += 10;
+                        myLabel.setText(myScore + "");
                         displayVideo("/Assets/winner.mp4");
-                        Alert check = new Alert(Alert.AlertType.INFORMATION,"Your opponent has withdrawn");
+                        Alert check = new Alert(Alert.AlertType.INFORMATION, "Your opponent has withdrawn");
                         check.showAndWait();
                         endGame();  //no server interaction
                     });
                     ServerHandler.msg = null;
+                } else if (msgType.equals(MassageType.RESTART_REQUEST_MSG)) {
+                    Platform.runLater(() -> {
+                        restartResponse();
+                    });
+                    ServerHandler.msg = null;
+                } else if (msgType.equals(MassageType.CONTINUE_GAME_MSG)) {
+                    Platform.runLater(() -> {
+                        resetGame();
+                    });
+                    ServerHandler.msg = null;
                 }
+
             }
         });
         listener.start();
     }
-    
+
     private void displayVideo(String videoUrl) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("video.fxml"));
@@ -276,27 +343,30 @@ public class OnlineGameController extends Controller{
         }
     }
 
-    public void askReplay(){
-            ButtonType restart = new ButtonType("Restart");
-            ButtonType endGame = new ButtonType("End the game");
-            Alert check = new Alert(Alert.AlertType.CONFIRMATION,"Restart game?",restart,endGame);
-            Optional<ButtonType> returnType = check.showAndWait();
+    public void askReplay() {
+        ButtonType restart = new ButtonType("Restart");
+        ButtonType endGame = new ButtonType("End the game");
+        Alert check = new Alert(Alert.AlertType.CONFIRMATION, "Restart game?", restart, endGame);
+        Optional<ButtonType> returnType = check.showAndWait();
 
-            if(returnType.isPresent()){
-                if(returnType.get() == restart){
-                    resetGame();
-                }
-                else{
-                    endGame();
-                }
-            }
-            else{
+        if (returnType.isPresent()) {
+            if (returnType.get() == restart) {
+                restartRequest();
+                //resetGame();
+            } else {
                 endGame();
             }
+        } else {
+            endGame();
+        }
     }
 
     private void endGame() {
-        // Update the scores for each player in the DB and dashboard
+        // Update the scores for each player in the dashboard
     }
-    
+
+    private void handleEndGame() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
 }
