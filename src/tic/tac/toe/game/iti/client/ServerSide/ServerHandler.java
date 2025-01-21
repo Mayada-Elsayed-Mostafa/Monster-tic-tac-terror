@@ -74,7 +74,7 @@ public class ServerHandler {
                                 alert.showAndWait().ifPresent(response -> {
                                     JSONObject reply = new JSONObject();
                                     if (response == acceptButton) {
-                                        reply.put("type", MassageType.CHALLENGE_ACCESSEPT_MSG);
+                                        reply.put("type", MassageType.CHALLENGE_ACCEPT_MSG);
                                         reply.put("data", challengerUsername);
                                     } else {
                                         reply.put("type", MassageType.CHALLENGE_REJECT_MSG);
@@ -87,7 +87,8 @@ public class ServerHandler {
                                     }
                                 });
                             });
-                        } else if (respone.get("type").equals(MassageType.CHALLENGE_START_MSG)) {
+                        } 
+                        else if (respone.get("type").equals(MassageType.CHALLENGE_START_MSG)) {
                             JSONObject gameData = (JSONObject) JSONValue.parse((String) respone.get("data"));
                             String opponentUsername;
                             if(!(boolean) gameData.get("isStarted")){
@@ -99,14 +100,18 @@ public class ServerHandler {
                                     alert.setContentText(opponentUsername + " is ready to play.");
 
                                     alert.showAndWait();
-                                    OnlineGameController.navigateToGame(responseMsg);
+                                   
                                 });
                             }
+                            Platform.runLater(() -> {
+                             OnlineGameController.navigateToGame(responseMsg);
+                            });
 
                             
-                        } else if (respone.get("type").equals(MassageType.UPDATE_LIST_MSG)) {
                         }
-                        else if(respone.get("type").equals(MassageType.CHALLENGE_ACCESSEPT_MSG))
+                        else if (respone.get("type").equals(MassageType.UPDATE_LIST_MSG)) {
+                        }
+                        else if(respone.get("type").equals(MassageType.CHALLENGE_ACCEPT_MSG))
                         {
                             
                         }
