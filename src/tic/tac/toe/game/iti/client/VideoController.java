@@ -10,7 +10,7 @@ import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
 import javafx.stage.Stage;
 
-public class VideoController implements Initializable {
+public class VideoController {
 
     private Stage stage;
     private Scene previousScene;
@@ -43,11 +43,6 @@ public class VideoController implements Initializable {
     @FXML
     private MediaView video;
     private MediaPlayer mediaPlayer;
-
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
-
-    }
 
     private void initializeMediaPlayer() {
         if (videoUrl != null) {

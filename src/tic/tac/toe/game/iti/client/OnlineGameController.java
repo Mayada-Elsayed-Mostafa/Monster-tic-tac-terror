@@ -27,7 +27,7 @@ import tic.tac.toe.game.iti.client.ServerSide.MassageType;
 import tic.tac.toe.game.iti.client.ServerSide.ServerHandler;
 import static tic.tac.toe.game.iti.client.ServerSide.ServerHandler.stage;
 
-public class OnlineGameController extends Controller {
+public class OnlineGameController {
 
     Stage stage;
     private int myScore, opponentScore = 0;
@@ -44,6 +44,8 @@ public class OnlineGameController extends Controller {
     private boolean isGameFinished = false;
     private Button[] cells;
     String textOfFile = "";
+    public static Scene myScene;
+    OptionsDisplayController displayer = new OptionsDisplayController();
 
     @FXML
     private Button cell_1_btn, cell_2_btn, cell_3_btn, cell_4_btn, cell_5_btn, cell_6_btn, cell_7_btn, cell_8_btn, cell_9_btn;
@@ -62,6 +64,10 @@ public class OnlineGameController extends Controller {
         this.stage = stage;
         cells = new Button[]{cell_1_btn, cell_2_btn, cell_3_btn, cell_4_btn, cell_5_btn, cell_6_btn, cell_7_btn, cell_8_btn, cell_9_btn};
         startGame(msg);
+    }
+    public void setStage(Stage stage) {
+        this.stage = stage;
+        cells = new Button[]{cell_1_btn, cell_2_btn, cell_3_btn, cell_4_btn, cell_5_btn, cell_6_btn, cell_7_btn, cell_8_btn, cell_9_btn};
     }
 
     public static void navigateToGame(String msg) {
@@ -105,11 +111,14 @@ public class OnlineGameController extends Controller {
                     Logger.getLogger(OnlineGameController.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 if (checkWinner()) {
-                    displayVideo("/Assets/winner.mp4");
                     myScore += 10;
                     myLabel.setText(myScore + "");
+                    myScene=stage.getScene();
+                    displayer.displayVideo("/Assets/winner.mp4");
+                    
                 } else if (moveCount == 9) {
-                    displayVideo("/Assets/tie.mp4");
+                    myScene=stage.getScene();
+                    displayer.displayVideo("/Assets/tie.mp4");
                     //tie video
                     JSONObject betweenGameMsg = new JSONObject();
                     betweenGameMsg.put("type", MassageType.IN_BETWEEN_GAME_MSG);
@@ -181,6 +190,7 @@ public class OnlineGameController extends Controller {
     }
 
     public void resetGame() {
+        returnToGame();
         if(doIStart){
             doIStart = false;
             isMyTurn = false;
@@ -209,18 +219,8 @@ public class OnlineGameController extends Controller {
         moveCount = 0;
        
     }
-
-    public void restartRequest() {   //sends restart request to the server
-        JSONObject restart = new JSONObject();
-        restart.put("type", MassageType.RESTART_REQUEST_MSG);
-        try {
-            ServerHandler.massageOut.writeUTF(restart.toJSONString());
-        } catch (IOException ex) {
-            Logger.getLogger(OnlineGameController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
-    public void restartResponse() {   //sends restart request to the server
+    
+    public void restartResponse() {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Play again?");
         alert.setContentText("Do you want to play again?");
@@ -289,11 +289,14 @@ public class OnlineGameController extends Controller {
                         moveCount++;
 
                         if (checkWinner()) {
-                            displayVideo("/Assets/loser.mp4");
                             opponentScore += 10;
                             opponentLabel.setText(opponentScore + "");
+                            myScene=stage.getScene();
+                            displayer.displayVideo("/Assets/loser.mp4");
+                            
                         } else if (moveCount == 9) {
-                            displayVideo("/Assets/tie.mp4");
+                            myScene=stage.getScene();
+                            displayer.displayVideo("/Assets/tie.mp4");
                         }
                     });
                     ServerHandler.msg = null;
@@ -302,7 +305,8 @@ public class OnlineGameController extends Controller {
                     Platform.runLater(() -> {
                         myScore += 10;
                         myLabel.setText(myScore + "");
-                        displayVideo("/Assets/winner.mp4");
+                        myScene=stage.getScene();
+                        displayer.displayVideo("/Assets/winner.mp4");
                         Alert check = new Alert(Alert.AlertType.INFORMATION, "Your opponent has withdrawn");
                         check.showAndWait();
                         endGame();  //no server interaction
@@ -315,6 +319,7 @@ public class OnlineGameController extends Controller {
                     ServerHandler.msg = null;
                 } else if (msgType.equals(MassageType.CONTINUE_GAME_MSG)) {
                     Platform.runLater(() -> {
+                        
                         resetGame();
                     });
                     ServerHandler.msg = null;
@@ -324,40 +329,18 @@ public class OnlineGameController extends Controller {
         });
         listener.start();
     }
-
-    private void displayVideo(String videoUrl) {
+    
+    public static void returnToGame() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("video.fxml"));
+            FXMLLoader loader = new FXMLLoader(TicTacToeGameITIClient.class.getClass().getResource("/tic/tac/toe/game/iti/client/OnlineGame.fxml"));
             Parent root = loader.load();
 
-            VideoController controller = loader.getController();
-            controller.setStage(stage);
-            controller.setPreviousScene(stage.getScene());
-            controller.setController(this);
-            controller.setVideoUrl(videoUrl);
-
-            stage.setScene(new Scene(root));
-        } catch (IOException e) {
-            Alert alert = new Alert(Alert.AlertType.ERROR, "An error occurred, please try again", ButtonType.OK);
-            alert.showAndWait();
-        }
-    }
-
-    public void askReplay() {
-        ButtonType restart = new ButtonType("Restart");
-        ButtonType endGame = new ButtonType("End the game");
-        Alert check = new Alert(Alert.AlertType.CONFIRMATION, "Restart game?", restart, endGame);
-        Optional<ButtonType> returnType = check.showAndWait();
-
-        if (returnType.isPresent()) {
-            if (returnType.get() == restart) {
-                restartRequest();
-                //resetGame();
-            } else {
-                endGame();
-            }
-        } else {
-            endGame();
+            OnlineGameController controller = loader.getController();
+            controller.setStage(ServerHandler.stage);
+            ServerHandler.stage.setScene(myScene);
+            ServerHandler.stage.setTitle("Online Game");
+        } catch (IOException ex) {
+            Logger.getLogger(OnlineGameController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
