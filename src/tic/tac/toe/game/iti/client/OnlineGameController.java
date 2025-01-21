@@ -283,11 +283,9 @@ public class OnlineGameController extends Controller {
                     Platform.runLater(() -> {
                         cells[cellNumber].setDisable(true);
                         cells[cellNumber].setStyle("-fx-text-fill: #D4A5A5;");
-
                         cells[cellNumber].setText(opponentChar);
                         isMyTurn = !isMyTurn;
                         moveCount++;
-
                         if (checkWinner()) {
                             displayVideo("/Assets/loser.mp4");
                             opponentScore += 10;
@@ -362,6 +360,7 @@ public class OnlineGameController extends Controller {
     }
 
     private void endGame() {
+        // Update the scores for each player in the DB and dashboard
         // Update the scores for each player in the dashboard
     }
 
