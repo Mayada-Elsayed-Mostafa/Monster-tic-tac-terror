@@ -1,31 +1,25 @@
 package tic.tac.toe.game.iti.client;
 
-import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextInputDialog;
 import javafx.stage.Stage;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
 import tic.tac.toe.game.iti.client.ServerSide.MassageType;
 import tic.tac.toe.game.iti.client.ServerSide.ServerHandler;
-import static tic.tac.toe.game.iti.client.ServerSide.ServerHandler.stage;
 
 public class OnlineGameController {
 
@@ -132,7 +126,6 @@ public class OnlineGameController {
                     loserName = opponentName;
                     myScene = stage.getScene();
                     displayer.displayVideo("/Assets/tie.mp4");
-                    //tie video
                     JSONObject betweenGameMsg = new JSONObject();
                     betweenGameMsg.put("type", MassageType.IN_BETWEEN_GAME_MSG);
                     JSONObject result = new JSONObject();
@@ -143,7 +136,7 @@ public class OnlineGameController {
                     } catch (IOException ex) {
                         Logger.getLogger(OnlineGameController.class.getName()).log(Level.SEVERE, null, ex);
                     }
-                    handleEndGame();
+                    endGame();
                 }
             }
         }
@@ -188,15 +181,22 @@ public class OnlineGameController {
 
     @FXML
     private void endHandeler(ActionEvent event) {
+        JSONObject end = new JSONObject();
+        end.put("type", MassageType.WITHDRAW_GAME_MSG);
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("Welcome.fxml"));
+            ServerHandler.massageOut.writeUTF(end.toJSONString());
+        } catch (IOException ex) {
+            Logger.getLogger(OnlineGameController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("HomePage.fxml"));
             Parent root = loader.load();
 
-            WelcomeController controller = loader.getController();
-            controller.setStage(stage);
+            HomePageController controller = loader.getController();
+            controller.setCurrentStage(stage);
 
             stage.setScene(new Scene(root));
-            stage.setTitle("Welcome Page");
+            stage.setTitle("Home Page");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -300,11 +300,9 @@ public class OnlineGameController {
                     Platform.runLater(() -> {
                         cells[cellNumber].setDisable(true);
                         cells[cellNumber].setStyle("-fx-text-fill: #D4A5A5;");
-
                         cells[cellNumber].setText(opponentChar);
                         isMyTurn = !isMyTurn;
                         moveCount++;
-
                         if (checkWinner()) {
                             opponentScore += 10;
                             if (!isX) {
@@ -334,11 +332,9 @@ public class OnlineGameController {
                         winnerName = myName;
                         loserName = opponentName;
                         myLabel.setText(myScore + "");
-                        myScene = stage.getScene();
-                        displayer.displayVideo("/Assets/winner.mp4");
+                        displayVideoWithdraw("/Assets/winner.mp4");
                         Alert check = new Alert(Alert.AlertType.INFORMATION, "Your opponent has withdrawn");
                         check.showAndWait();
-                        endGame();  //no server interaction
                     });
                     ServerHandler.msg = null;
                 } else if (msgType.equals(MassageType.RESTART_REQUEST_MSG)) {
@@ -348,15 +344,34 @@ public class OnlineGameController {
                     ServerHandler.msg = null;
                 } else if (msgType.equals(MassageType.CONTINUE_GAME_MSG)) {
                     Platform.runLater(() -> {
-
                         resetGame();
                     });
                     ServerHandler.msg = null;
                 }
-
             }
         });
         listener.start();
+    }
+
+    private void displayVideoWithdraw(String videoUrl) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("video.fxml"));
+            Parent root = loader.load();
+            FXMLLoader loaderHome = new FXMLLoader(getClass().getResource("HomePage.fxml"));
+            Parent rot = loaderHome.load();
+            HomePageController myController = loaderHome.getController();
+            VideoController controller = loader.getController();
+            controller.setStage(stage);
+            myController.setCurrentStage(stage);
+            stage.setScene(new Scene(rot));
+            controller.setPreviousScene(stage.getScene());
+            controller.setController(myController);
+            controller.setVideoUrl(videoUrl);
+            stage.setScene(new Scene(root));
+        } catch (IOException e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR, "An error occurred, please try again", ButtonType.OK);
+            alert.showAndWait();
+        }
     }
 
     public static void returnToGame() {
@@ -374,11 +389,7 @@ public class OnlineGameController {
     }
 
     private void endGame() {
+        // Update the scores for each player in the DB and dashboard
         // Update the scores for each player in the dashboard
     }
-
-    private void handleEndGame() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
 }

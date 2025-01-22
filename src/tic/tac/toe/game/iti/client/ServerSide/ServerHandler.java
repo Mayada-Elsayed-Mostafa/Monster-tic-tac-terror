@@ -51,9 +51,11 @@ public class ServerHandler {
                                 JSONObject obj = (JSONObject) JSONValue.parse((String) array.get(i));
                                 dtoPlayers.add(new Player((String) obj.get("username"), "", "", ((Long) obj.get("score")).intValue()));
                             }
+     
                             Platform.runLater(new Runnable() {
                                 @Override
                                 public void run() {
+                                    HomePageController.currentPlayers=dtoPlayers;
                                     HomePageController.updateAvailablePlayers(dtoPlayers);
                                 }
                             });
