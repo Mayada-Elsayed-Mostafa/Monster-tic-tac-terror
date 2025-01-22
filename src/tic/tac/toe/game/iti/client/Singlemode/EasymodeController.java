@@ -24,8 +24,6 @@ import tic.tac.toe.game.iti.client.WelcomeController;
 public class EasymodeController extends Controller implements Initializable {
 
     Stage stage;
-    FileWriter fw = null;
-
     @FXML
     private Text gameStatus;
     @FXML
@@ -297,9 +295,6 @@ public class EasymodeController extends Controller implements Initializable {
     @FXML
     private void endHandeler() {
         try {
-            if (fw != null) {
-                fw.close();
-            }
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/tic/tac/toe/game/iti/client/Welcome.fxml"));
             Parent root = loader.load();
 
