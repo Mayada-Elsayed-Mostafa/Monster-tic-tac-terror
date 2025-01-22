@@ -6,11 +6,17 @@
 package tic.tac.toe.game.iti.client;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
@@ -34,7 +40,7 @@ public class OfflineRecordsController  {
         startController();
     }
    private void startController(){
-       File files=new File("offlineGames");
+       File files=new File("offlineRecords");
        File[] jsonFiles = files.listFiles((dir, name) -> name.toLowerCase().endsWith(".json"));
        for(File json:jsonFiles){
            Button button =new Button();
@@ -60,6 +66,19 @@ public class OfflineRecordsController  {
    }
 
     private void handleFileRecored(File json) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("Record.fxml"));
+            Parent root = loader.load();
+
+            RecordController controller = loader.getController();
+            controller.setStage(stage);
+            controller.loadGameRecord(json);
+
+            stage.setScene(new Scene(root));
+            stage.setTitle("Record");
+        } catch (IOException ex) {
+            Logger.getLogger(HomePageController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
 }
