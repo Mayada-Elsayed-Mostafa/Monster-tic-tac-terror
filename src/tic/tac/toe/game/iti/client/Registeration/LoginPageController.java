@@ -70,10 +70,10 @@ public class LoginPageController {
                 Logger.getLogger(LoginPageController.class.getName()).log(Level.SEVERE, null, ex);
             }
             while (ServerHandler.msg == null) {
+                System.out.print("");
             }
             JSONObject data = (JSONObject) JSONValue.parse(ServerHandler.msg);
             if (data.get("type").equals(MassageType.LOGINSUCCESS_MSG)) {
-                showAlert(Alert.AlertType.CONFIRMATION, "Successful", "you are logged in successfully");
                 navigateToHome(data.get("data"));
             } else if (data.get("type").equals(MassageType.LOGINFAIL_MSG)) {
                 showAlert(Alert.AlertType.WARNING, "unsuccessful", "Log in failed, try again");
