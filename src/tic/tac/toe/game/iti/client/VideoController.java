@@ -43,7 +43,7 @@ public class VideoController {
 
     private void initializeMediaPlayer() {
         if (videoUrl != null) {
-            mediaPlayer = new MediaPlayer(new Media(this.getClass().getResource(videoUrl).toExternalForm()));
+            mediaPlayer = new MediaPlayer(new Media(getClass().getResource(videoUrl).toExternalForm())); //this.?????????????????????????????
             mediaPlayer.setAutoPlay(true);
             video.setMediaPlayer(mediaPlayer);
 
