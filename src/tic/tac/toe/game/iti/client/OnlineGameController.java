@@ -304,10 +304,9 @@ public class OnlineGameController extends Controller {
                         myScore += 10;
                         myLabel.setText(myScore + "");
                         displayVideoWithdraw("/Assets/winner.mp4");
-                        displayVideo("/Assets/winner.mp4");
                         Alert check = new Alert(Alert.AlertType.INFORMATION, "Your opponent has withdrawn");
                         check.showAndWait();
-                        endGame();  //no server interaction
+                         
                     });
                     ServerHandler.msg = null;
                 } else if (msgType.equals(MassageType.RESTART_REQUEST_MSG)) {
