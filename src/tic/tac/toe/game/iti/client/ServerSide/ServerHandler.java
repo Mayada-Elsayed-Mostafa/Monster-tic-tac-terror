@@ -14,15 +14,19 @@ import java.util.stream.Collectors;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import org.json.simple.JSONArray;
 import tic.tac.toe.game.iti.client.HomePageController;
 import tic.tac.toe.game.iti.client.OnlineGameController;
+import tic.tac.toe.game.iti.client.TicTacToeGameITIClient;
+import tic.tac.toe.game.iti.client.WelcomeController;
 import tic.tac.toe.game.iti.client.player.Player;
 
 public class ServerHandler {
+
     public static Stage stage;
     public static DataInputStream massageIn;
     public static DataOutputStream massageOut;
@@ -36,6 +40,7 @@ public class ServerHandler {
         ServerHandler.massageIn = new DataInputStream(ServerHandler.socket.getInputStream());
         ServerHandler.massageOut = new DataOutputStream(ServerHandler.socket.getOutputStream());
         Thread listner;
+        isFinished=false;
         listner = new Thread(new Runnable() {
             @Override
             public void run() {
@@ -44,6 +49,9 @@ public class ServerHandler {
                         String responseMsg = massageIn.readUTF();
                         JSONObject respone = (JSONObject) JSONValue.parse(responseMsg);
                         if (respone.get("type").equals(MassageType.SERVER_CLOSE_MSG)) {
+                            Platform.runLater(() -> {
+                                serverDisconnection();
+                            });
 
                         } else if (respone.get("type").equals(MassageType.UPDATE_LIST_MSG) && isLoggedIn) {
                             JSONArray array = (JSONArray) respone.get("data");
@@ -52,7 +60,7 @@ public class ServerHandler {
                                 JSONObject obj = (JSONObject) JSONValue.parse((String) array.get(i));
                                 dtoPlayers.add(new Player((String) obj.get("username"), "", "", ((Long) obj.get("score")).intValue()));
                             }
-                            HomePageController.currentPlayers=dtoPlayers;
+                            HomePageController.currentPlayers = dtoPlayers;
                             Platform.runLater(new Runnable() {
                                 @Override
                                 public void run() {
@@ -89,11 +97,10 @@ public class ServerHandler {
                                     }
                                 });
                             });
-                        } 
-                        else if (respone.get("type").equals(MassageType.CHALLENGE_START_MSG)) {
+                        } else if (respone.get("type").equals(MassageType.CHALLENGE_START_MSG)) {
                             JSONObject gameData = (JSONObject) JSONValue.parse((String) respone.get("data"));
                             String opponentUsername;
-                            if(!(boolean) gameData.get("isStarted")){
+                            if (!(boolean) gameData.get("isStarted")) {
                                 opponentUsername = (String) gameData.get("player1");
                                 Platform.runLater(() -> {
                                     Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -102,35 +109,37 @@ public class ServerHandler {
                                     alert.setContentText(opponentUsername + " is ready to play.");
 
                                     alert.showAndWait();
+
                                 });
                             }
                             Platform.runLater(() -> {
-                             OnlineGameController.navigateToGame(responseMsg);
+                                OnlineGameController.navigateToGame(responseMsg);
                             });
 
-                            
-                        }
-                        else if (respone.get("type").equals(MassageType.UPDATE_LIST_MSG)) {
+                        } else if (respone.get("type").equals(MassageType.UPDATE_LIST_MSG)) {
                             JSONArray array = (JSONArray) respone.get("data");
                             ArrayList<Player> dtoPlayers = new ArrayList<Player>();
                             for (int i = 0; i < array.size(); i++) {
                                 JSONObject obj = (JSONObject) JSONValue.parse((String) array.get(i));
                                 dtoPlayers.add(new Player((String) obj.get("username"), "", "", ((Long) obj.get("score")).intValue()));
                             }
-                            HomePageController.currentPlayers=dtoPlayers;
-                        }
-                        else if(respone.get("type").equals(MassageType.CHALLENGE_ACCEPT_MSG))
-                        {
-                            
-                        }
-                        else
+                            HomePageController.currentPlayers = dtoPlayers;
+                        } else if (respone.get("type").equals(MassageType.CHALLENGE_ACCEPT_MSG)) {
+
+                        } else {
                             ServerHandler.msg = responseMsg;
+                        }
                     } catch (IOException ex) {
                         ServerHandler.isFinished = true;
-                        ServerHandler.massageIn=null;
-                        ServerHandler.massageOut=null;
+                        ServerHandler.massageIn = null;
+                        ServerHandler.massageOut = null;
                         ServerHandler.socket = null;
-                        Logger.getLogger(ServerHandler.class.getName()).log(Level.SEVERE, null, ex);
+                        ServerHandler.msg=null;
+                        if (!TicTacToeGameITIClient.isClosed) {
+                            Platform.runLater(() -> {
+                                serverDisconnection();
+                            });
+                        }
                     }
                 }
             }
@@ -147,9 +156,30 @@ public class ServerHandler {
         ServerHandler.massageIn.close();
         ServerHandler.massageOut.close();
         ServerHandler.socket.close();
-        ServerHandler.massageIn=null;
-        ServerHandler.massageOut=null;
+        ServerHandler.massageIn = null;
+        ServerHandler.massageOut = null;
         ServerHandler.socket = null;
-        
+
+    }
+
+    private static void serverDisconnection() {
+
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle("Connection Lost");
+        alert.setContentText("You will be redirected to the home page");
+        alert.showAndWait();
+
+        try {
+            FXMLLoader loader = new FXMLLoader(ServerHandler.class.getResource("/tic/tac/toe/game/iti/client/Welcome.fxml"));
+            Parent root = loader.load();
+
+            WelcomeController controller = loader.getController();
+            controller.setStage(stage);
+
+            stage.setScene(new Scene(root));
+            stage.setTitle("Welcome Page");
+        } catch (IOException ex) {
+            Logger.getLogger(ServerHandler.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 }
