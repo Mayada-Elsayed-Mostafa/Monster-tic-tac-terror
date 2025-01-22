@@ -37,7 +37,7 @@ public class HomePageController {
     private static VBox sScores;
     private static VBox sChallenges;
     @FXML
-    private Button sendRequest_BTN;
+    private Button recordsBtn;
 
     public void setStage(Stage stage) {
         this.stage = stage;
@@ -46,6 +46,7 @@ public class HomePageController {
         sChallenges = challenges;
     }
 
+    @FXML
     public void handleLogout(ActionEvent event) {
         JSONObject output = new JSONObject();
         output.put("type", MassageType.LOGOUT_MSG);
@@ -97,6 +98,22 @@ public class HomePageController {
             ServerHandler.massageOut.writeUTF(challengeRequest.toJSONString());
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    @FXML
+    private void handleRecords(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("OnlineRecords.fxml"));
+            Parent root = loader.load();
+
+            OnlineRecordsController controller = loader.getController();
+            controller.setStage(stage);
+
+            stage.setScene(new Scene(root));
+            stage.setTitle("Online Records");
+        } catch (IOException ex) {
+            Logger.getLogger(HomePageController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
