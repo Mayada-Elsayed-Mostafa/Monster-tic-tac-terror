@@ -1,6 +1,5 @@
 package tic.tac.toe.game.iti.client;
 
-import java.awt.Color;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -14,12 +13,12 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextInputDialog;
 import javafx.stage.Stage;
-import javax.swing.plaf.ColorUIResource;
 
-public class GameController {
+public class GameController extends Controller{
 
     Stage stage;
     private int score1, score2 = 0;
@@ -88,8 +87,10 @@ public class GameController {
             clickedButton.setDisable(true);
 
             moveCount++;
+            String winner = "";
             if (checkWinner()) {
-                String winner = isPlayer1Turn ? player1Name + " (X)" : player2Name + " (O)";
+                winner = isPlayer1Turn ? player1Name : player2Name;
+                handleWinner(winner);
                 System.out.println(winner + " wins!");
                 if (player2Name.equals(winner)) {
                     score2 += 10;
@@ -98,10 +99,9 @@ public class GameController {
                     score1 += 10;
                     score1Number.setText(String.valueOf(score1));
                 }
-                resetGame();
             } else if (moveCount == 9) {
                 System.out.println("It's a tie!");
-                resetGame();
+                handleWinner(winner);
             }
 
             isPlayer1Turn = !isPlayer1Turn;
@@ -140,7 +140,7 @@ public class GameController {
     }
 
     @FXML
-    private void recordHandeler(ActionEvent event) {
+    private void recordHandeler() {
         LocalDateTime now = LocalDateTime.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd_HH-mm-ss");
         String formattedDateTime = now.format(formatter);
@@ -156,7 +156,7 @@ public class GameController {
     }
 
     @FXML
-    private void endHandeler(ActionEvent event) {
+    private void endHandeler() {
         try {
             if (fw != null) {
                 fw.close();
@@ -194,6 +194,8 @@ public class GameController {
         cell_8_btn.setDisable(false);
         cell_9_btn.setDisable(false);
         moveCount = 0;
+        isPlayer1Turn = true;
+        board = new String[3][3];
     }
 
     private void showAlertForPlayerNames() {
@@ -215,6 +217,48 @@ public class GameController {
         if (player2NameInput.isPresent() && !player2NameInput.get().isEmpty()) {
             this.player2Name = player2NameInput.get();
         }
+    }
+
+    private void displayVideo(String videoUrl) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("video.fxml"));
+            Parent root = loader.load();
+
+            VideoController controller = loader.getController();
+            controller.setStage(stage);
+            controller.setPreviousScene(stage.getScene());
+            controller.setController(this);
+            controller.setVideoUrl(videoUrl);
+
+            stage.setScene(new Scene(root));
+        } catch (IOException e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR, "An error occurred, please try again", ButtonType.OK);
+            alert.showAndWait();
+        }
+    }
+
+    private void handleWinner(String winner) {
+        String videoUrl;
+        if (winner != null && !winner.isEmpty()) {
+            stage.setTitle(winner + " is the winner");
+            videoUrl = "/Assets/winner.mp4";
+        }else{
+            stage.setTitle("It's a Tie!");
+            videoUrl = "/Assets/tie.mp4";
+        }
+            displayVideo(videoUrl);
+    }
+
+    public void askReplay() {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Do you want to play again?", ButtonType.YES, ButtonType.NO);
+        alert.setTitle("Play Again?");
+        alert.showAndWait().ifPresent(response -> {
+            if (response == ButtonType.YES) {
+                resetGame();
+            } else {
+                endHandeler();
+            }
+        });
     }
 
     public void startGame() {

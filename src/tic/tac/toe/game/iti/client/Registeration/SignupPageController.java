@@ -71,8 +71,8 @@ public class SignupPageController {
             String jsonString = jsonObject.toString();
 
             ServerHandler.massageOut.writeUTF(jsonString);
-
             while (ServerHandler.msg == null) {
+                System.out.print("");
             }
             JSONObject data = (JSONObject) JSONValue.parse(ServerHandler.msg);
             if (data.get("type").equals(MassageType.REGISTER_SUCCESS_MSG)) {
@@ -82,6 +82,7 @@ public class SignupPageController {
             } else if (data.get("type").equals(MassageType.REGISTER_FAIL_MSG)) {
                 showAlert("unsuccessful", "please, try again");
             }
+            ServerHandler.msg=null;
         } catch (Exception e) {
             e.printStackTrace();
             showAlert("Error", "connect to server" + e.getMessage());

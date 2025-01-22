@@ -1,60 +1,150 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package tic.tac.toe.game.iti.client.ServerSide;
 
 import org.json.simple.JSONObject;
-import org.json.simple.JSONValue; 
+import org.json.simple.JSONValue;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
+import javafx.application.Platform;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.stage.Stage;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
+import org.json.simple.JSONArray;
+import tic.tac.toe.game.iti.client.HomePageController;
+import tic.tac.toe.game.iti.client.OnlineGameController;
+import tic.tac.toe.game.iti.client.player.Player;
 
-/**
- *
- * @author HAZEM-LAB
- */
 public class ServerHandler {
-    public static DataInputStream massageIn; 
+    public static Stage stage;
+    public static DataInputStream massageIn;
     public static DataOutputStream massageOut;
     public static Socket socket;
-    public static String msg=null;
-    public static boolean isFinished=false;
-    
-    public static void setSocket(String ip) throws IOException{
-        ServerHandler.socket=new Socket(ip, 5005);
-        ServerHandler.massageIn=new DataInputStream(ServerHandler.socket.getInputStream());
-        ServerHandler.massageOut=new DataOutputStream(ServerHandler.socket.getOutputStream());
-        Thread listner=new Thread(new Runnable() {
+    public static String msg = null;
+    public static boolean isFinished = false;
+    public static boolean isLoggedIn = false;
+
+    public static void setSocket(String ip) throws IOException {
+        ServerHandler.socket = new Socket(ip, 5005);
+        ServerHandler.massageIn = new DataInputStream(ServerHandler.socket.getInputStream());
+        ServerHandler.massageOut = new DataOutputStream(ServerHandler.socket.getOutputStream());
+        Thread listner;
+        listner = new Thread(new Runnable() {
             @Override
             public void run() {
-                while(!ServerHandler.isFinished){
+                while (!ServerHandler.isFinished) {
                     try {
-                        String responseMsg=massageIn.readUTF();
-                        JSONObject respone=(JSONObject) JSONValue.parse(responseMsg);
-                        if(respone.get("type").equals(MassageType.SERVER_CLOSE_MSG))
-                        {
+                        String responseMsg = massageIn.readUTF();
+                        JSONObject respone = (JSONObject) JSONValue.parse(responseMsg);
+                        if (respone.get("type").equals(MassageType.SERVER_CLOSE_MSG)) {
+
+                        } else if (respone.get("type").equals(MassageType.UPDATE_LIST_MSG) && isLoggedIn) {
+                            JSONArray array = (JSONArray) respone.get("data");
+                            ArrayList<Player> dtoPlayers = new ArrayList<Player>();
+                            for (int i = 0; i < array.size(); i++) {
+                                JSONObject obj = (JSONObject) JSONValue.parse((String) array.get(i));
+                                dtoPlayers.add(new Player((String) obj.get("username"), "", "", ((Long) obj.get("score")).intValue()));
+                            }
+     
+                            Platform.runLater(new Runnable() {
+                                @Override
+                                public void run() {
+                                    HomePageController.currentPlayers=dtoPlayers;
+                                    HomePageController.updateAvailablePlayers(dtoPlayers);
+                                }
+                            });
+                        } else if (respone.get("type").equals(MassageType.CHALLENGE_REQUEST_MSG)) {
+                            String challengerUsername = (String) respone.get("data");
+
+                            Platform.runLater(() -> {
+                                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                                alert.setTitle("Challenge Request");
+                                alert.setHeaderText(challengerUsername + " has challenged you to a game!");
+                                alert.setContentText("Do you want to accept the challenge?");
+
+                                ButtonType acceptButton = new ButtonType("Accept");
+                                ButtonType rejectButton = new ButtonType("Reject");
+
+                                alert.getButtonTypes().setAll(acceptButton, rejectButton);
+
+                                alert.showAndWait().ifPresent(response -> {
+                                    JSONObject reply = new JSONObject();
+                                    if (response == acceptButton) {
+                                        reply.put("type", MassageType.CHALLENGE_ACCEPT_MSG);
+                                        reply.put("data", challengerUsername);
+                                    } else {
+                                        reply.put("type", MassageType.CHALLENGE_REJECT_MSG);
+                                        reply.put("data", challengerUsername);
+                                    }
+                                    try {
+                                        ServerHandler.massageOut.writeUTF(reply.toJSONString());
+                                    } catch (IOException e) {
+                                        e.printStackTrace();
+                                    }
+                                });
+                            });
+                        } 
+                        else if (respone.get("type").equals(MassageType.CHALLENGE_START_MSG)) {
+                            JSONObject gameData = (JSONObject) JSONValue.parse((String) respone.get("data"));
+                            String opponentUsername;
+                            if(!(boolean) gameData.get("isStarted")){
+                                opponentUsername = (String) gameData.get("player1");
+                                Platform.runLater(() -> {
+                                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                                    alert.setTitle("Challenge Accepted");
+                                    alert.setHeaderText("Your challenge has been accepted!");
+                                    alert.setContentText(opponentUsername + " is ready to play.");
+
+                                    alert.showAndWait();
+                                   
+                                });
+                            }
+                            Platform.runLater(() -> {
+                             OnlineGameController.navigateToGame(responseMsg);
+                            });
+
                             
                         }
-                        else if(respone.get("type").equals(MassageType.UPDATE_LIST_MSG))
-                        {
-                            
+                        else if (respone.get("type").equals(MassageType.UPDATE_LIST_MSG)) {
                         }
-                        else if(respone.get("type").equals(MassageType.CHALLENGE_ACCESSEPT_MSG))
+                        else if(respone.get("type").equals(MassageType.CHALLENGE_ACCEPT_MSG))
                         {
                             
                         }
                         else
-                            ServerHandler.msg=responseMsg;
+                            ServerHandler.msg = responseMsg;
                     } catch (IOException ex) {
+                        ServerHandler.isFinished = true;
+                        ServerHandler.massageIn=null;
+                        ServerHandler.massageOut=null;
+                        ServerHandler.socket = null;
                         Logger.getLogger(ServerHandler.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
             }
-        });
+        }
+        );
+        listner.start();
+    }
+
+    public static void closeSocket() throws IOException {
+        JSONObject object = new JSONObject();
+        object.put("type", MassageType.CLIENT_CLOSE_MSG);
+        ServerHandler.massageOut.writeUTF(object.toJSONString());
+        ServerHandler.isFinished = true;
+        ServerHandler.massageIn.close();
+        ServerHandler.massageOut.close();
+        ServerHandler.socket.close();
+        ServerHandler.massageIn=null;
+        ServerHandler.massageOut=null;
+        ServerHandler.socket = null;
+        
     }
 }

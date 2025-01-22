@@ -1,6 +1,7 @@
 package tic.tac.toe.game.iti.client.Registeration;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.event.ActionEvent;
@@ -15,6 +16,7 @@ import javafx.scene.control.Hyperlink;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
 import tic.tac.toe.game.iti.client.HomePageController;
@@ -55,6 +57,7 @@ public class LoginPageController {
             showAlert(Alert.AlertType.WARNING, "Invalid", "Your username must be at least 3 characters");
         } else if (_password.length() < 6) {
             showAlert(Alert.AlertType.WARNING, "Invalid", "Your password must be at least 6 characters");
+            
         } else {
             Player p = new Player(_username, _password);
             JSONObject player = new JSONObject();
@@ -73,9 +76,10 @@ public class LoginPageController {
                 System.out.print("");
             }
             JSONObject data = (JSONObject) JSONValue.parse(ServerHandler.msg);
-            if (data.get("type").equals(MassageType.LOGINSUCCESS_MSG)) {
+            if (data.get("type").equals(MassageType.LOGIN_SUCCESS_MSG)) {
+                ServerHandler.isLoggedIn = true;
                 navigateToHome(data.get("data"));
-            } else if (data.get("type").equals(MassageType.LOGINFAIL_MSG)) {
+            } else if (data.get("type").equals(MassageType.LOGIN_FAIL_MSG)) {
                 showAlert(Alert.AlertType.WARNING, "unsuccessful", "Log in failed, try again");
             }
             ServerHandler.msg = null;
@@ -84,15 +88,27 @@ public class LoginPageController {
 
     private void navigateToHome(Object data) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("HomePage.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/tic/tac/toe/game/iti/client/HomePage.fxml"));
             Parent root = loader.load();
 
             HomePageController controller = loader.getController();
             controller.setStage(stage);
+            
+            JSONArray array = (JSONArray) data;
+            
+            ArrayList<Player> dtoPlayers = new ArrayList<Player>();
+            for(int i = 0; i < array.size(); i++){
+                JSONObject obj = (JSONObject) JSONValue.parse((String)array.get(i));
+                dtoPlayers.add(new Player((String)obj.get("username"), "", "", ((Long)obj.get("score")).intValue()));
+                
+            }
+            
+            HomePageController.updateAvailablePlayers(dtoPlayers);
 
             stage.setScene(new Scene(root));
             stage.setTitle("Home Page");
         } catch (IOException e) {
+            e.printStackTrace();
             Alert alert = new Alert(Alert.AlertType.ERROR, "An error occured, please try again", ButtonType.OK);
             alert.showAndWait();
         }
