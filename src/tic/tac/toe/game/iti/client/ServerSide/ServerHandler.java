@@ -1,4 +1,5 @@
 package tic.tac.toe.game.iti.client.ServerSide;
+
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
 import java.io.DataInputStream;
