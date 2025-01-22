@@ -49,6 +49,7 @@ public class RecordController {
     private Timer replayTimer;
     private JSONObject gameRecord;
     private int currentMoveIndex = 0;
+    private Scene prevScene;
 
     private Button[][] board;
 
@@ -64,6 +65,7 @@ public class RecordController {
 
     public void setStage(Stage stage) {
         this.stage = stage;
+        prevScene=stage.getScene();
     }
 
     public void loadGameRecord(File jsonFile) {
@@ -129,17 +131,6 @@ public class RecordController {
 
     @FXML
     private void handleBack(ActionEvent event) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("OnlineRecords.fxml"));
-            Parent root = loader.load();
-
-            OnlineRecordsController controller = loader.getController();
-            controller.setStage(stage);
-
-            stage.setScene(new Scene(root));
-            stage.setTitle("Online Records");
-        } catch (IOException ex) {
-            Logger.getLogger(HomePageController.class.getName()).log(Level.SEVERE, null, ex);
-        }
+            stage.setScene(prevScene); 
     }
 }
