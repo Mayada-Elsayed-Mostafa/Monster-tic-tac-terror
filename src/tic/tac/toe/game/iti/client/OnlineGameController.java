@@ -31,6 +31,9 @@ public class OnlineGameController {
 
     Stage stage;
     private int myScore, opponentScore = 0;
+    private String myName, opponentName = "";
+    public static int player1Score, player2Score = 0;
+    public static String winnerName, loserName = "";
     private Label myLabel, opponentLabel;
     private int moveCount = 0;
     private String[][] board = new String[3][3];
@@ -65,6 +68,7 @@ public class OnlineGameController {
         cells = new Button[]{cell_1_btn, cell_2_btn, cell_3_btn, cell_4_btn, cell_5_btn, cell_6_btn, cell_7_btn, cell_8_btn, cell_9_btn};
         startGame(msg);
     }
+
     public void setStage(Stage stage) {
         this.stage = stage;
         cells = new Button[]{cell_1_btn, cell_2_btn, cell_3_btn, cell_4_btn, cell_5_btn, cell_6_btn, cell_7_btn, cell_8_btn, cell_9_btn};
@@ -112,12 +116,21 @@ public class OnlineGameController {
                 }
                 if (checkWinner()) {
                     myScore += 10;
+                    if (isX) {
+                        player1Score += 10;
+                    } else {
+                        player2Score += 10;
+                    }
+                    winnerName = myName;
+                    loserName = opponentName;
                     myLabel.setText(myScore + "");
-                    myScene=stage.getScene();
+                    myScene = stage.getScene();
                     displayer.displayVideo("/Assets/winner.mp4");
-                    
+
                 } else if (moveCount == 9) {
-                    myScene=stage.getScene();
+                    winnerName = myName;
+                    loserName = opponentName;
+                    myScene = stage.getScene();
                     displayer.displayVideo("/Assets/tie.mp4");
                     //tie video
                     JSONObject betweenGameMsg = new JSONObject();
@@ -191,10 +204,10 @@ public class OnlineGameController {
 
     public void resetGame() {
         returnToGame();
-        if(doIStart){
+        if (doIStart) {
             doIStart = false;
             isMyTurn = false;
-        }else{
+        } else {
             doIStart = true;
             isMyTurn = true;
         }
@@ -217,9 +230,9 @@ public class OnlineGameController {
         cell_8_btn.setDisable(false);
         cell_9_btn.setDisable(false);
         moveCount = 0;
-       
+
     }
-    
+
     public void restartResponse() {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Play again?");
@@ -260,9 +273,13 @@ public class OnlineGameController {
             opponentChar = "X";
             myLabel = score2Number;
             opponentLabel = score1Number;
+            myName = player2Name;
+            opponentName = player1Name;
         } else {
             myLabel = score1Number;
             opponentLabel = score2Number;
+            myName = player1Name;
+            opponentName = player2Name;
         }
         Thread listener = new Thread(() -> {
             while (!isGameFinished && ServerHandler.socket != null) {
@@ -290,12 +307,21 @@ public class OnlineGameController {
 
                         if (checkWinner()) {
                             opponentScore += 10;
+                            if (!isX) {
+                                player1Score += 10;
+                            } else {
+                                player2Score += 10;
+                            }
+                            winnerName = opponentName;
+                            loserName = myName;
                             opponentLabel.setText(opponentScore + "");
-                            myScene=stage.getScene();
+                            myScene = stage.getScene();
                             displayer.displayVideo("/Assets/loser.mp4");
-                            
+
                         } else if (moveCount == 9) {
-                            myScene=stage.getScene();
+                            winnerName = opponentName;
+                            loserName = myName;
+                            myScene = stage.getScene();
                             displayer.displayVideo("/Assets/tie.mp4");
                         }
                     });
@@ -304,8 +330,11 @@ public class OnlineGameController {
 
                     Platform.runLater(() -> {
                         myScore += 10;
+                        player1Score += 10;
+                        winnerName = myName;
+                        loserName = opponentName;
                         myLabel.setText(myScore + "");
-                        myScene=stage.getScene();
+                        myScene = stage.getScene();
                         displayer.displayVideo("/Assets/winner.mp4");
                         Alert check = new Alert(Alert.AlertType.INFORMATION, "Your opponent has withdrawn");
                         check.showAndWait();
@@ -319,7 +348,7 @@ public class OnlineGameController {
                     ServerHandler.msg = null;
                 } else if (msgType.equals(MassageType.CONTINUE_GAME_MSG)) {
                     Platform.runLater(() -> {
-                        
+
                         resetGame();
                     });
                     ServerHandler.msg = null;
@@ -329,7 +358,7 @@ public class OnlineGameController {
         });
         listener.start();
     }
-    
+
     public static void returnToGame() {
         try {
             FXMLLoader loader = new FXMLLoader(TicTacToeGameITIClient.class.getClass().getResource("/tic/tac/toe/game/iti/client/OnlineGame.fxml"));

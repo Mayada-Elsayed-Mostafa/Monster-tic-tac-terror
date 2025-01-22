@@ -6,10 +6,13 @@
 package tic.tac.toe.game.iti.client;
 
 import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -26,7 +29,7 @@ import tic.tac.toe.game.iti.client.ServerSide.ServerHandler;
  *
  * @author SHEREEN
  */
-public class OptionsDisplayController extends Controller {
+public class OptionsDisplayController extends Controller implements Initializable {
     
     Stage stage;
 
@@ -61,7 +64,7 @@ public class OptionsDisplayController extends Controller {
         restartRequest();
     }
     
-    public void restartRequest() {   //sends restart request to the server
+    public void restartRequest() {
         JSONObject restart = new JSONObject();
         restart.put("type", MassageType.RESTART_REQUEST_MSG);
         try {
@@ -92,6 +95,15 @@ public class OptionsDisplayController extends Controller {
             Alert alert = new Alert(Alert.AlertType.ERROR, "An error occurred, please try again", ButtonType.OK);
             alert.showAndWait();
         }
+    }
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        winner.setText(OnlineGameController.winnerName+"");
+        loser.setText(OnlineGameController.loserName+"");
+        winnerScore.setText(OnlineGameController.player1Score+"");
+        loserScore.setText(OnlineGameController.player2Score+"");
+        header.setText(OnlineGameController.winnerName+" VS "+OnlineGameController.loserName);
     }
     
 }
