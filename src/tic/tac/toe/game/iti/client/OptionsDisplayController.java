@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package tic.tac.toe.game.iti.client;
 
 import java.io.IOException;
@@ -10,6 +5,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -24,13 +20,8 @@ import org.json.simple.JSONObject;
 import tic.tac.toe.game.iti.client.ServerSide.MassageType;
 import tic.tac.toe.game.iti.client.ServerSide.ServerHandler;
 
-/**
- * FXML Controller class
- *
- * @author SHEREEN
- */
 public class OptionsDisplayController extends Controller implements Initializable {
-    
+
     Stage stage;
 
     @FXML
@@ -51,19 +42,20 @@ public class OptionsDisplayController extends Controller implements Initializabl
     private Button restartGameBtn;
     @FXML
     private Button endGameBtn;
-    
 
     public void setStage(Stage stage, String msg) {
         this.stage = stage;
     }
 
     @Override
-    public void askReplay() { }
-    
-    public void restartHandler(){
+    public void askReplay() {
+    }
+
+    @FXML
+    public void restartHandler() {
         restartRequest();
     }
-    
+
     public void restartRequest() {
         JSONObject restart = new JSONObject();
         restart.put("type", MassageType.RESTART_REQUEST_MSG);
@@ -73,7 +65,7 @@ public class OptionsDisplayController extends Controller implements Initializabl
             Logger.getLogger(OnlineGameController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     public void displayVideo(String videoUrl) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("video.fxml"));
@@ -83,7 +75,7 @@ public class OptionsDisplayController extends Controller implements Initializabl
 
             VideoController controller = loader.getController();
             controller.setStage(ServerHandler.stage);
-            
+
             controller.setController(this);
             controller.setVideoUrl(videoUrl);
 
@@ -99,11 +91,39 @@ public class OptionsDisplayController extends Controller implements Initializabl
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        winner.setText(OnlineGameController.winnerName+"");
-        loser.setText(OnlineGameController.loserName+"");
-        winnerScore.setText(OnlineGameController.player1Score+"");
-        loserScore.setText(OnlineGameController.player2Score+"");
-        header.setText(OnlineGameController.winnerName+" VS "+OnlineGameController.loserName);
+        winner.setText(OnlineGameController.winnerName + "");
+        loser.setText(OnlineGameController.loserName + "");
+        winnerScore.setText(OnlineGameController.player1Score + "");
+        loserScore.setText(OnlineGameController.player2Score + "");
+        header.setText(OnlineGameController.winnerName + " VS " + OnlineGameController.loserName);
     }
-    
+
+    @FXML
+    private void endGameFunction(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("HomePage.fxml"));
+            Parent root = loader.load();
+
+            HomePageController controller = loader.getController();
+            controller.setCurrentStage(ServerHandler.stage);
+
+            ServerHandler.stage.setScene(new Scene(root));
+            ServerHandler.stage.setTitle("Home Page");
+        } catch (IOException ex) {
+            Logger.getLogger(OptionsDisplayController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        endGameRequest();
+
+    }
+
+    public void endGameRequest() {
+        JSONObject end = new JSONObject();
+        end.put("type", MassageType.END_GAME_MSG);
+        try {
+            ServerHandler.massageOut.writeUTF(end.toJSONString());
+        } catch (IOException ex) {
+            Logger.getLogger(OnlineGameController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
 }
