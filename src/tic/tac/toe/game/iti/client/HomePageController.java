@@ -1,8 +1,5 @@
 package tic.tac.toe.game.iti.client;
 
-import java.util.List;
-import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
 import java.io.IOException;
 import java.util.List;
 import java.util.logging.Level;
@@ -22,7 +19,7 @@ import tic.tac.toe.game.iti.client.ServerSide.MassageType;
 import tic.tac.toe.game.iti.client.ServerSide.ServerHandler;
 import tic.tac.toe.game.iti.client.player.Player;
 
-public class HomePageController {
+public class HomePageController extends Controller{
 
     private Stage stage;
 
@@ -38,12 +35,22 @@ public class HomePageController {
     private static VBox sChallenges;
     @FXML
     private Button recordsBtn;
+    
+    public static List<Player> currentPlayers;
 
     public void setStage(Stage stage) {
         this.stage = stage;
         sUserNames = usernames;
         sScores = scores;
         sChallenges = challenges;
+    }
+    
+    public void setCurrentStage(Stage stage) {
+        this.stage = stage;
+        sUserNames = usernames;
+        sScores = scores;
+        sChallenges = challenges;
+        updateAvailablePlayers(currentPlayers);
     }
 
     @FXML
@@ -85,7 +92,7 @@ public class HomePageController {
             challengeBtn.setOnAction(event -> {
                 sendRequestHandler(player);
             });
-            sChallenges.getChildren().add(challengeBtn);
+            sChallenges.getChildren().add(challengeBtn);      
         }
     }
 
@@ -115,6 +122,10 @@ public class HomePageController {
         } catch (IOException ex) {
             Logger.getLogger(HomePageController.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    @Override
+    public void askReplay() {
     }
 
 }
