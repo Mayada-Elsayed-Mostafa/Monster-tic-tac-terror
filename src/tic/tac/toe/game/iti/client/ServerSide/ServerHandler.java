@@ -1,4 +1,5 @@
 package tic.tac.toe.game.iti.client.ServerSide;
+
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
 import java.io.DataInputStream;
@@ -51,9 +52,12 @@ public class ServerHandler {
                                 JSONObject obj = (JSONObject) JSONValue.parse((String) array.get(i));
                                 dtoPlayers.add(new Player((String) obj.get("username"), "", "", ((Long) obj.get("score")).intValue()));
                             }
+                            HomePageController.currentPlayers=dtoPlayers;
                             Platform.runLater(new Runnable() {
                                 @Override
                                 public void run() {
+                                    
+                                    
                                     HomePageController.updateAvailablePlayers(dtoPlayers);
                                 }
                             });
@@ -74,7 +78,7 @@ public class ServerHandler {
                                 alert.showAndWait().ifPresent(response -> {
                                     JSONObject reply = new JSONObject();
                                     if (response == acceptButton) {
-                                        reply.put("type", MassageType.CHALLENGE_ACCESSEPT_MSG);
+                                        reply.put("type", MassageType.CHALLENGE_ACCEPT_MSG);
                                         reply.put("data", challengerUsername);
                                     } else {
                                         reply.put("type", MassageType.CHALLENGE_REJECT_MSG);
@@ -87,29 +91,48 @@ public class ServerHandler {
                                     }
                                 });
                             });
-                        } else if (respone.get("type").equals(MassageType.CHALLENGE_START_MSG)) {
-                            String opponentUsername = (String) respone.get("data");
+                        } 
+                        else if (respone.get("type").equals(MassageType.CHALLENGE_START_MSG)) {
+                            JSONObject gameData = (JSONObject) JSONValue.parse((String) respone.get("data"));
+                            String opponentUsername;
+                            if(!(boolean) gameData.get("isStarted")){
+                                opponentUsername = (String) gameData.get("player1");
+                                Platform.runLater(() -> {
+                                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                                    alert.setTitle("Challenge Accepted");
+                                    alert.setHeaderText("Your challenge has been accepted!");
+                                    alert.setContentText(opponentUsername + " is ready to play.");
 
+                                    alert.showAndWait();
+                                   
+                                });
+                            }
                             Platform.runLater(() -> {
-                                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                                alert.setTitle("Challenge Accepted");
-                                alert.setHeaderText("Your challenge has been accepted!");
-                                alert.setContentText(opponentUsername + " is ready to play.");
-
-                                alert.showAndWait();
-                                OnlineGameController.navigateToGame(responseMsg);
-
+                             OnlineGameController.navigateToGame(responseMsg);
                             });
-                        } else if (respone.get("type").equals(MassageType.UPDATE_LIST_MSG)) {
 
+                            
                         }
-                        else if(respone.get("type").equals(MassageType.CHALLENGE_ACCESSEPT_MSG))
+                        else if (respone.get("type").equals(MassageType.UPDATE_LIST_MSG)) {
+                            JSONArray array = (JSONArray) respone.get("data");
+                            ArrayList<Player> dtoPlayers = new ArrayList<Player>();
+                            for (int i = 0; i < array.size(); i++) {
+                                JSONObject obj = (JSONObject) JSONValue.parse((String) array.get(i));
+                                dtoPlayers.add(new Player((String) obj.get("username"), "", "", ((Long) obj.get("score")).intValue()));
+                            }
+                            HomePageController.currentPlayers=dtoPlayers;
+                        }
+                        else if(respone.get("type").equals(MassageType.CHALLENGE_ACCEPT_MSG))
                         {
                             
                         }
                         else
                             ServerHandler.msg = responseMsg;
                     } catch (IOException ex) {
+                        ServerHandler.isFinished = true;
+                        ServerHandler.massageIn=null;
+                        ServerHandler.massageOut=null;
+                        ServerHandler.socket = null;
                         Logger.getLogger(ServerHandler.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
@@ -127,6 +150,9 @@ public class ServerHandler {
         ServerHandler.massageIn.close();
         ServerHandler.massageOut.close();
         ServerHandler.socket.close();
+        ServerHandler.massageIn=null;
+        ServerHandler.massageOut=null;
         ServerHandler.socket = null;
+        
     }
 }

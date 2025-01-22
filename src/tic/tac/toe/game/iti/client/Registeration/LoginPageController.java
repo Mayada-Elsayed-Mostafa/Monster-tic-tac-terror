@@ -1,12 +1,9 @@
 package tic.tac.toe.game.iti.client.Registeration;
 
 import java.io.IOException;
-import java.io.Reader;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.stream.Collectors;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -79,11 +76,10 @@ public class LoginPageController {
                 System.out.print("");
             }
             JSONObject data = (JSONObject) JSONValue.parse(ServerHandler.msg);
-            if (data.get("type").equals(MassageType.LOGINSUCCESS_MSG)) {
-                showAlert(Alert.AlertType.CONFIRMATION, "Successful", "you are logged in successfully");
+            if (data.get("type").equals(MassageType.LOGIN_SUCCESS_MSG)) {
                 ServerHandler.isLoggedIn = true;
                 navigateToHome(data.get("data"));
-            } else if (data.get("type").equals(MassageType.LOGINFAIL_MSG)) {
+            } else if (data.get("type").equals(MassageType.LOGIN_FAIL_MSG)) {
                 showAlert(Alert.AlertType.WARNING, "unsuccessful", "Log in failed, try again");
             }
             ServerHandler.msg = null;
