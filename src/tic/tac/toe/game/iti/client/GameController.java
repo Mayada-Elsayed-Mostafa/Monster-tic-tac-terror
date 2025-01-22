@@ -18,7 +18,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextInputDialog;
 import javafx.stage.Stage;
 
-public class GameController {
+public class GameController extends Controller{
 
     Stage stage;
     private int score1, score2 = 0;
@@ -227,7 +227,7 @@ public class GameController {
             VideoController controller = loader.getController();
             controller.setStage(stage);
             controller.setPreviousScene(stage.getScene());
-            controller.setGameController(this);
+            controller.setController(this);
             controller.setVideoUrl(videoUrl);
 
             stage.setScene(new Scene(root));
