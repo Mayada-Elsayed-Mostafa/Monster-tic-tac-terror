@@ -36,7 +36,7 @@
       <ButtonBar layoutX="113.0" layoutY="311.0" prefHeight="40.0" prefWidth="323.0">
         <buttons>
           <Button fx:id="restartGameBtn" minWidth="73.0" mnemonicParsing="false" onAction="#restartHandler" prefHeight="31.0" prefWidth="150.0" text="Play again" />
-            <Button fx:id="endGameBtn" mnemonicParsing="false" prefHeight="31.0" text="End game" textAlignment="CENTER" />
+            <Button fx:id="endGameBtn" mnemonicParsing="false" onAction="#endGameFunction" prefHeight="31.0" text="End game" textAlignment="CENTER" />
         </buttons>
       </ButtonBar>
    </children>

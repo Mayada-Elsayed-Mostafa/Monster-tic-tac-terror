@@ -56,8 +56,6 @@ public class ServerHandler {
                             Platform.runLater(new Runnable() {
                                 @Override
                                 public void run() {
-                                    
-                                    
                                     HomePageController.updateAvailablePlayers(dtoPlayers);
                                 }
                             });
@@ -104,7 +102,6 @@ public class ServerHandler {
                                     alert.setContentText(opponentUsername + " is ready to play.");
 
                                     alert.showAndWait();
-                                   
                                 });
                             }
                             Platform.runLater(() -> {
