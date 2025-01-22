@@ -52,11 +52,12 @@ public class ServerHandler {
                                 JSONObject obj = (JSONObject) JSONValue.parse((String) array.get(i));
                                 dtoPlayers.add(new Player((String) obj.get("username"), "", "", ((Long) obj.get("score")).intValue()));
                             }
-     
+                            HomePageController.currentPlayers=dtoPlayers;
                             Platform.runLater(new Runnable() {
                                 @Override
                                 public void run() {
-                                    HomePageController.currentPlayers=dtoPlayers;
+                                    
+                                    
                                     HomePageController.updateAvailablePlayers(dtoPlayers);
                                 }
                             });
@@ -113,6 +114,13 @@ public class ServerHandler {
                             
                         }
                         else if (respone.get("type").equals(MassageType.UPDATE_LIST_MSG)) {
+                            JSONArray array = (JSONArray) respone.get("data");
+                            ArrayList<Player> dtoPlayers = new ArrayList<Player>();
+                            for (int i = 0; i < array.size(); i++) {
+                                JSONObject obj = (JSONObject) JSONValue.parse((String) array.get(i));
+                                dtoPlayers.add(new Player((String) obj.get("username"), "", "", ((Long) obj.get("score")).intValue()));
+                            }
+                            HomePageController.currentPlayers=dtoPlayers;
                         }
                         else if(respone.get("type").equals(MassageType.CHALLENGE_ACCEPT_MSG))
                         {
