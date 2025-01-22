@@ -1,16 +1,13 @@
 package tic.tac.toe.game.iti.client;
 
-import java.net.URL;
-import java.util.ResourceBundle;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
 import javafx.stage.Stage;
 
-public class VideoController implements Initializable {
+public class VideoController {
 
     private Stage stage;
     private Scene previousScene;
@@ -44,14 +41,9 @@ public class VideoController implements Initializable {
     private MediaView video;
     private MediaPlayer mediaPlayer;
 
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
-
-    }
-
     private void initializeMediaPlayer() {
         if (videoUrl != null) {
-            mediaPlayer = new MediaPlayer(new Media(this.getClass().getResource(videoUrl).toExternalForm()));
+            mediaPlayer = new MediaPlayer(new Media(getClass().getResource(videoUrl).toExternalForm())); //this.?????????????????????????????
             mediaPlayer.setAutoPlay(true);
             video.setMediaPlayer(mediaPlayer);
 
