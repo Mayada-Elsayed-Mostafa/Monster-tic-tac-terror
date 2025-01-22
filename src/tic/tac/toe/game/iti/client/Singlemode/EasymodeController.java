@@ -138,8 +138,6 @@ public class EasymodeController extends Controller implements Initializable {
                 gameStatus.setText(currentPlayer + " Wins!");
                 if(currentPlayer == 'X'){
                     displayVideo("/Assets/winner.mp4");
-                }else{
-                    displayVideo("/Assets/loser.mp4");
                 }
                 
                 gameOver = true;
@@ -200,10 +198,8 @@ public class EasymodeController extends Controller implements Initializable {
         }
         makeMove(move[0], move[1], 'O');
         if (checkWinner('O')) {
+            displayVideo("/Assets/loser.mp4");
             gameStatus.setText("Computer Wins!");
-            gameOver = true;
-        } else if (isBoardFull()) {
-            gameStatus.setText("It's a Draw!");
             gameOver = true;
         } else {
             currentPlayer = 'X';
@@ -262,10 +258,9 @@ public class EasymodeController extends Controller implements Initializable {
         }
         return bestScore;
     }
-    
     private void displayVideo(String videoUrl) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("video.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/tic/tac/toe/game/iti/client/video.fxml"));
             Parent root = loader.load();
 
             VideoController controller = loader.getController();
@@ -300,14 +295,14 @@ public class EasymodeController extends Controller implements Initializable {
             if (fw != null) {
                 fw.close();
             }
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/tic/tac/toe/game/iti/client/Welcome.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/tic/tac/toe/game/iti/client/Singlemode/Singlemode.fxml"));
             Parent root = loader.load();
 
-            WelcomeController controller = loader.getController();
+            SinglemodeController controller = loader.getController();
             controller.setStage(stage);
 
             stage.setScene(new Scene(root));
-            stage.setTitle("Welcome Page");
+            stage.setTitle("Single mode Page");
         } catch (IOException e) {
             e.printStackTrace();
         }

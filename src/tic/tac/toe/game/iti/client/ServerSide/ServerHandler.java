@@ -64,7 +64,6 @@ public class ServerHandler {
                             Platform.runLater(new Runnable() {
                                 @Override
                                 public void run() {
-
                                     HomePageController.updateAvailablePlayers(dtoPlayers);
                                 }
                             });

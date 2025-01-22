@@ -109,6 +109,19 @@ public class OnlineGameController {
                     Logger.getLogger(OnlineGameController.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 if (checkWinner()) {
+                    winnerName = myName;
+                    loserName = opponentName;
+                    JSONObject betweenGameMsg = new JSONObject();
+                    betweenGameMsg.put("type", MassageType.IN_BETWEEN_GAME_MSG);
+                    JSONObject result = new JSONObject();
+                    result.put("result", "win");
+                    result.put("winner", myName);
+                    betweenGameMsg.put("data", result.toJSONString());
+                    try {
+                        ServerHandler.massageOut.writeUTF(betweenGameMsg.toJSONString());
+                    } catch (IOException ex) {
+                        Logger.getLogger(OnlineGameController.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                     myScore += 10;
                     if (isX) {
                         player1Score += 10;
@@ -122,10 +135,6 @@ public class OnlineGameController {
                     displayer.displayVideo("/Assets/winner.mp4");
 
                 } else if (moveCount == 9) {
-                    winnerName = myName;
-                    loserName = opponentName;
-                    myScene = stage.getScene();
-                    displayer.displayVideo("/Assets/tie.mp4");
                     JSONObject betweenGameMsg = new JSONObject();
                     betweenGameMsg.put("type", MassageType.IN_BETWEEN_GAME_MSG);
                     JSONObject result = new JSONObject();
@@ -136,7 +145,9 @@ public class OnlineGameController {
                     } catch (IOException ex) {
                         Logger.getLogger(OnlineGameController.class.getName()).log(Level.SEVERE, null, ex);
                     }
-                    endGame();
+                    myScene = stage.getScene();
+                    displayer.displayVideo("/Assets/tie.mp4");
+                    
                 }
             }
         }
@@ -342,6 +353,44 @@ public class OnlineGameController {
                         restartResponse();
                     });
                     ServerHandler.msg = null;
+                } else if (msgType.equals(MassageType.END_GAME_MSG)) {
+                    Platform.runLater(() -> {
+                        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                        alert.setTitle("End Game");
+                        alert.setContentText("Game ended...");
+
+                        //ButtonType okButton = new ButtonType("OK");
+
+                        //alert.getButtonTypes().add(okButton);
+
+                        alert.showAndWait().ifPresent(response -> {
+                            JSONObject reply = new JSONObject();
+                            if (response == ButtonType.OK) {
+                                reply.put("type", MassageType.END_GAME_MSG);
+                            }
+                            try {
+                                ServerHandler.massageOut.writeUTF(reply.toJSONString());
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        });
+
+                        try {
+                            //Return to home page
+                            FXMLLoader loader = new FXMLLoader(getClass().getResource("HomePage.fxml"));
+                            Parent root = loader.load();
+
+                            HomePageController controller = loader.getController();
+                            controller.setCurrentStage(stage);
+
+                            stage.setScene(new Scene(root));
+                            stage.setTitle("Home Page");
+                        } catch (IOException ex) {
+                            Logger.getLogger(OnlineGameController.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+
+                    });
+                    ServerHandler.msg = null;
                 } else if (msgType.equals(MassageType.CONTINUE_GAME_MSG)) {
                     Platform.runLater(() -> {
                         resetGame();
@@ -391,5 +440,6 @@ public class OnlineGameController {
     private void endGame() {
         // Update the scores for each player in the DB and dashboard
         // Update the scores for each player in the dashboard
+
     }
 }
