@@ -1,7 +1,6 @@
 package tic.tac.toe.game.iti.client;
 
-import java.io.File;
-import java.io.FileWriter;
+
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -12,20 +11,17 @@ import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextInputDialog;
 import javafx.stage.Stage;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
 import tic.tac.toe.game.iti.client.ServerSide.MassageType;
 import tic.tac.toe.game.iti.client.ServerSide.ServerHandler;
-import static tic.tac.toe.game.iti.client.ServerSide.ServerHandler.stage;
 
 public class OnlineGameController extends Controller {
 
@@ -308,6 +304,7 @@ public class OnlineGameController extends Controller {
                         myScore += 10;
                         myLabel.setText(myScore + "");
                         displayVideoWithdraw("/Assets/winner.mp4");
+                        displayVideo("/Assets/winner.mp4");
                         Alert check = new Alert(Alert.AlertType.INFORMATION, "Your opponent has withdrawn");
                         check.showAndWait();
                         endGame();  //no server interaction
@@ -351,6 +348,7 @@ public class OnlineGameController extends Controller {
             alert.showAndWait();
         }
     }
+
     
     private void displayVideo(String videoUrl) {
         try {

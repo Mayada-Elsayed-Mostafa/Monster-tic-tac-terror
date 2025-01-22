@@ -37,7 +37,7 @@ public class HomePageController extends Controller{
     private Button recordsBtn;
     
     public static List<Player> currentPlayers;
-    
+
     public void setStage(Stage stage) {
         this.stage = stage;
         sUserNames = usernames;
@@ -52,7 +52,7 @@ public class HomePageController extends Controller{
         sChallenges = challenges;
         updateAvailablePlayers(currentPlayers);
     }
-    
+
     @FXML
     public void handleLogout(ActionEvent event) {
         JSONObject output = new JSONObject();
