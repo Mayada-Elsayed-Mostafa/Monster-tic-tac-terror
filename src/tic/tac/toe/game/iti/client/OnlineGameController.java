@@ -493,17 +493,7 @@ public class OnlineGameController {
 
                         //alert.getButtonTypes().add(okButton);
 
-                        alert.showAndWait().ifPresent(response -> {
-                            JSONObject reply = new JSONObject();
-                            if (response == ButtonType.OK) {
-                                reply.put("type", MassageType.END_GAME_MSG);
-                            }
-                            try {
-                                ServerHandler.massageOut.writeUTF(reply.toJSONString());
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
-                        });
+                        alert.showAndWait();
 
                         try {
                             //Return to home page
