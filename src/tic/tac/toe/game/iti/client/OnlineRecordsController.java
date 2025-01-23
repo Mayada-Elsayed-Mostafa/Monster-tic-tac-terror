@@ -6,6 +6,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -25,6 +26,8 @@ public class OnlineRecordsController  {
     private VBox filesList;
     @FXML
     private VBox buttonsList;
+    @FXML
+    private Button backBtn;
     public void setStage(Stage stage) {
         this.stage = stage;
         startController();
@@ -68,6 +71,22 @@ public class OnlineRecordsController  {
             stage.setTitle("Record");
         } catch (IOException ex) {
             Logger.getLogger(HomePageController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    @FXML
+    private void handleBackBtn(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/tic/tac/toe/game/iti/client/HomePage.fxml"));
+            Parent root = loader.load();
+
+            HomePageController controller = loader.getController();
+            controller.setCurrentStage(stage);
+
+            stage.setScene(new Scene(root));
+            stage.setTitle("Home Page");
+        } catch (IOException ex) {
+            Logger.getLogger(OnlineRecordsController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     

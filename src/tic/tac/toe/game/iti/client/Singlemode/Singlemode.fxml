@@ -21,5 +21,6 @@
                 <Font size="18.0" />
             </font>
         </Button>
+      <Button fx:id="backBtn" layoutX="62.0" layoutY="40.0" mnemonicParsing="false" onAction="#handleBackBtn" text="back" />
     </children>
 </Pane>
