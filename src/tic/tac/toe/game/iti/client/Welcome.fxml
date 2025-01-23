@@ -4,22 +4,27 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tic.tac.toe.game.iti.client.WelcomeController" >
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tic.tac.toe.game.iti.client.WelcomeController">
     <children>
-        <Button fx:id="onlineBtn" layoutX="148.0" layoutY="130.0" maxWidth="400.0" minWidth="-Infinity" mnemonicParsing="false" onAction="#goToOnlineGame" prefHeight="34.0" prefWidth="300.0" text="Online Mode" textAlignment="CENTER">
+        <Button fx:id="onlineBtn" layoutX="150.0" layoutY="106.0" maxWidth="400.0" minWidth="-Infinity" mnemonicParsing="false" onAction="#goToOnlineGame" prefHeight="34.0" prefWidth="300.0" text="Online Mode" textAlignment="CENTER">
             <font>
                 <Font size="18.0" />
             </font>
         </Button>
-        <Button fx:id="singleModeBtn" layoutX="148.0" layoutY="230.0" maxWidth="400.0" mnemonicParsing="false" onAction="#singleModeHandeler" prefHeight="34.0" prefWidth="300.0" text="Single Mode" textAlignment="CENTER">
+        <Button fx:id="singleModeBtn" layoutX="150.0" layoutY="206.0" maxWidth="400.0" mnemonicParsing="false" onAction="#singleModeHandeler" prefHeight="34.0" prefWidth="300.0" text="Single Mode" textAlignment="CENTER">
             <font>
                 <Font size="18.0" />
             </font>
         </Button>
-        <Button fx:id="multiModeBtn" layoutX="148.0" layoutY="181.0" maxWidth="400.0" mnemonicParsing="false" onAction="#multiModeBtnHandel" prefHeight="34.0" prefWidth="300.0" text="Multi Mode" textAlignment="CENTER">
+        <Button fx:id="multiModeBtn" layoutX="150.0" layoutY="157.0" maxWidth="400.0" mnemonicParsing="false" onAction="#multiModeBtnHandel" prefHeight="34.0" prefWidth="300.0" text="Multi Mode" textAlignment="CENTER">
             <font>
                 <Font size="18.0" />
             </font>
         </Button>
+      <Button fx:id="offlineRcdsBtn" layoutX="150.0" layoutY="256.0" maxWidth="400.0" mnemonicParsing="false" onAction="#offlineRcdsBtnHandle" prefHeight="34.0" prefWidth="300.0" text="Offilne Records" textAlignment="CENTER">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Button>
     </children>
 </Pane>
