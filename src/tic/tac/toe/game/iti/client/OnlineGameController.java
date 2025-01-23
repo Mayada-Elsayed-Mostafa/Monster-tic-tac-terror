@@ -59,11 +59,11 @@ public class OnlineGameController {
     private Label score2Number;
     @FXML
     private Label namesLabel;
-    
-    private boolean isRecording=false;
-    
+
+    private boolean isRecording = false;
+
     JSONObject fileObject;
-    
+
     JSONArray moves;
 
     public void setStage(Stage stage, String msg) {
@@ -98,22 +98,22 @@ public class OnlineGameController {
         if (clickedButton.getText().isEmpty()) {
             if (isMyTurn) {
                 int cellNumber = 0;
-                JSONArray cell=new JSONArray();
+                JSONArray cell = new JSONArray();
                 for (int i = 0; i < cells.length; i++) {
                     if (clickedButton == cells[i]) {
                         cellNumber = i;
-                        cell.add(i/3);
-                        cell.add(i%3);
+                        cell.add(i / 3);
+                        cell.add(i % 3);
                         break;
                     }
                 }
-                if(isX){
-                    JSONObject move=new JSONObject();
+                if (isX) {
+                    JSONObject move = new JSONObject();
                     move.put("player", player1Name);
                     move.put("position", cell);
                     moves.add(move);
-                }else{
-                    JSONObject move=new JSONObject();
+                } else {
+                    JSONObject move = new JSONObject();
                     move.put("player", player2Name);
                     move.put("position", cell);
                     moves.add(move);
@@ -132,24 +132,24 @@ public class OnlineGameController {
                     Logger.getLogger(OnlineGameController.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 if (checkWinner()) {
-                    if(isRecording){
+                    if (isRecording) {
                         fileObject.put("moves", moves);
-                        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd_HH-mm-ss");  
-                        LocalDateTime now = LocalDateTime.now();  
-                        String time=dtf.format(now);
+                        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd_HH-mm-ss");
+                        LocalDateTime now = LocalDateTime.now();
+                        String time = dtf.format(now);
 
-                        File record=new File("onlineRecords/"+player1Name+"vs"+player2Name+" "+time+".json");
-                        try {      
+                        File record = new File("onlineRecords/" + player1Name + "vs" + player2Name + " " + time + ".json");
+                        try {
                             if (record.createNewFile()) {
                                 FileWriter myWriter = new FileWriter(record);
                                 myWriter.write(fileObject.toJSONString());
                                 myWriter.close();
-                            }   
+                            }
 
-                        }catch(IOException e){
+                        } catch (IOException e) {
                             e.printStackTrace();
                         }
-                     }
+                    }
 
                     winnerName = myName;
                     loserName = opponentName;
@@ -177,24 +177,24 @@ public class OnlineGameController {
                     displayer.displayVideo("/Assets/winner.mp4");
 
                 } else if (moveCount == 9) {
-                    if(isRecording){
+                    if (isRecording) {
                         fileObject.put("moves", moves);
-                        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd_HH-mm-ss");  
-                        LocalDateTime now = LocalDateTime.now();  
-                        String time=dtf.format(now);
+                        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd_HH-mm-ss");
+                        LocalDateTime now = LocalDateTime.now();
+                        String time = dtf.format(now);
 
-                        File record=new File("onlineRecords/"+player1Name+"vs"+player2Name+" "+time+".json");
-                        try {      
+                        File record = new File("onlineRecords/" + player1Name + "vs" + player2Name + " " + time + ".json");
+                        try {
                             if (record.createNewFile()) {
                                 FileWriter myWriter = new FileWriter(record);
                                 myWriter.write(fileObject.toJSONString());
                                 myWriter.close();
-                            }   
+                            }
 
-                        }catch(IOException e){
+                        } catch (IOException e) {
                             e.printStackTrace();
                         }
-                     }
+                    }
                     //tie video
                     winnerName = myName;
                     loserName = opponentName;
@@ -212,7 +212,7 @@ public class OnlineGameController {
                     }
                     myScene = stage.getScene();
                     displayer.displayVideo("/Assets/tie.mp4");
-                    
+
                 }
             }
         }
@@ -250,8 +250,8 @@ public class OnlineGameController {
 
     @FXML
     private void recordHandeler(ActionEvent event) {
-        if(!isRecording){
-            isRecording=true;
+        if (!isRecording) {
+            isRecording = true;
             recordBtn.setDisable(true);
         }
     }
@@ -307,7 +307,7 @@ public class OnlineGameController {
         cell_8_btn.setDisable(false);
         cell_9_btn.setDisable(false);
         moveCount = 0;
-        isRecording=false;
+        isRecording = false;
     }
 
     public void restartResponse() {
@@ -326,6 +326,19 @@ public class OnlineGameController {
                 reply.put("type", MassageType.RESTART_ACCEPT_MSG);
             } else {
                 reply.put("type", MassageType.RESTART_REJECT_MSG);
+                try {
+                    //Return to home page
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("HomePage.fxml"));
+                    Parent root = loader.load();
+
+                    HomePageController controller = loader.getController();
+                    controller.setCurrentStage(stage);
+
+                    stage.setScene(new Scene(root));
+                    stage.setTitle("Home Page");
+                } catch (IOException ex) {
+                    Logger.getLogger(OnlineGameController.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
             try {
                 ServerHandler.massageOut.writeUTF(reply.toJSONString());
@@ -358,19 +371,19 @@ public class OnlineGameController {
             myName = player1Name;
             opponentName = player2Name;
         }
-        fileObject=new JSONObject();
-        moves=new JSONArray();
-        JSONObject player1=new JSONObject();
+        fileObject = new JSONObject();
+        moves = new JSONArray();
+        JSONObject player1 = new JSONObject();
         player1.put("name", player1Name);
         player1.put("symbol", "X");
-        JSONObject player2=new JSONObject();
+        JSONObject player2 = new JSONObject();
         player2.put("name", player2Name);
         player2.put("symbol", "O");
-        JSONObject players=new JSONObject();
+        JSONObject players = new JSONObject();
         players.put("player1", player1.toJSONString());
         players.put("player2", player2.toJSONString());
         fileObject.put("players", players.toJSONString());
-        
+
         Thread listener = new Thread(() -> {
             while (!isGameFinished && ServerHandler.socket != null) {
                 while (ServerHandler.msg == null) {
@@ -387,16 +400,16 @@ public class OnlineGameController {
                 String msgType = (String) data.get("type");
                 if (msgType.equals(MassageType.PLAY_MSG)) {
                     int cellNumber = ((Long) data.get("data")).intValue();
-                    JSONArray cell=new JSONArray();
-                    cell.add(cellNumber/3);
-                    cell.add(cellNumber%3);
-                    if(isX){
-                        JSONObject move=new JSONObject();
+                    JSONArray cell = new JSONArray();
+                    cell.add(cellNumber / 3);
+                    cell.add(cellNumber % 3);
+                    if (isX) {
+                        JSONObject move = new JSONObject();
                         move.put("player", player2Name);
                         move.put("position", cell);
                         moves.add(move);
-                    }else{
-                        JSONObject move=new JSONObject();
+                    } else {
+                        JSONObject move = new JSONObject();
                         move.put("player", player1Name);
                         move.put("position", cell);
                         moves.add(move);
@@ -409,24 +422,24 @@ public class OnlineGameController {
                         moveCount++;
                         if (checkWinner()) {
 
-                            if(isRecording){
+                            if (isRecording) {
                                 fileObject.put("moves", moves);
-                                DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd_HH-mm-ss");  
-                                LocalDateTime now = LocalDateTime.now();  
-                                String time=dtf.format(now);
+                                DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd_HH-mm-ss");
+                                LocalDateTime now = LocalDateTime.now();
+                                String time = dtf.format(now);
 
-                                File record=new File("onlineRecords/"+player1Name+"vs"+player2Name+" "+time+".json");
-                                try {      
+                                File record = new File("onlineRecords/" + player1Name + "vs" + player2Name + " " + time + ".json");
+                                try {
                                     if (record.createNewFile()) {
                                         FileWriter myWriter = new FileWriter(record);
                                         myWriter.write(fileObject.toJSONString());
                                         myWriter.close();
-                                    }   
+                                    }
 
-                                }catch(IOException e){
+                                } catch (IOException e) {
                                     e.printStackTrace();
                                 }
-                             }
+                            }
                             opponentScore += 10;
                             if (!isX) {
                                 player1Score += 10;
@@ -440,24 +453,24 @@ public class OnlineGameController {
                             displayer.displayVideo("/Assets/loser.mp4");
 
                         } else if (moveCount == 9) {
-                            if(isRecording){
+                            if (isRecording) {
                                 fileObject.put("moves", moves);
-                                DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd_HH-mm-ss");  
-                                LocalDateTime now = LocalDateTime.now();  
-                                String time=dtf.format(now);
+                                DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd_HH-mm-ss");
+                                LocalDateTime now = LocalDateTime.now();
+                                String time = dtf.format(now);
 
-                                File record=new File("onlineRecords/"+player1Name+"vs"+player2Name+" "+time+".json");
-                                try {      
+                                File record = new File("onlineRecords/" + player1Name + "vs" + player2Name + " " + time + ".json");
+                                try {
                                     if (record.createNewFile()) {
                                         FileWriter myWriter = new FileWriter(record);
                                         myWriter.write(fileObject.toJSONString());
                                         myWriter.close();
-                                    }   
+                                    }
 
-                                }catch(IOException e){
+                                } catch (IOException e) {
                                     e.printStackTrace();
                                 }
-                             }
+                            }
                             winnerName = opponentName;
                             loserName = myName;
                             myScene = stage.getScene();
@@ -466,7 +479,7 @@ public class OnlineGameController {
                     });
                     ServerHandler.msg = null;
                 } else if (msgType.equals(MassageType.WITHDRAW_GAME_MSG)) {
-
+                    ServerHandler.msg = null;
                     Platform.runLater(() -> {
                         myScore += 10;
                         player1Score += 10;
@@ -477,24 +490,23 @@ public class OnlineGameController {
                         Alert check = new Alert(Alert.AlertType.INFORMATION, "Your opponent has withdrawn");
                         check.showAndWait();
                     });
-                    ServerHandler.msg = null;
                 } else if (msgType.equals(MassageType.RESTART_REQUEST_MSG)) {
+                    ServerHandler.msg = null;
                     Platform.runLater(() -> {
                         restartResponse();
                     });
-                    ServerHandler.msg = null;
+                    
                 } else if (msgType.equals(MassageType.END_GAME_MSG)) {
+                    ServerHandler.msg = null;
                     Platform.runLater(() -> {
                         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
                         alert.setTitle("End Game");
                         alert.setContentText("Game ended...");
 
                         //ButtonType okButton = new ButtonType("OK");
-
                         //alert.getButtonTypes().add(okButton);
-
                         alert.showAndWait();
-
+                        
                         try {
                             //Return to home page
                             FXMLLoader loader = new FXMLLoader(getClass().getResource("HomePage.fxml"));
@@ -510,7 +522,7 @@ public class OnlineGameController {
                         }
 
                     });
-                    ServerHandler.msg = null;
+                    
                 } else if (msgType.equals(MassageType.CONTINUE_GAME_MSG)) {
                     Platform.runLater(() -> {
                         resetGame();

@@ -110,7 +110,6 @@ public class ServerHandler {
                                     alert.setContentText(opponentUsername + " is ready to play.");
 
                                     alert.showAndWait();
-
                                 });
                             }
                             Platform.runLater(() -> {
