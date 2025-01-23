@@ -220,9 +220,6 @@ public class OnlineGameController {
                     } catch (IOException ex) {
                         Logger.getLogger(OnlineGameController.class.getName()).log(Level.SEVERE, null, ex);
                     }
-                    myScene = stage.getScene();
-                    displayer.displayVideo("/Assets/tie.mp4");
-
                 }
             }
         }
