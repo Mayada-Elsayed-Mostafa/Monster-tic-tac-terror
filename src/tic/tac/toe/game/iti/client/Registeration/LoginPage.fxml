@@ -31,5 +31,6 @@
       </Button>
       <Label layoutX="155.0" layoutY="335.0" text="Haven’t any account?" textFill="#d2cece" />
       <Hyperlink fx:id="creatAccount" layoutX="300.0" layoutY="331.0" onAction="#createAccountHandler" text="Create account" />
+      <Button fx:id="backBtn" layoutX="74.0" layoutY="36.0" mnemonicParsing="false" onAction="#handleBackBtn" text="back" />
    </children>
 </Pane>
