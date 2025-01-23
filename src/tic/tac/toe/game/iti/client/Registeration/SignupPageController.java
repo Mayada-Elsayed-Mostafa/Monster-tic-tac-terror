@@ -1,6 +1,8 @@
 package tic.tac.toe.game.iti.client.Registeration;
 
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -17,6 +19,7 @@ import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
 import tic.tac.toe.game.iti.client.ServerSide.MassageType;
 import tic.tac.toe.game.iti.client.ServerSide.ServerHandler;
+import tic.tac.toe.game.iti.client.WelcomeController;
 import tic.tac.toe.game.iti.client.player.Player;
 
 public class SignupPageController {
@@ -32,6 +35,8 @@ public class SignupPageController {
     private Button signupBtn;
     @FXML
     private Hyperlink haveanAcountHT;
+    @FXML
+    private Button backBtn;
 
     public void setStage(Stage stage) {
         this.stage = stage;
@@ -122,6 +127,30 @@ public class SignupPageController {
 
         stage.setScene(new Scene(root));
         stage.setTitle("LoginPage");
+    }
+
+    @FXML
+    private void handleBackBtn(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/tic/tac/toe/game/iti/client/Welcome.fxml"));
+            Parent root = loader.load();
+            WelcomeController controller = loader.getController();
+            controller.setStage(stage);
+            ServerHandler.isClosedNormally = true;
+            ServerHandler.closeSocket();
+            stage.setScene(new Scene(root));
+            stage.setTitle("Welcome Page");
+            new Thread(() -> {
+                try {
+                    Thread.sleep(5000);
+                    ServerHandler.isClosedNormally = false;
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(LoginPageController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }).start();
+        } catch (IOException ex) {
+            Logger.getLogger(SignupPageController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
 }

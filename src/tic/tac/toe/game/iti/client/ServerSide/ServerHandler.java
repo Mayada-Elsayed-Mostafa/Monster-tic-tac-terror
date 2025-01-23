@@ -34,13 +34,14 @@ public class ServerHandler {
     public static String msg = null;
     public static boolean isFinished = false;
     public static boolean isLoggedIn = false;
+    public static boolean isClosedNormally = false;
 
     public static void setSocket(String ip) throws IOException {
         ServerHandler.socket = new Socket(ip, 5005);
         ServerHandler.massageIn = new DataInputStream(ServerHandler.socket.getInputStream());
         ServerHandler.massageOut = new DataOutputStream(ServerHandler.socket.getOutputStream());
         Thread listner;
-        isFinished=false;
+        isFinished = false;
         listner = new Thread(new Runnable() {
             @Override
             public void run() {
@@ -133,10 +134,13 @@ public class ServerHandler {
                         ServerHandler.massageIn = null;
                         ServerHandler.massageOut = null;
                         ServerHandler.socket = null;
-                        ServerHandler.msg=null;
+                        ServerHandler.msg = null;
                         if (!TicTacToeGameITIClient.isClosed) {
                             Platform.runLater(() -> {
-                                serverDisconnection();
+                                if (!isClosedNormally) {
+                                    serverDisconnection();
+                                    isClosedNormally = !isClosedNormally;
+                                }
                             });
                         }
                     }

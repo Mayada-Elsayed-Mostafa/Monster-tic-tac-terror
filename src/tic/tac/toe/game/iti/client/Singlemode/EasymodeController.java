@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.Random;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -18,6 +20,8 @@ import javafx.scene.control.Label;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import tic.tac.toe.game.iti.client.Controller;
+import tic.tac.toe.game.iti.client.Registeration.LoginPageController;
+import tic.tac.toe.game.iti.client.ServerSide.ServerHandler;
 import tic.tac.toe.game.iti.client.VideoController;
 import tic.tac.toe.game.iti.client.WelcomeController;
 
@@ -40,7 +44,7 @@ public class EasymodeController extends Controller implements Initializable {
     @FXML
     private Button restartButton;
     @FXML
-    private Button endButton1;
+    private Button endBtn;
 
     @FXML
     private void buttonOneHandler(ActionEvent event) {
@@ -287,7 +291,6 @@ public class EasymodeController extends Controller implements Initializable {
         });
     }
 
-    @FXML
     private void endHandeler() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/tic/tac/toe/game/iti/client/Welcome.fxml"));
@@ -300,6 +303,20 @@ public class EasymodeController extends Controller implements Initializable {
             stage.setTitle("Single mode Page");
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    @FXML
+    private void handleEndBtn(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("Singlemode.fxml"));
+            Parent root = loader.load();
+            SinglemodeController controller = loader.getController();
+            controller.setStage(stage);
+            stage.setScene(new Scene(root));
+            stage.setTitle("Single Mode Page");
+        } catch (IOException ex) {
+            Logger.getLogger(EasymodeController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 }
