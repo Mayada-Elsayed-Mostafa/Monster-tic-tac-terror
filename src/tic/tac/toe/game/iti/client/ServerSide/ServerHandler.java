@@ -87,15 +87,13 @@ public class ServerHandler {
                                     if (response == acceptButton) {
                                         reply.put("type", MassageType.CHALLENGE_ACCEPT_MSG);
                                         reply.put("data", challengerUsername);
-                                    } else {
-                                        reply.put("type", MassageType.CHALLENGE_REJECT_MSG);
-                                        reply.put("data", challengerUsername);
+                                        try {
+                                            ServerHandler.massageOut.writeUTF(reply.toJSONString());
+                                        } catch (IOException e) {
+                                            e.printStackTrace();
+                                        }
                                     }
-                                    try {
-                                        ServerHandler.massageOut.writeUTF(reply.toJSONString());
-                                    } catch (IOException e) {
-                                        e.printStackTrace();
-                                    }
+                                    
                                 });
                             });
                         } else if (respone.get("type").equals(MassageType.CHALLENGE_START_MSG)) {
