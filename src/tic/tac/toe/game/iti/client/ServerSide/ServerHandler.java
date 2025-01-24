@@ -91,8 +91,10 @@ public class ServerHandler {
                                             ServerHandler.massageOut.writeUTF(reply.toJSONString());
                                         } catch (IOException e) {
                                             e.printStackTrace();
+
                                         }
                                     }
+                                    
                                     
                                 });
                             });
