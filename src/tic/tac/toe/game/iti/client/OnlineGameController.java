@@ -189,11 +189,11 @@ public class OnlineGameController {
 
                     if (isRecording) {
                         fileObject.put("moves", moves);
-                        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd_HH-mm-ss");
+                        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("MM-dd_HH-mm");
                         LocalDateTime now = LocalDateTime.now();
                         String time = dtf.format(now);
 
-                        File record = new File("onlineRecords/" + player1Name + "vs" + player2Name + " " + time + ".json");
+                        File record = new File("onlineRecords/" + player1Name + " Vs " + player2Name + " " + time + ".json");
                         try {
                             if (record.createNewFile()) {
                                 FileWriter myWriter = new FileWriter(record);
@@ -316,6 +316,18 @@ public class OnlineGameController {
         cell_9_btn.setDisable(false);
         moveCount = 0;
         isRecording = false;
+        fileObject = new JSONObject();
+        moves = new JSONArray();
+        JSONObject player1 = new JSONObject();
+        player1.put("name", player1Name);
+        player1.put("symbol", "X");
+        JSONObject player2 = new JSONObject();
+        player2.put("name", player2Name);
+        player2.put("symbol", "O");
+        JSONObject players = new JSONObject();
+        players.put("player1", player1);
+        players.put("player2", player2);
+        fileObject.put("players", players);
     }
 
     public void restartResponse() {
@@ -390,9 +402,9 @@ public class OnlineGameController {
         player2.put("name", player2Name);
         player2.put("symbol", "O");
         JSONObject players = new JSONObject();
-        players.put("player1", player1.toJSONString());
-        players.put("player2", player2.toJSONString());
-        fileObject.put("players", players.toJSONString());
+        players.put("player1", player1);
+        players.put("player2", player2);
+        fileObject.put("players", players);
         Thread listener = new Thread(() -> {
             while (!isGameFinished && ServerHandler.socket != null) {
                 while (ServerHandler.msg == null) {
