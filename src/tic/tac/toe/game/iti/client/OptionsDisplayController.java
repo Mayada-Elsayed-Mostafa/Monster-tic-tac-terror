@@ -101,6 +101,7 @@ public class OptionsDisplayController extends Controller implements Initializabl
     @FXML
     private void endGameFunction(ActionEvent event) {
         try {
+            OnlineGameController.isGameFinished=true;
             FXMLLoader loader = new FXMLLoader(getClass().getResource("HomePage.fxml"));
             Parent root = loader.load();
 

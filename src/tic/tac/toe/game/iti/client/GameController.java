@@ -21,7 +21,7 @@ import jdk.nashorn.api.scripting.JSObject;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
-public class GameController extends Controller{
+public class GameController extends Controller {
 
     Stage stage;
     private int score1, score2 = 0;
@@ -30,11 +30,11 @@ public class GameController extends Controller{
     private boolean isPlayer1Turn = true;
     private String player1Name = "Player 1";
     private String player2Name = "Player 2";
-    private boolean isRecording=false;
+    private boolean isRecording = false;
     @FXML
     private Button cell_1_btn, cell_2_btn, cell_3_btn, cell_4_btn, cell_5_btn, cell_6_btn, cell_7_btn, cell_8_btn, cell_9_btn;
     private Button[] buttons;
-    
+
     @FXML
     private Button recordBtn;
     @FXML
@@ -49,28 +49,28 @@ public class GameController extends Controller{
     public void setStage(Stage stage) {
         this.stage = stage;
         startGame();
-        buttons=new Button[]{cell_1_btn, cell_2_btn, cell_3_btn, cell_4_btn, cell_5_btn, cell_6_btn, cell_7_btn, cell_8_btn, cell_9_btn};
+        buttons = new Button[]{cell_1_btn, cell_2_btn, cell_3_btn, cell_4_btn, cell_5_btn, cell_6_btn, cell_7_btn, cell_8_btn, cell_9_btn};
     }
-    
+
     JSONObject fileObject;
-    
+
     JSONArray moves;
-    
+
     @FXML
     public void handleCellClick(ActionEvent event) {
         Button clickedButton = (Button) event.getSource();
-            
+
         if (clickedButton.getText().isEmpty()) {
-            JSONArray cell=new JSONArray();
-                for (int i = 0; i < buttons.length; i++) {
-                    if (clickedButton == buttons[i]) {
-                        cell.add(i/3);
-                        cell.add(i%3);
-                        break;
-                    }
+            JSONArray cell = new JSONArray();
+            for (int i = 0; i < buttons.length; i++) {
+                if (clickedButton == buttons[i]) {
+                    cell.add(i / 3);
+                    cell.add(i % 3);
+                    break;
                 }
-            JSONObject move=new JSONObject();
-            
+            }
+            JSONObject move = new JSONObject();
+
             move.put("position", cell);
             if (isPlayer1Turn) {
                 clickedButton.setStyle("-fx-text-fill: #D4A5A5;");
@@ -83,33 +83,33 @@ public class GameController extends Controller{
                 move.put("player", player2Name);
             }
             clickedButton.setDisable(true);
-            
+
             moves.add(move);
             moveCount++;
             String winner = "";
             if (checkWinner()) {
-                if(isRecording){
-                   fileObject.put("moves", moves);
-                   DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd_HH-mm-ss");  
-                   LocalDateTime now = LocalDateTime.now();  
-                   String time=dtf.format(now);
+                if (isRecording) {
+                    fileObject.put("moves", moves);
+                    DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd_HH-mm-ss");
+                    LocalDateTime now = LocalDateTime.now();
+                    String time = dtf.format(now);
 
-                   File record=new File("offlineRecords/"+player1Name+"vs"+player2Name+" "+time+".json");
-                   try {      
-                       if (record.createNewFile()) {
-                           FileWriter myWriter = new FileWriter(record);
-                           myWriter.write(fileObject.toJSONString());
-                           myWriter.close();
-                       }   
+                    File record = new File("offlineRecords/" + player1Name + "vs" + player2Name + " " + time + ".json");
+                    try {
+                        if (record.createNewFile()) {
+                            FileWriter myWriter = new FileWriter(record);
+                            myWriter.write(fileObject.toJSONString());
+                            myWriter.close();
+                        }
 
-                   }catch(IOException e){
-                       e.printStackTrace();
-                   }
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                 }
                 winner = isPlayer1Turn ? player1Name : player2Name;
-                
+
                 handleWinner(winner);
-                
+
                 if (player2Name.equals(winner)) {
                     score2 += 10;
                     score2Number.setText(String.valueOf(score2));
@@ -118,23 +118,23 @@ public class GameController extends Controller{
                     score1Number.setText(String.valueOf(score1));
                 }
             } else if (moveCount == 9) {
-                if(isRecording){
-                   fileObject.put("moves", moves);
-                   DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd_HH-mm-ss");  
-                   LocalDateTime now = LocalDateTime.now();  
-                   String time=dtf.format(now);
+                if (isRecording) {
+                    fileObject.put("moves", moves);
+                    DateTimeFormatter dtf = DateTimeFormatter.ofPattern("MM-dd_HH-mm");
+                    LocalDateTime now = LocalDateTime.now();
+                    String time = dtf.format(now);
 
-                   File record=new File("offlineRecords/"+player1Name+"vs"+player2Name+" "+time+".json");
-                   try {      
-                       if (record.createNewFile()) {
-                           FileWriter myWriter = new FileWriter(record);
-                           myWriter.write(fileObject.toJSONString());
-                           myWriter.close();
-                       }   
+                    File record = new File("onlineRecords/" + player1Name + " Vs " + player2Name + " " + time + ".json");
+                    try {
+                        if (record.createNewFile()) {
+                            FileWriter myWriter = new FileWriter(record);
+                            myWriter.write(fileObject.toJSONString());
+                            myWriter.close();
+                        }
 
-                   }catch(IOException e){
-                       e.printStackTrace();
-                   }
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                 }
                 System.out.println("It's a tie!");
                 handleWinner(winner);
@@ -177,17 +177,17 @@ public class GameController extends Controller{
 
     @FXML
     private void recordHandeler() {
-        if(!isRecording){
-            isRecording=true;
+        if (!isRecording) {
+            isRecording = true;
             recordBtn.setDisable(true);
-            
+
         }
     }
 
     @FXML
     private void endHandeler() {
         try {
-            
+
             FXMLLoader loader = new FXMLLoader(getClass().getResource("Welcome.fxml"));
             Parent root = loader.load();
 
@@ -223,16 +223,16 @@ public class GameController extends Controller{
         moveCount = 0;
         isPlayer1Turn = true;
         board = new String[3][3];
-        isRecording=false;
-        fileObject=new JSONObject();
-        moves=new JSONArray();
-        JSONObject player1=new JSONObject();
+        isRecording = false;
+        fileObject = new JSONObject();
+        moves = new JSONArray();
+        JSONObject player1 = new JSONObject();
         player1.put("name", player1Name);
         player1.put("symbol", "X");
-        JSONObject player2=new JSONObject();
+        JSONObject player2 = new JSONObject();
         player2.put("name", player2Name);
         player2.put("symbol", "O");
-        JSONObject players=new JSONObject();
+        JSONObject players = new JSONObject();
         players.put("player1", player1);
         players.put("player2", player2);
         fileObject.put("players", players);
@@ -282,11 +282,11 @@ public class GameController extends Controller{
         if (winner != null && !winner.isEmpty()) {
             stage.setTitle(winner + " is the winner");
             videoUrl = "/Assets/winner.mp4";
-        }else{
+        } else {
             stage.setTitle("It's a Tie!");
             videoUrl = "/Assets/tie.mp4";
         }
-            displayVideo(videoUrl);
+        displayVideo(videoUrl);
     }
 
     public void askReplay() {
@@ -303,8 +303,8 @@ public class GameController extends Controller{
 
     public void startGame() {
         showAlertForPlayerNames();
-        fileObject=new JSONObject();
-        moves=new JSONArray();
+        fileObject = new JSONObject();
+        moves = new JSONArray();
         namesLabel.setText(player1Name + " VS " + player2Name);
         resetGame();
     }
