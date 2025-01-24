@@ -30,6 +30,8 @@ public class WelcomeController {
     private Button onlineBtn;
     @FXML
     private Button singleModeBtn;
+    @FXML
+    private Button offlineRcdsBtn;
 
     public void setStage(Stage stage) {
         this.stage = stage;
@@ -110,6 +112,21 @@ public class WelcomeController {
         } else {
             Alert a = new Alert(Alert.AlertType.WARNING, "Please Enter IP to continue...", ButtonType.OK);
             a.showAndWait();
+        }
+    }
+    
+    public void offlineRcdsBtnHandle(ActionEvent event){
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("OfflineRecords.fxml"));
+            Parent root = loader.load();
+
+            OfflineRecordsController controller = loader.getController();
+            controller.setStage(stage);
+
+            stage.setScene(new Scene(root));
+            stage.setTitle("Offline Records Page");
+        } catch (IOException ex) {
+            Logger.getLogger(OfflineRecordsController.class.getName()).log(Level.SEVERE, "Error loading Singlemode.fxml", ex);
         }
     }
 }
