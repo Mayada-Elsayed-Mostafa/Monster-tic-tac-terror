@@ -68,7 +68,7 @@ public class HomePageController extends Controller{
 
             LoginPageController controller = loader.getController();
             controller.setStage(stage);
-
+            ServerHandler.isLoggedIn=false;
             stage.setScene(new Scene(root));
             stage.setTitle("Login Page");
         } catch (IOException ex) {

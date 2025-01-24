@@ -178,7 +178,7 @@ public class ServerHandler {
 
             WelcomeController controller = loader.getController();
             controller.setStage(stage);
-
+            isLoggedIn=false;
             stage.setScene(new Scene(root));
             stage.setTitle("Welcome Page");
         } catch (IOException ex) {
