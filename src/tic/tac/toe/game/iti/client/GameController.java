@@ -241,6 +241,7 @@ public class GameController extends Controller{
     private void showAlertForPlayerNames() {
 
         TextInputDialog playerNameDialog = new TextInputDialog();
+        playerNameDialog.initOwner(stage.getScene().getWindow());
         playerNameDialog.setTitle("Enter Player Names");
         playerNameDialog.setHeaderText("Please enter names for both players.");
 
@@ -273,6 +274,7 @@ public class GameController extends Controller{
             stage.setScene(new Scene(root));
         } catch (IOException e) {
             Alert alert = new Alert(Alert.AlertType.ERROR, "An error occurred, please try again", ButtonType.OK);
+            alert.initOwner(stage.getScene().getWindow());
             alert.showAndWait();
         }
     }
@@ -292,6 +294,7 @@ public class GameController extends Controller{
     public void askReplay() {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Do you want to play again?", ButtonType.YES, ButtonType.NO);
         alert.setTitle("Play Again?");
+        alert.initOwner(stage.getScene().getWindow());
         alert.showAndWait().ifPresent(response -> {
             if (response == ButtonType.YES) {
                 resetGame();
