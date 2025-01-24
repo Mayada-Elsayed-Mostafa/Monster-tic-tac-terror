@@ -147,7 +147,7 @@ public class OnlineGameController {
                     LocalDateTime now = LocalDateTime.now();
                     String time = dtf.format(now);
 
-                    File record = new File("offlineRecords/" + player1Name + " Vs " + player2Name + " " + time + ".json");
+                    File record = new File("onlineRecords/" + player1Name + " Vs " + player2Name + " " + time + ".json");
                         try {
                             if (record.createNewFile()) {
                                 FileWriter myWriter = new FileWriter(record);
@@ -452,7 +452,7 @@ public class OnlineGameController {
                                 DateTimeFormatter dtf = DateTimeFormatter.ofPattern("MM-dd_HH-mm");
                                 LocalDateTime now = LocalDateTime.now();
                                 String time = dtf.format(now);
-                                File record = new File("offlineRecords/" + player1Name + " Vs " + player2Name + " " + time + ".json");
+                                File record = new File("onlineRecords/" + player1Name + " Vs " + player2Name + " " + time + ".json");
                                 try {
                                     if (record.createNewFile()) {
                                         FileWriter myWriter = new FileWriter(record);
