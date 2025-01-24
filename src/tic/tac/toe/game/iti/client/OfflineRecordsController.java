@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package tic.tac.toe.game.iti.client;
 
 import java.io.File;
@@ -11,6 +6,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -35,6 +31,8 @@ public class OfflineRecordsController  {
    private VBox filesList;
    @FXML
    private VBox buttonsList;
+    @FXML
+    private Button backBtn;
    public void setStage(Stage stage) {
         this.stage = stage;
         startController();
@@ -78,6 +76,20 @@ public class OfflineRecordsController  {
             stage.setTitle("Record");
         } catch (IOException ex) {
             Logger.getLogger(HomePageController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    @FXML
+    private void handleBackBtn(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/tic/tac/toe/game/iti/client/Welcome.fxml"));
+            Parent root = loader.load();
+            WelcomeController controller = loader.getController();
+            controller.setStage(stage);
+            stage.setScene(new Scene(root));
+            stage.setTitle("Welcome Page");
+        } catch (IOException ex) {
+            Logger.getLogger(OfflineRecordsController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     
