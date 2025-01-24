@@ -85,6 +85,7 @@ public class OptionsDisplayController extends Controller implements Initializabl
 
         } catch (IOException e) {
             Alert alert = new Alert(Alert.AlertType.ERROR, "An error occurred, please try again", ButtonType.OK);
+            alert.initOwner(stage.getScene().getWindow());
             alert.showAndWait();
         }
     }

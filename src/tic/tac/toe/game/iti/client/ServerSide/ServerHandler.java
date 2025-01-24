@@ -76,7 +76,7 @@ public class ServerHandler {
                                 alert.setTitle("Challenge Request");
                                 alert.setHeaderText(challengerUsername + " has challenged you to a game!");
                                 alert.setContentText("Do you want to accept the challenge?");
-
+                                alert.initOwner(stage.getScene().getWindow());
                                 ButtonType acceptButton = new ButtonType("Accept");
                                 ButtonType rejectButton = new ButtonType("Reject");
 
@@ -108,7 +108,7 @@ public class ServerHandler {
                                     alert.setTitle("Challenge Accepted");
                                     alert.setHeaderText("Your challenge has been accepted!");
                                     alert.setContentText(opponentUsername + " is ready to play.");
-
+                                    alert.initOwner(stage.getScene().getWindow());
                                     alert.showAndWait();
                                 });
                             }
@@ -170,8 +170,8 @@ public class ServerHandler {
         Alert alert = new Alert(Alert.AlertType.WARNING);
         alert.setTitle("Connection Lost");
         alert.setContentText("You will be redirected to the home page");
+        alert.initOwner(stage.getScene().getWindow());
         alert.showAndWait();
-
         try {
             FXMLLoader loader = new FXMLLoader(ServerHandler.class.getResource("/tic/tac/toe/game/iti/client/Welcome.fxml"));
             Parent root = loader.load();
