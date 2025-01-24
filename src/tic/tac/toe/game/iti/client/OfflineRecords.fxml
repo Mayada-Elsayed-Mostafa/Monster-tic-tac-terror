@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
@@ -58,4 +60,11 @@
          </center>
       </BorderPane>
    </center>
+   <top>
+      <AnchorPane prefHeight="55.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+         <children>
+            <Button fx:id="backBtn" layoutX="60.0" layoutY="29.0" mnemonicParsing="false" onAction="#handleBackBtn" text="back" />
+         </children>
+      </AnchorPane>
+   </top>
 </BorderPane>

@@ -107,6 +107,7 @@ public class SignupPageController {
             stage.setTitle("LoginPage");
         } catch (IOException e) {
             Alert alert = new Alert(Alert.AlertType.ERROR, "please try again", ButtonType.OK);
+            alert.initOwner(stage.getScene().getWindow());
             alert.showAndWait();
         }
     }
@@ -115,6 +116,7 @@ public class SignupPageController {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle(title);
         alert.setContentText(message);
+        alert.initOwner(stage.getScene().getWindow());
         alert.showAndWait();
     }
 

@@ -274,6 +274,7 @@ public class EasymodeController extends Controller implements Initializable {
             stage.setScene(new Scene(root));
         } catch (IOException e) {
             Alert alert = new Alert(Alert.AlertType.ERROR, "An error occurred, please try again", ButtonType.OK);
+            alert.initOwner(stage.getScene().getWindow());
             alert.showAndWait();
         }
     }
@@ -282,6 +283,7 @@ public class EasymodeController extends Controller implements Initializable {
     public void askReplay() {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Do you want to play again?", ButtonType.YES, ButtonType.NO);
         alert.setTitle("Play Again?");
+        alert.initOwner(stage.getScene().getWindow());
         alert.showAndWait().ifPresent(response -> {
             if (response == ButtonType.YES) {
                 initializeGame();
@@ -293,7 +295,7 @@ public class EasymodeController extends Controller implements Initializable {
 
     private void endHandeler() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/tic/tac/toe/game/iti/client/Welcome.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("Singlemode.fxml"));
             Parent root = loader.load();
 
             SinglemodeController controller = loader.getController();

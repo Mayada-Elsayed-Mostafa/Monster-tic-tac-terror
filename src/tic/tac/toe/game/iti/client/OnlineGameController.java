@@ -143,11 +143,11 @@ public class OnlineGameController {
 
                     if (isRecording) {
                         fileObject.put("moves", moves);
-                        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd_HH-mm-ss");
-                        LocalDateTime now = LocalDateTime.now();
-                        String time = dtf.format(now);
+                        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("MM-dd_HH-mm");
+                    LocalDateTime now = LocalDateTime.now();
+                    String time = dtf.format(now);
 
-                        File record = new File("onlineRecords/" + player1Name + "vs" + player2Name + " " + time + ".json");
+                    File record = new File("onlineRecords/" + player1Name + " Vs " + player2Name + " " + time + ".json");
                         try {
                             if (record.createNewFile()) {
                                 FileWriter myWriter = new FileWriter(record);
@@ -334,7 +334,7 @@ public class OnlineGameController {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Play again?");
         alert.setContentText("Do you want to play again?");
-
+        alert.initOwner(stage.getScene().getWindow());
         ButtonType acceptButton = new ButtonType("Accept");
         ButtonType rejectButton = new ButtonType("Reject");
 
@@ -449,11 +449,10 @@ public class OnlineGameController {
 
                             if (isRecording) {
                                 fileObject.put("moves", moves);
-                                DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd_HH-mm-ss");
+                                DateTimeFormatter dtf = DateTimeFormatter.ofPattern("MM-dd_HH-mm");
                                 LocalDateTime now = LocalDateTime.now();
                                 String time = dtf.format(now);
-
-                                File record = new File("onlineRecords/" + player1Name + "vs" + player2Name + " " + time + ".json");
+                                File record = new File("onlineRecords/" + player1Name + " Vs " + player2Name + " " + time + ".json");
                                 try {
                                     if (record.createNewFile()) {
                                         FileWriter myWriter = new FileWriter(record);
@@ -481,11 +480,10 @@ public class OnlineGameController {
 
                             if (isRecording) {
                                 fileObject.put("moves", moves);
-                                DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd_HH-mm-ss");
+                                DateTimeFormatter dtf = DateTimeFormatter.ofPattern("MM-dd_HH-mm");
                                 LocalDateTime now = LocalDateTime.now();
                                 String time = dtf.format(now);
-
-                                File record = new File("onlineRecords/" + player1Name + "vs" + player2Name + " " + time + ".json");
+                                File record = new File("offlineRecords/" + player1Name + " Vs " + player2Name + " " + time + ".json");
                                 try {
                                     if (record.createNewFile()) {
                                         FileWriter myWriter = new FileWriter(record);
@@ -515,6 +513,7 @@ public class OnlineGameController {
                         myLabel.setText(myScore + "");
                         displayVideoWithdraw("/Assets/winner.mp4");
                         Alert check = new Alert(Alert.AlertType.INFORMATION, "Your opponent has withdrawn");
+                        check.initOwner(stage.getScene().getWindow());
                         check.showAndWait();
                     });
                 } else if (msgType.equals(MassageType.RESTART_REQUEST_MSG)) {
@@ -531,9 +530,7 @@ public class OnlineGameController {
                         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
                         alert.setTitle("End Game");
                         alert.setContentText("Game ended...");
-
-                        //ButtonType okButton = new ButtonType("OK");
-                        //alert.getButtonTypes().add(okButton);
+                        alert.initOwner(stage.getScene().getWindow());
                         alert.showAndWait();
 
                         try {
@@ -580,6 +577,7 @@ public class OnlineGameController {
             stage.setScene(new Scene(root));
         } catch (IOException e) {
             Alert alert = new Alert(Alert.AlertType.ERROR, "An error occurred, please try again", ButtonType.OK);
+            alert.initOwner(stage.getScene().getWindow());
             alert.showAndWait();
         }
     }
