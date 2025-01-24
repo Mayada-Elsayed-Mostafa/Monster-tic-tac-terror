@@ -96,6 +96,7 @@ public class WelcomeController {
         TextInputDialog ipTI = new TextInputDialog();
         ipTI.setTitle("IP Address");
         ipTI.setHeaderText("Enter the IP Address...");
+        ipTI.initOwner(onlineBtn.getScene().getWindow());
 
         Optional<String> ipInput = ipTI.showAndWait();
 
@@ -107,10 +108,12 @@ public class WelcomeController {
             } catch (IOException ex) {
                 Alert alert = new Alert(Alert.AlertType.WARNING, "Unable to connect to the server. Please try again later.", ButtonType.OK);
                 alert.setTitle("Connection Error");
+                alert.initOwner(onlineBtn.getScene().getWindow());
                 alert.showAndWait();
             }
         } else {
             Alert a = new Alert(Alert.AlertType.WARNING, "Please Enter IP to continue...", ButtonType.OK);
+            a.initOwner(onlineBtn.getScene().getWindow());
             a.showAndWait();
         }
     }

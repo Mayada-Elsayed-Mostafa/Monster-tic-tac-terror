@@ -49,6 +49,7 @@ public class LoginPageController {
         Alert alert = new Alert(alertType);
         alert.setTitle(title);
         alert.setContentText(message);
+        alert.initOwner(stage.getScene().getWindow());
         alert.showAndWait();
     }
 
@@ -114,6 +115,7 @@ public class LoginPageController {
         } catch (IOException e) {
             e.printStackTrace();
             Alert alert = new Alert(Alert.AlertType.ERROR, "An error occured, please try again", ButtonType.OK);
+            alert.initOwner(stage.getScene().getWindow());
             alert.showAndWait();
         }
     }
@@ -131,6 +133,7 @@ public class LoginPageController {
             stage.setTitle("Signup Page");
         } catch (IOException e) {
             Alert alert = new Alert(Alert.AlertType.ERROR, "An error occured, please try again", ButtonType.OK);
+            alert.initOwner(stage.getScene().getWindow());
             alert.showAndWait();
         }
     }
