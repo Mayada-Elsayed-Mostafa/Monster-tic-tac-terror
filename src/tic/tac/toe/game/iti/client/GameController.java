@@ -90,7 +90,7 @@ public class GameController extends Controller {
             if (checkWinner()) {
                 if (isRecording) {
                     fileObject.put("moves", moves);
-                    DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd_HH-mm-ss");
+                    DateTimeFormatter dtf = DateTimeFormatter.ofPattern("MM-dd_HH-mm");
                     LocalDateTime now = LocalDateTime.now();
                     String time = dtf.format(now);
 
