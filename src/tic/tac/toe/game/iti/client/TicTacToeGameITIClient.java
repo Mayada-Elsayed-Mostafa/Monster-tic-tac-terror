@@ -25,6 +25,9 @@ public class TicTacToeGameITIClient extends Application {
             controller.setStage(primaryStage);
 
             ServerHandler.stage = primaryStage;
+            
+            primaryStage.setWidth(800);
+            primaryStage.setHeight(600);
 
             primaryStage.setOnCloseRequest(event -> {
                 isClosed = true;
