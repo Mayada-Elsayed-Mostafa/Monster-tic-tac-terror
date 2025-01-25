@@ -5,32 +5,52 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tic.tac.toe.game.iti.client.Registeration.LoginPageController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" stylesheets="@../../../../../../../StyleSheet.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tic.tac.toe.game.iti.client.Registeration.LoginPageController">
    <children>
-      <Label layoutX="222.0" layoutY="61.0" text="Welcome Back!" textAlignment="CENTER">
-         <font>
-            <Font size="18.0" />
-         </font>
-      </Label>
-      <TextField fx:id="username" layoutX="100.0" layoutY="147.0" prefHeight="34.0" prefWidth="400.0" promptText="Enter your username...">
+      <ImageView fitHeight="600.0" fitWidth="800.0" pickOnBounds="true">
+         <image>
+            <Image url="@../../../../../../../Assets/welcome.jpg" />
+         </image>
+      </ImageView>
+      <TextField fx:id="username" layoutX="200.0" layoutY="250.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="400.0" promptText="Enter your username..." styleClass="text-input">
          <font>
             <Font size="14.0" />
          </font></TextField>
-      <PasswordField fx:id="password" layoutX="100.0" layoutY="201.0" prefHeight="34.0" prefWidth="400.0" promptText="Enter your Password...">
+      <PasswordField fx:id="password" layoutX="200.0" layoutY="330.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="400.0" promptText="Enter your Password..." styleClass="text-input">
          <font>
             <Font size="14.0" />
          </font>
       </PasswordField>
-      <Button fx:id="loginBtn" layoutX="240.0" layoutY="270.0" mnemonicParsing="false" onAction="#loginButtonHandler" prefWidth="120.0" text="Login" textAlignment="CENTER">
+      <Button fx:id="loginBtn" layoutX="325.0" layoutY="410.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#loginButtonHandler" prefHeight="45.0" prefWidth="150.0" styleClass="blue-registration-Btn" text="Login" textAlignment="CENTER">
          <font>
             <Font size="18.0" />
          </font>
       </Button>
-      <Label layoutX="155.0" layoutY="335.0" text="Haven’t any account?" textFill="#d2cece" />
-      <Hyperlink fx:id="creatAccount" layoutX="300.0" layoutY="331.0" onAction="#createAccountHandler" text="Create account" />
-      <Button fx:id="backBtn" layoutX="74.0" layoutY="36.0" mnemonicParsing="false" onAction="#handleBackBtn" text="back" />
+      <Label layoutX="235.0" layoutY="490.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="175.0" text="Haven’t any account?" textFill="#f45162" />
+      <Hyperlink fx:id="creatAccount" layoutX="410.0" layoutY="490.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onAction="#createAccountHandler" prefHeight="40.0" prefWidth="150.0" text="Create account" />
+      <ImageView fitHeight="232.0" fitWidth="428.0" layoutX="300.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" styleClass="text-input">
+         <image>
+            <Image url="@../../../../../../../Assets/signup_welcome.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="50.0" fitWidth="32.0" layoutX="381.0" layoutY="136.0" pickOnBounds="true">
+         <image>
+            <Image url="@../../../../../../../Assets/welcome%20icon.jpg" />
+         </image>
+      </ImageView>
+      <Button fx:id="backBtn" layoutX="40.0" layoutY="30.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onAction="#handleBackBtn" prefHeight="50.0" prefWidth="50.0" styleClass="home-btn" textAlignment="CENTER">
+         <graphic>
+            <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true">
+               <image>
+                  <Image url="@../../../../../../../Assets/HomeIcon.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
    </children>
 </Pane>
