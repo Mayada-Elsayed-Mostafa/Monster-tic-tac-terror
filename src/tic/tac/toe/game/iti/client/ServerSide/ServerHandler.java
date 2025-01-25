@@ -55,17 +55,11 @@ public class ServerHandler {
                             });
 
                         } else if (respone.get("type").equals(MassageType.UPDATE_LIST_MSG) && isLoggedIn) {
-                            JSONArray array = (JSONArray) respone.get("data");
-                            ArrayList<Player> dtoPlayers = new ArrayList<Player>();
-                            for (int i = 0; i < array.size(); i++) {
-                                JSONObject obj = (JSONObject) JSONValue.parse((String) array.get(i));
-                                dtoPlayers.add(new Player((String) obj.get("username"), "", "", ((Long) obj.get("score")).intValue()));
-                            }
-                            HomePageController.currentPlayers = dtoPlayers;
+                            HomePageController.currentPlayers = responseMsg;
                             Platform.runLater(new Runnable() {
                                 @Override
                                 public void run() {
-                                    HomePageController.updateAvailablePlayers(dtoPlayers);
+                                    HomePageController.updateAvailablePlayers(responseMsg);
                                 }
                             });
                         } else if (respone.get("type").equals(MassageType.CHALLENGE_REQUEST_MSG)) {
@@ -117,13 +111,7 @@ public class ServerHandler {
                             });
 
                         } else if (respone.get("type").equals(MassageType.UPDATE_LIST_MSG)) {
-                            JSONArray array = (JSONArray) respone.get("data");
-                            ArrayList<Player> dtoPlayers = new ArrayList<Player>();
-                            for (int i = 0; i < array.size(); i++) {
-                                JSONObject obj = (JSONObject) JSONValue.parse((String) array.get(i));
-                                dtoPlayers.add(new Player((String) obj.get("username"), "", "", ((Long) obj.get("score")).intValue()));
-                            }
-                            HomePageController.currentPlayers = dtoPlayers;
+                            HomePageController.currentPlayers = responseMsg;
                         } else if (respone.get("type").equals(MassageType.CHALLENGE_ACCEPT_MSG)) {
 
                         } else {
@@ -178,7 +166,7 @@ public class ServerHandler {
 
             WelcomeController controller = loader.getController();
             controller.setStage(stage);
-
+            isLoggedIn=false;
             stage.setScene(new Scene(root));
             stage.setTitle("Welcome Page");
         } catch (IOException ex) {

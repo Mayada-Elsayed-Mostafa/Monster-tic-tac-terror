@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -83,7 +84,7 @@ public class LoginPageController {
             JSONObject data = (JSONObject) JSONValue.parse(ServerHandler.msg);
             if (data.get("type").equals(MassageType.LOGIN_SUCCESS_MSG)) {
                 ServerHandler.isLoggedIn = true;
-                navigateToHome(data.get("data"));
+                navigateToHome(ServerHandler.msg);
             } else if (data.get("type").equals(MassageType.LOGIN_FAIL_MSG)) {
                 showAlert(Alert.AlertType.WARNING, "unsuccessful", "Log in failed, try again");
             }
@@ -99,16 +100,7 @@ public class LoginPageController {
             HomePageController controller = loader.getController();
             controller.setStage(stage);
             
-            JSONArray array = (JSONArray) data;
-            
-            ArrayList<Player> dtoPlayers = new ArrayList<Player>();
-            for(int i = 0; i < array.size(); i++){
-                JSONObject obj = (JSONObject) JSONValue.parse((String)array.get(i));
-                dtoPlayers.add(new Player((String)obj.get("username"), "", "", ((Long)obj.get("score")).intValue()));
-                
-            }
-            
-            HomePageController.updateAvailablePlayers(dtoPlayers);
+            HomePageController.updateAvailablePlayers((String) data);
 
             stage.setScene(new Scene(root));
             stage.setTitle("Home Page");

@@ -1,6 +1,7 @@
 package tic.tac.toe.game.iti.client;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -13,13 +14,15 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+import org.json.simple.JSONValue;
 import tic.tac.toe.game.iti.client.Registeration.LoginPageController;
 import tic.tac.toe.game.iti.client.ServerSide.MassageType;
 import tic.tac.toe.game.iti.client.ServerSide.ServerHandler;
 import tic.tac.toe.game.iti.client.player.Player;
 
-public class HomePageController extends Controller{
+public class HomePageController extends Controller {
 
     private Stage stage;
 
@@ -33,10 +36,13 @@ public class HomePageController extends Controller{
     private static VBox sUserNames;
     private static VBox sScores;
     private static VBox sChallenges;
+    private static Label myUsername;
+    private static Label myScore;
+
     @FXML
     private Button recordsBtn;
-    
-    public static List<Player> currentPlayers;
+
+    public static String currentPlayers;
 
     public void setStage(Stage stage) {
         this.stage = stage;
@@ -44,7 +50,7 @@ public class HomePageController extends Controller{
         sScores = scores;
         sChallenges = challenges;
     }
-    
+
     public void setCurrentStage(Stage stage) {
         this.stage = stage;
         sUserNames = usernames;
@@ -68,7 +74,7 @@ public class HomePageController extends Controller{
 
             LoginPageController controller = loader.getController();
             controller.setStage(stage);
-
+            ServerHandler.isLoggedIn = false;
             stage.setScene(new Scene(root));
             stage.setTitle("Login Page");
         } catch (IOException ex) {
@@ -76,7 +82,17 @@ public class HomePageController extends Controller{
         }
     }
 
-    public static void updateAvailablePlayers(List<Player> players) {
+    public static void updateAvailablePlayers(String msg) {
+        JSONObject obj = (JSONObject) JSONValue.parse(msg);
+        JSONObject data = (JSONObject) obj.get("data");
+        //myUsername.setText((String) data.get("username"));
+        //myScore.setText((String) data.get("score"));
+        ArrayList<Player> players = new ArrayList();
+        JSONArray array = (JSONArray) data.get("players");
+        for (int i = 0; i < array.size(); i++) {
+            JSONObject playersData = (JSONObject) JSONValue.parse((String) array.get(i));
+            players.add(new Player((String) playersData.get("username"), "", "", ((Long) playersData.get("score")).intValue()));
+        }
         sUserNames.getChildren().clear();
         sScores.getChildren().clear();
         sChallenges.getChildren().clear();
@@ -92,7 +108,7 @@ public class HomePageController extends Controller{
             challengeBtn.setOnAction(event -> {
                 sendRequestHandler(player);
             });
-            sChallenges.getChildren().add(challengeBtn);      
+            sChallenges.getChildren().add(challengeBtn);
         }
     }
 
