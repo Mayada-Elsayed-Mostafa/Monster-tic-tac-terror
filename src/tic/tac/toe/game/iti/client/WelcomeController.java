@@ -30,6 +30,8 @@ public class WelcomeController {
     private Button onlineBtn;
     @FXML
     private Button singleModeBtn;
+    @FXML
+    private Button offlineRcdsBtn;
 
     public void setStage(Stage stage) {
         this.stage = stage;
@@ -94,6 +96,7 @@ public class WelcomeController {
         TextInputDialog ipTI = new TextInputDialog();
         ipTI.setTitle("IP Address");
         ipTI.setHeaderText("Enter the IP Address...");
+        ipTI.initOwner(onlineBtn.getScene().getWindow());
 
         Optional<String> ipInput = ipTI.showAndWait();
 
@@ -105,11 +108,28 @@ public class WelcomeController {
             } catch (IOException ex) {
                 Alert alert = new Alert(Alert.AlertType.WARNING, "Unable to connect to the server. Please try again later.", ButtonType.OK);
                 alert.setTitle("Connection Error");
+                alert.initOwner(onlineBtn.getScene().getWindow());
                 alert.showAndWait();
             }
         } else {
             Alert a = new Alert(Alert.AlertType.WARNING, "Please Enter IP to continue...", ButtonType.OK);
+            a.initOwner(onlineBtn.getScene().getWindow());
             a.showAndWait();
+        }
+    }
+    
+    public void offlineRcdsBtnHandle(ActionEvent event){
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("OfflineRecords.fxml"));
+            Parent root = loader.load();
+
+            OfflineRecordsController controller = loader.getController();
+            controller.setStage(stage);
+
+            stage.setScene(new Scene(root));
+            stage.setTitle("Offline Records Page");
+        } catch (IOException ex) {
+            Logger.getLogger(OfflineRecordsController.class.getName()).log(Level.SEVERE, "Error loading Singlemode.fxml", ex);
         }
     }
 }

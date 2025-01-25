@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ButtonBar?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tic.tac.toe.game.iti.client.OptionsDisplayController">
+   <children>
+      <Label fx:id="header" layoutX="193.0" layoutY="52.0" text="Player1 VS Player2">
+         <font>
+            <Font size="24.0" />
+         </font></Label>
+      <FlowPane layoutX="116.0" layoutY="104.0" prefHeight="44.0" prefWidth="369.0">
+         <children>
+            <Label fx:id="players" prefHeight="43.0" prefWidth="291.0" text="Players" />
+            <Label fx:id="score" prefHeight="44.0" prefWidth="78.0" text="Score" />
+         </children>
+      </FlowPane>
+      <FlowPane layoutX="114.0" layoutY="166.0" prefHeight="44.0" prefWidth="387.0">
+         <children>
+            <Label fx:id="winner" prefHeight="43.0" prefWidth="297.0" text="Player1" />
+            <Label fx:id="winnerScore" prefHeight="44.0" prefWidth="85.0" text="Score" />
+         </children>
+      </FlowPane>
+      <FlowPane layoutX="114.0" layoutY="220.0" prefHeight="44.0" prefWidth="387.0">
+         <children>
+            <Label fx:id="loser" prefHeight="43.0" prefWidth="296.0" text="Player2" />
+            <Label fx:id="loserScore" prefHeight="44.0" prefWidth="91.0" text="Score" />
+         </children>
+      </FlowPane>
+      <Line endX="201.0" layoutX="298.0" layoutY="156.0" startX="-217.0" />
+      <ButtonBar layoutX="113.0" layoutY="311.0" prefHeight="40.0" prefWidth="323.0">
+        <buttons>
+          <Button fx:id="restartGameBtn" minWidth="73.0" mnemonicParsing="false" onAction="#restartHandler" prefHeight="31.0" prefWidth="150.0" text="Play again" />
+            <Button fx:id="endGameBtn" mnemonicParsing="false" onAction="#endGameFunction" prefHeight="31.0" text="End game" textAlignment="CENTER" />
+        </buttons>
+      </ButtonBar>
+   </children>
+</AnchorPane>

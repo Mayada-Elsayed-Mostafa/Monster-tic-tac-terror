@@ -1,9 +1,7 @@
 package tic.tac.toe.game.iti.client.Registeration;
 
 import java.io.IOException;
-import java.io.Reader;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
@@ -23,8 +21,10 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
 import tic.tac.toe.game.iti.client.HomePageController;
+import tic.tac.toe.game.iti.client.OnlineRecordsController;
 import tic.tac.toe.game.iti.client.ServerSide.MassageType;
 import tic.tac.toe.game.iti.client.ServerSide.ServerHandler;
+import tic.tac.toe.game.iti.client.WelcomeController;
 import tic.tac.toe.game.iti.client.player.Player;
 
 public class LoginPageController {
@@ -39,6 +39,8 @@ public class LoginPageController {
     private PasswordField password;
     @FXML
     private Hyperlink creatAccount;
+    @FXML
+    private Button backBtn;
 
     public void setStage(Stage stage) {
         this.stage = stage;
@@ -48,6 +50,7 @@ public class LoginPageController {
         Alert alert = new Alert(alertType);
         alert.setTitle(title);
         alert.setContentText(message);
+        alert.initOwner(stage.getScene().getWindow());
         alert.showAndWait();
     }
 
@@ -79,11 +82,10 @@ public class LoginPageController {
                 System.out.print("");
             }
             JSONObject data = (JSONObject) JSONValue.parse(ServerHandler.msg);
-            if (data.get("type").equals(MassageType.LOGINSUCCESS_MSG)) {
-                showAlert(Alert.AlertType.CONFIRMATION, "Successful", "you are logged in successfully");
+            if (data.get("type").equals(MassageType.LOGIN_SUCCESS_MSG)) {
                 ServerHandler.isLoggedIn = true;
-                navigateToHome(data.get("data"));
-            } else if (data.get("type").equals(MassageType.LOGINFAIL_MSG)) {
+                navigateToHome(ServerHandler.msg);
+            } else if (data.get("type").equals(MassageType.LOGIN_FAIL_MSG)) {
                 showAlert(Alert.AlertType.WARNING, "unsuccessful", "Log in failed, try again");
             }
             ServerHandler.msg = null;
@@ -98,21 +100,14 @@ public class LoginPageController {
             HomePageController controller = loader.getController();
             controller.setStage(stage);
             
-            JSONArray array = (JSONArray) data;
-            
-            ArrayList<Player> dtoPlayers = new ArrayList<Player>();
-            for(int i = 0; i < array.size(); i++){
-                JSONObject obj = (JSONObject) JSONValue.parse((String)array.get(i));
-                dtoPlayers.add(new Player((String)obj.get("username"), "", "", ((Long)obj.get("score")).intValue()));
-                
-            }
-            
-            HomePageController.updateAvailablePlayers(dtoPlayers);
+            HomePageController.updateAvailablePlayers((String) data);
 
             stage.setScene(new Scene(root));
             stage.setTitle("Home Page");
         } catch (IOException e) {
+            e.printStackTrace();
             Alert alert = new Alert(Alert.AlertType.ERROR, "An error occured, please try again", ButtonType.OK);
+            alert.initOwner(stage.getScene().getWindow());
             alert.showAndWait();
         }
     }
@@ -130,7 +125,32 @@ public class LoginPageController {
             stage.setTitle("Signup Page");
         } catch (IOException e) {
             Alert alert = new Alert(Alert.AlertType.ERROR, "An error occured, please try again", ButtonType.OK);
+            alert.initOwner(stage.getScene().getWindow());
             alert.showAndWait();
+        }
+    }
+
+    @FXML
+    private void handleBackBtn(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/tic/tac/toe/game/iti/client/Welcome.fxml"));
+            Parent root = loader.load();
+            WelcomeController controller = loader.getController();
+            controller.setStage(stage);
+            ServerHandler.isClosedNormally = true;
+            ServerHandler.closeSocket();
+            stage.setScene(new Scene(root));
+            stage.setTitle("Welcome Page");
+            new Thread(() -> {
+                try {
+                    Thread.sleep(5000);
+                    ServerHandler.isClosedNormally = false;
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(LoginPageController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }).start();
+        } catch (IOException ex) {
+            Logger.getLogger(LoginPageController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 }

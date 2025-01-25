@@ -2,8 +2,6 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.VBox?>
@@ -14,16 +12,8 @@
    <top>
       <AnchorPane prefHeight="70.0" prefWidth="600.0" BorderPane.alignment="CENTER">
          <children>
-            <Button layoutX="14.0" layoutY="13.0" mnemonicParsing="false" style="-fx-background-color: white; -fx-border-color: #946E3D; -fx-border-width: 2px; -fx-border-radius: 5px; -fx-padding: 5px 10px; -fx-font-weight: bold; -fx-font-size: 18px;" text="Logout" textFill="#946e3d" />
-            <Button alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="456.0" layoutY="15.0" mnemonicParsing="false" style="-fx-background-color: #946E3D; -fx-border-width: 2px; -fx-border-radius: 5px; -fx-padding: 5px 10px; -fx-font-weight: bold; -fx-font-size: 18px;" text="Records " textFill="WHITE">
-               <graphic>
-                  <ImageView fitHeight="25.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true" style="-fx-scale-x: 2; -fx-scale-y: 2;">
-                     <image>
-                        <Image url="@../../../../../../images/angle-down.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-            </Button>
+            <Button layoutX="56.0" layoutY="15.0" mnemonicParsing="false" onAction="#handleLogout" style="-fx-background-color: white; -fx-border-color: #946E3D; -fx-border-width: 2px; -fx-border-radius: 5px; -fx-padding: 5px 10px; -fx-font-weight: bold; -fx-font-size: 18px;" text="Logout" textFill="#946e3d" />
+            <Button fx:id="recordsBtn" alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="454.0" layoutY="17.0" mnemonicParsing="false" onAction="#handleRecords" style="-fx-background-color: #946E3D; -fx-border-width: 2px; -fx-border-radius: 5px; -fx-padding: 5px 10px; -fx-font-weight: bold; -fx-font-size: 18px;" text="Records " textFill="WHITE" />
          </children>
       </AnchorPane>
    </top>
@@ -73,9 +63,9 @@
                   <Insets top="10.0" />
                </BorderPane.margin>
                <children>
-                  <Button mnemonicParsing="false" prefHeight="50.0" prefWidth="117.0" text="Challenge">
+                  <Button mnemonicParsing="false" prefHeight="50.0" prefWidth="117.0" text="Send Request">
                      <font>
-                        <Font size="18.0" />
+                        <Font size="14.0" />
                      </font>
                      <VBox.margin>
                         <Insets left="35.0" right="40.0" />
