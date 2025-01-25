@@ -5,37 +5,52 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tic.tac.toe.game.iti.client.Registeration.SignupPageController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" stylesheets="@../../../../../../../StyleSheet.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tic.tac.toe.game.iti.client.Registeration.SignupPageController">
    <children>
-      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="135.0" layoutY="38.0" prefHeight="27.0" prefWidth="323.0" text="Register a new account">
+      <ImageView fitHeight="600.0" fitWidth="800.0" pickOnBounds="true">
+         <image>
+            <Image url="@../../../../../../../Assets/welcome.jpg" />
+         </image>
+      </ImageView>
+      <Label id="title" alignment="CENTER" contentDisplay="CENTER" layoutX="150.0" layoutY="18.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="70.0" prefWidth="500.0" styleClass="red" text="Register a new account">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
-      <TextField fx:id="userNameTF" layoutX="100.0" layoutY="99.0" prefHeight="34.0" prefWidth="400.0" promptText="Enter your User Name...">
+      <TextField fx:id="userNameTF" layoutX="200.0" layoutY="180.0" maxHeight="-Infinity" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="400.0" promptText="Enter your User Name..." styleClass="text-input">
          <font>
             <Font size="14.0" />
          </font></TextField>
-      <Button fx:id="signupBtn" layoutX="257.0" layoutY="260.0" mnemonicParsing="false" onAction="#signupHandler" text="Signup" textAlignment="CENTER">
+      <Button fx:id="signupBtn" layoutX="325.0" layoutY="420.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#signupHandler" prefHeight="45.0" prefWidth="150.0" styleClass="blue-registration-Btn" text="Signup" textAlignment="CENTER">
          <font>
             <Font size="18.0" />
          </font>
       </Button>
-      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="153.0" layoutY="330.0" maxHeight="24.0" minHeight="24.0" text="Already have an account?  " textAlignment="CENTER" textFill="#d2cece" />
-      <Hyperlink fx:id="haveanAcountHT" alignment="CENTER" contentDisplay="CENTER" layoutX="330.0" layoutY="329.0" maxHeight="27.0" minHeight="24.0" onAction="#haveanAcountHTHandler" prefHeight="27.0" prefWidth="84.0" text="Login here" textAlignment="CENTER" />
-      <PasswordField fx:id="passwordTF1" layoutX="97.0" layoutY="151.0" prefHeight="34.0" prefWidth="400.0" promptText="Enter your Password...">
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="235.0" layoutY="500.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="250.0" text="Already have an account?  " textAlignment="CENTER" textFill="#f45162" />
+      <Hyperlink fx:id="haveanAcountHT" alignment="CENTER" contentDisplay="CENTER" layoutX="440.0" layoutY="500.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onAction="#haveanAcountHTHandler" prefHeight="40.0" prefWidth="150.0" text="Login here" textAlignment="CENTER" />
+      <PasswordField fx:id="passwordTF1" layoutX="200.0" layoutY="260.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="400.0" promptText="Enter your Password..." styleClass="text-input">
          <font>
             <Font size="14.0" />
          </font>
       </PasswordField>
-      <PasswordField fx:id="confirmTF1" layoutX="100.0" layoutY="210.0" prefHeight="34.0" prefWidth="400.0" promptText="Confirm password...">
+      <PasswordField fx:id="confirmTF1" layoutX="200.0" layoutY="340.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="400.0" promptText="Confirm password..." styleClass="text-input">
          <font>
             <Font size="14.0" />
          </font>
       </PasswordField>
-      <Button fx:id="backBtn" layoutX="45.0" layoutY="26.0" mnemonicParsing="false" onAction="#handleBackBtn" text="back" />
+      <Button fx:id="backBtn" layoutX="40.0" layoutY="30.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onAction="#handleBackBtn" prefHeight="50.0" prefWidth="50.0" styleClass="home-btn" textAlignment="CENTER">
+         <graphic>
+            <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true">
+               <image>
+                  <Image url="@../../../../../../../Assets/HomeIcon.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
    </children>
 </Pane>

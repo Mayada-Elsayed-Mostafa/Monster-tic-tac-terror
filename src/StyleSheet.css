@@ -1,0 +1,168 @@
+.root {
+    -fx-font-family: "Arial";
+    -fx-font-size: 16px;
+}
+
+.button.blue-btn{
+    -fx-background-color: #F0FAFC;
+    -fx-font-size: 32px;
+}
+.button.white-btn{
+    -fx-background-color: #FFFFFF;
+    -fx-font-size: 32px;
+}
+
+.button.yellow-rounded-Btn {
+    -fx-background-color: #FCCB4A;
+    -fx-text-fill: white;
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-background-radius: 20px;
+    -fx-border-radius: 15;
+}
+
+.button.yellow-rounded-Btn:hover {
+    -fx-background-color: #E6B93F;
+}
+
+.button.blue-rounded-Btn {
+    -fx-background-color: #279DFF;
+    -fx-text-fill: white;
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-background-radius: 20px;
+    -fx-border-radius: 15;
+}
+
+.button.blue-rounded-Btn:hover {
+    -fx-background-color: #1A7BCC;
+}
+
+.button.red-rounded-Btn {
+    -fx-background-color: #F45162;
+    -fx-text-fill: white;
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-background-radius: 20px;
+    -fx-border-radius: 15;
+}
+
+.button.red-rounded-Btn:hover {
+    -fx-background-color: #D63E54;
+}
+
+.button.green-rounded-Btn {
+    -fx-background-color: #29D4B2;
+    -fx-text-fill: white;
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-background-radius: 20px;
+    -fx-border-radius: 15;
+}
+
+.button.green-rounded-Btn:hover {
+    -fx-background-color: #24B39B;
+}
+
+.button.blue-request-Btn {
+    -fx-background-color: #279DFF;
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-background-radius: 20px;
+    -fx-border-radius: 15;
+}
+
+.button.blue-rounded-Btn:hover {
+    -fx-background-color: #1A7BCC;
+}
+
+
+.button {
+    -fx-background-color: #F45162;
+    -fx-text-fill: white;
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+}
+
+.button:hover {
+    -fx-background-color: #45a049;
+}
+
+.button.green-btn {
+    -fx-background-color: #29D4B2;
+    -fx-text-fill: white;
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+}
+
+.button.home-btn {
+    -fx-background-color: #198BFE;
+    -fx-background-radius: 15px;
+}
+
+.button.home-btn:hover {
+    -fx-background-color: #1A7BCC;
+}
+
+.button.blue-registration-Btn {
+    -fx-background-color: #198BFE;
+    -fx-text-fill: white;
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-background-radius: 20px;
+    -fx-border-radius: 15;
+}
+
+.button.blue-registration-Btn:hover {
+    -fx-background-color: #1A7BCC;
+}
+
+.label.name {
+    -fx-text-fill: #333333;
+    -fx-font-weight: bold;
+}
+
+
+.text-input {
+    -fx-background-color: white;
+    -fx-text-fill: black;
+    -fx-border-color: #62C570;
+    -fx-border-width: 2px;
+    -fx-background-radius: 20px;
+    -fx-border-radius: 15;
+}
+
+.text-input:focused {
+    -fx-border-color: #F45162;
+}
+
+.title{
+    -fx-font-size: 28px;
+    -fx-font-family: 'Pacifico';
+    -fx-font-weight: bold;
+}
+
+.title.green{
+    -fx-font-size: 36px;
+    -fx-text-fill: #29D4B2;
+}
+
+
+#title.red {
+    -fx-font-size: 42px;
+    -fx-text-fill: #F45162;
+}
+
+
+#title {
+    -fx-font-size: 24px;
+    -fx-font-family: 'Pacifico';
+    -fx-text-fill: #ffffff;
+    -fx-font-weight: bold;
+}
+#score{
+    -fx-font-size: 20px;
+    -fx-text-fill: #f45162;
+    -fx-font-weight: bold;
+}
