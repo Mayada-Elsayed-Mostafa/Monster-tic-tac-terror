@@ -94,7 +94,7 @@ public class GameController extends Controller {
                     LocalDateTime now = LocalDateTime.now();
                     String time = dtf.format(now);
 
-                    File record = new File("offlineRecords/" + player1Name + "vs" + player2Name + " " + time + ".json");
+                    File record = new File("offlineRecords/" + player1Name + " Vs " + player2Name + " " + time + ".json");
                     try {
                         if (record.createNewFile()) {
                             FileWriter myWriter = new FileWriter(record);
@@ -220,6 +220,7 @@ public class GameController extends Controller {
         cell_7_btn.setDisable(false);
         cell_8_btn.setDisable(false);
         cell_9_btn.setDisable(false);
+        recordBtn.setDisable(false);
         moveCount = 0;
         isPlayer1Turn = true;
         board = new String[3][3];
@@ -308,7 +309,7 @@ public class GameController extends Controller {
         showAlertForPlayerNames();
         fileObject = new JSONObject();
         moves = new JSONArray();
-        namesLabel.setText(player1Name + " VS " + player2Name);
+        namesLabel.setText(player1Name + " (X)" + " vs " + player2Name + " (O)");
         resetGame();
     }
 }

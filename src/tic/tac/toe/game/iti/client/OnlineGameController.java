@@ -68,18 +68,18 @@ public class OnlineGameController {
 
     public void setStage(Stage stage, String msg) {
         this.stage = stage;
-        isGameFinished=false;
-        winnerName="";
-        loserName="";
-        player1Score=0;
-        player2Score=0;
+        isGameFinished = false;
+        winnerName = "";
+        loserName = "";
+        player1Score = 0;
+        player2Score = 0;
         cells = new Button[]{cell_1_btn, cell_2_btn, cell_3_btn, cell_4_btn, cell_5_btn, cell_6_btn, cell_7_btn, cell_8_btn, cell_9_btn};
         startGame(msg);
     }
 
     public void setStage(Stage stage) {
         this.stage = stage;
-        isGameFinished=false;
+        isGameFinished = false;
         cells = new Button[]{cell_1_btn, cell_2_btn, cell_3_btn, cell_4_btn, cell_5_btn, cell_6_btn, cell_7_btn, cell_8_btn, cell_9_btn};
 
     }
@@ -144,10 +144,10 @@ public class OnlineGameController {
                     if (isRecording) {
                         fileObject.put("moves", moves);
                         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("MM-dd_HH-mm");
-                    LocalDateTime now = LocalDateTime.now();
-                    String time = dtf.format(now);
+                        LocalDateTime now = LocalDateTime.now();
+                        String time = dtf.format(now);
 
-                    File record = new File("onlineRecords/" + player1Name + " Vs " + player2Name + " " + time + ".json");
+                        File record = new File("onlineRecords/" + player1Name + " Vs " + player2Name + " " + time + ".json");
                         try {
                             if (record.createNewFile()) {
                                 FileWriter myWriter = new FileWriter(record);
@@ -304,7 +304,7 @@ public class OnlineGameController {
         cell_6_btn.setText("");
         cell_7_btn.setText("");
         cell_8_btn.setText("");
-        cell_9_btn.setText("");        
+        cell_9_btn.setText("");
         cell_1_btn.setDisable(false);
         cell_2_btn.setDisable(false);
         cell_3_btn.setDisable(false);
@@ -314,6 +314,7 @@ public class OnlineGameController {
         cell_7_btn.setDisable(false);
         cell_8_btn.setDisable(false);
         cell_9_btn.setDisable(false);
+        recordBtn.setDisable(false);
         moveCount = 0;
         isRecording = false;
         fileObject = new JSONObject();
@@ -345,7 +346,7 @@ public class OnlineGameController {
             if (response == acceptButton) {
                 reply.put("type", MassageType.RESTART_ACCEPT_MSG);
             } else {
-                isGameFinished=true;
+                isGameFinished = true;
                 reply.put("type", MassageType.RESTART_REJECT_MSG);
                 try {
                     //Return to home page
@@ -374,7 +375,7 @@ public class OnlineGameController {
         JSONObject object = (JSONObject) JSONValue.parse((String) mainObject.get("data"));
         player1Name = (String) object.get("player1");
         player2Name = (String) object.get("player2");
-        namesLabel.setText(player1Name + " vs " + player2Name);
+        namesLabel.setText(player1Name + " (X)" + " vs " + player2Name + " (O)");
         boolean start = (boolean) object.get("isStarted");
         doIStart = start;
         isMyTurn = start;
@@ -412,7 +413,7 @@ public class OnlineGameController {
                         if (ServerHandler.socket == null) {
                             return;
                         }
-                        if(isGameFinished){
+                        if (isGameFinished) {
                             return;
                         }
                         Thread.sleep(100);  // Prevents busy-waiting
@@ -504,7 +505,7 @@ public class OnlineGameController {
                     ServerHandler.msg = null;
                 } else if (msgType.equals(MassageType.WITHDRAW_GAME_MSG)) {
                     ServerHandler.msg = null;
-                    isGameFinished=true;
+                    isGameFinished = true;
                     Platform.runLater(() -> {
                         myScore += 10;
                         player1Score += 10;
@@ -525,7 +526,7 @@ public class OnlineGameController {
 
                 } else if (msgType.equals(MassageType.END_GAME_MSG)) {
                     ServerHandler.msg = null;
-                    isGameFinished=true;
+                    isGameFinished = true;
                     Platform.runLater(() -> {
                         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
                         alert.setTitle("End Game");
