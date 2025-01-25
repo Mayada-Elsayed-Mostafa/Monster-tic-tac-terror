@@ -7,10 +7,8 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.stream.Collectors;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -72,7 +70,7 @@ public class ServerHandler {
                             String challengerUsername = (String) respone.get("data");
 
                             Platform.runLater(() -> {
-                                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                                Alert alert = new Alert(Alert.AlertType.INFORMATION);
                                 alert.setTitle("Challenge Request");
                                 alert.setHeaderText(challengerUsername + " has challenged you to a game!");
                                 alert.setContentText("Do you want to accept the challenge?");
@@ -165,7 +163,7 @@ public class ServerHandler {
 
     private static void serverDisconnection() {
 
-        Alert alert = new Alert(Alert.AlertType.WARNING);
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Connection Lost");
         alert.setContentText("You will be redirected to the home page");
         alert.showAndWait();

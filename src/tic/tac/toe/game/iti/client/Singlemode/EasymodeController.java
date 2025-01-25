@@ -1,6 +1,5 @@
 package tic.tac.toe.game.iti.client.Singlemode;
 
-import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Random;
@@ -17,13 +16,12 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import tic.tac.toe.game.iti.client.Controller;
-import tic.tac.toe.game.iti.client.Registeration.LoginPageController;
-import tic.tac.toe.game.iti.client.ServerSide.ServerHandler;
 import tic.tac.toe.game.iti.client.VideoController;
-import tic.tac.toe.game.iti.client.WelcomeController;
 
 public class EasymodeController extends Controller implements Initializable {
 
@@ -40,11 +38,11 @@ public class EasymodeController extends Controller implements Initializable {
     private String difficulty = "Easy";
     private final Random random = new Random();
     @FXML
-    private Label namesLabel;
+    private Label player1;
     @FXML
-    private Button restartButton;
+    private Label player2;
     @FXML
-    private Button endBtn;
+    private ImageView endGameIconBtn;
 
     @FXML
     private void buttonOneHandler(ActionEvent event) {
@@ -91,11 +89,6 @@ public class EasymodeController extends Controller implements Initializable {
         handleMove(2, 2);
     }
 
-    @FXML
-    private void restartButtonHandler(ActionEvent event) {
-        initializeGame();
-    }
-
     public void setStage(Stage stage) {
         this.stage = stage;
     }
@@ -138,10 +131,10 @@ public class EasymodeController extends Controller implements Initializable {
             makeMove(row, col, currentPlayer);
             if (checkWinner(currentPlayer)) {
                 gameStatus.setText(currentPlayer + " Wins!");
-                if(currentPlayer == 'X'){
+                if (currentPlayer == 'X') {
                     displayVideo("/Assets/winner.mp4");
                 }
-                
+
                 gameOver = true;
             } else if (isBoardFull()) {
                 gameStatus.setText("It's a Draw!");
@@ -216,7 +209,7 @@ public class EasymodeController extends Controller implements Initializable {
         } while (board[move[0]][move[1]] != ' ');
         return move;
     }
-    
+
     private int[] getOptimalMove() {
         int bestScore = Integer.MIN_VALUE;
         int[] bestMove = {-1, -1};
@@ -260,6 +253,7 @@ public class EasymodeController extends Controller implements Initializable {
         }
         return bestScore;
     }
+
     private void displayVideo(String videoUrl) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/tic/tac/toe/game/iti/client/video.fxml"));
@@ -273,14 +267,14 @@ public class EasymodeController extends Controller implements Initializable {
 
             stage.setScene(new Scene(root));
         } catch (IOException e) {
-            Alert alert = new Alert(Alert.AlertType.ERROR, "An error occurred, please try again", ButtonType.OK);
+            Alert alert = new Alert(Alert.AlertType.NONE, "An error occurred, please try again", ButtonType.OK);
             alert.showAndWait();
         }
     }
-    
+
     @Override
     public void askReplay() {
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Do you want to play again?", ButtonType.YES, ButtonType.NO);
+        Alert alert = new Alert(Alert.AlertType.NONE, "Do you want to play again?", ButtonType.YES, ButtonType.NO);
         alert.setTitle("Play Again?");
         alert.showAndWait().ifPresent(response -> {
             if (response == ButtonType.YES) {
@@ -293,7 +287,7 @@ public class EasymodeController extends Controller implements Initializable {
 
     private void endHandeler() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/tic/tac/toe/game/iti/client/Welcome.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("Singlemode.fxml"));
             Parent root = loader.load();
 
             SinglemodeController controller = loader.getController();
@@ -307,7 +301,7 @@ public class EasymodeController extends Controller implements Initializable {
     }
 
     @FXML
-    private void handleEndBtn(ActionEvent event) {
+    private void endGameHandeler(MouseEvent event) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("Singlemode.fxml"));
             Parent root = loader.load();
@@ -318,5 +312,10 @@ public class EasymodeController extends Controller implements Initializable {
         } catch (IOException ex) {
             Logger.getLogger(EasymodeController.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    @FXML
+    private void restartGameHandeler(MouseEvent event) {
+        initializeGame();
     }
 }

@@ -1,96 +1,68 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
-<?import javafx.scene.text.Font?>
+<?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Text?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #D6C0B3;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tic.tac.toe.game.iti.client.Singlemode.EasymodeController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" stylesheets="@../../../../../../../StyleSheet.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tic.tac.toe.game.iti.client.Singlemode.EasymodeController">
     <children>
-        <Label fx:id="namesLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="147.0" layoutY="14.0" prefHeight="35.0" prefWidth="317.0" text="Player VS Computer" textAlignment="CENTER" textFill="#493628">
-            <font>
-                <Font name="System Bold Italic" size="18.0" />
-            </font>
-        </Label>
-        <Text fx:id="gameStatus" layoutX="51.0" layoutY="105.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="90.00000357627869" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="200.0" stroke="BLACK" strokeType="INSIDE" width="200.0" />
+        <ImageView fitHeight="600.0" fitWidth="800.0" pickOnBounds="true">
+            <image>
+                <Image url="@../../../../../../../Assets/gameBG.png" />
+            </image>
+        </ImageView>
+        <Label id="title" fx:id="player1" alignment="CENTER" contentDisplay="CENTER" layoutX="240.0" layoutY="25.0" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="100.0" text="You" textAlignment="CENTER" />
+        <Label id="vs-title" alignment="CENTER" contentDisplay="CENTER" layoutX="348.0" layoutY="13.0" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="50.0" text="VS" textAlignment="CENTER" />
+        <Label id="title" fx:id="player2" alignment="CENTER" contentDisplay="CENTER" layoutX="417.0" layoutY="25.0" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="35.0" prefWidth="115.0" text="Computer" textAlignment="CENTER" />
+        <Text id="title" fx:id="gameStatus" fill="WHITE" layoutX="293.0" layoutY="97.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="210.6666259765625" />
 
-        <GridPane hgap="4.0" layoutX="180.0" layoutY="68.0" maxHeight="250.0" maxWidth="250.0" minHeight="250.0" minWidth="250.0" prefHeight="250.0" prefWidth="217.0" vgap="4.0">
+        <Rectangle arcHeight="40.0" arcWidth="40.0" fill="#caeaf7" height="325.0" layoutX="237.5" layoutY="138.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="325.0" />
+        <GridPane alignment="CENTER" hgap="0" layoutX="250.0" layoutY="150.0" maxHeight="300.0" maxWidth="300.0" minHeight="300.0" minWidth="300.0" prefHeight="300.0" prefWidth="300.0" vgap="0">
             <columnConstraints>
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="100.0" percentWidth="0.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="100.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="100.0" prefWidth="100.0" />
             </columnConstraints>
             <rowConstraints>
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="100.0" prefHeight="100.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="100.0" prefHeight="100.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="100.0" prefHeight="100.0" vgrow="SOMETIMES" />
             </rowConstraints>
             <children>
-                <Button fx:id="buttonOne" contentDisplay="CENTER" mnemonicParsing="false" onAction="#buttonOneHandler" prefHeight="86.0" prefWidth="86.0" style="-fx-background-color: E4E0E1;" textAlignment="CENTER">
-                    <font>
-                        <Font name="System Bold" size="24.0" />
-                    </font>
-                </Button>
-                <Button fx:id="buttonTwo" mnemonicParsing="false" onAction="#buttonTwoHandler" prefHeight="86.0" prefWidth="86.0" style="-fx-background-color: E4E0E1;" GridPane.columnIndex="1">
-                    <font>
-                        <Font name="System Bold" size="24.0" />
-                    </font>
-                </Button>
-                <Button fx:id="buttonThree" mnemonicParsing="false" onAction="#buttonThreeHandler" prefHeight="86.0" prefWidth="86.0" style="-fx-background-color: E4E0E1;" GridPane.columnIndex="2">
-                    <font>
-                        <Font name="System Bold" size="24.0" />
-                    </font>
-                </Button>
-                <Button fx:id="buttonFour" mnemonicParsing="false" onAction="#buttonFourHandler" prefHeight="86.0" prefWidth="86.0" style="-fx-background-color: E4E0E1;" GridPane.rowIndex="1">
-                    <font>
-                        <Font name="System Bold" size="24.0" />
-                    </font>
-                </Button>
-                <Button fx:id="buttonFive" mnemonicParsing="false" onAction="#buttonFiveHandler" prefHeight="86.0" prefWidth="86.0" style="-fx-background-color: E4E0E1;" GridPane.columnIndex="1" GridPane.rowIndex="1">
-                    <font>
-                        <Font name="System Bold" size="24.0" />
-                    </font>
-                </Button>
-                <Button fx:id="buttonSix" mnemonicParsing="false" onAction="#buttonSixHandler" prefHeight="86.0" prefWidth="86.0" style="-fx-background-color: E4E0E1;" GridPane.columnIndex="2" GridPane.rowIndex="1">
-                    <font>
-                        <Font name="System Bold" size="24.0" />
-                    </font>
-                </Button>
-                <Button fx:id="buttonSeven" mnemonicParsing="false" onAction="#buttonSevenHandler" prefHeight="86.0" prefWidth="86.0" style="-fx-background-color: E4E0E1;" GridPane.rowIndex="2">
-                    <font>
-                        <Font name="System Bold" size="24.0" />
-                    </font>
-                </Button>
-                <Button fx:id="buttonEight" mnemonicParsing="false" onAction="#buttonEightHandler" prefHeight="86.0" prefWidth="86.0" style="-fx-background-color: E4E0E1;" GridPane.columnIndex="1" GridPane.rowIndex="2">
-                    <font>
-                        <Font name="System Bold" size="24.0" />
-                    </font>
-                </Button>
-                <Button fx:id="buttonNine" mnemonicParsing="false" onAction="#buttonNineHandler" prefHeight="86.0" prefWidth="86.0" style="-fx-background-color: E4E0E1;" GridPane.columnIndex="2" GridPane.rowIndex="2">
-                    <font>
-                        <Font name="System Bold" size="24.0" />
-                    </font>
-                </Button>
+                <Button fx:id="buttonOne" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#buttonOneHandler" prefHeight="100.0" prefWidth="100.0" styleClass="blue-btn" textAlignment="CENTER" />
+                <Button fx:id="buttonTwo" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#buttonTwoHandler" prefHeight="100.0" prefWidth="100.0" styleClass="white-btn" GridPane.columnIndex="1" />
+                <Button fx:id="buttonThree" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#buttonThreeHandler" prefHeight="100.0" prefWidth="100.0" styleClass="blue-btn" GridPane.columnIndex="2" />
+                <Button fx:id="buttonFour" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#buttonFourHandler" prefHeight="100.0" prefWidth="100.0" styleClass="white-btn" GridPane.rowIndex="1" />
+                <Button fx:id="buttonFive" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#buttonFiveHandler" prefHeight="100.0" prefWidth="100.0" styleClass="blue-btn" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                <Button fx:id="buttonSix" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#buttonSixHandler" prefHeight="100.0" prefWidth="100.0" styleClass="white-btn" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                <Button fx:id="buttonSeven" contentDisplay="CENTER" mnemonicParsing="false" onAction="#buttonSevenHandler" prefHeight="100.0" prefWidth="100.0" styleClass="blue-btn" GridPane.rowIndex="2" />
+                <Button fx:id="buttonEight" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#buttonEightHandler" prefHeight="100.0" prefWidth="100.0" styleClass="white-btn" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                <Button fx:id="buttonNine" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#buttonNineHandler" prefHeight="100.0" prefWidth="100.0" styleClass="blue-btn" GridPane.columnIndex="2" GridPane.rowIndex="2" />
             </children>
+            <opaqueInsets>
+                <Insets />
+            </opaqueInsets>
         </GridPane>
-<!--        <Button fx:id="endGameBtn" alignment="CENTER" contentDisplay="CENTER" layoutX="490.0" layoutY="356.0" mnemonicParsing="false" onAction="#endHandeler" prefHeight="35.0" prefWidth="90.0" style="-fx-background-color: E4E0E1;" text="End Game" textAlignment="CENTER" textFill="#493628">
-            <font>
-                <Font name="System Bold" size="14.0" />
-            </font>
-        </Button>-->
-        <Button fx:id="restartButton" alignment="CENTER" contentDisplay="CENTER" layoutX="14.0" layoutY="356.0" mnemonicParsing="false" onAction="#restartButtonHandler" prefHeight="35.0" prefWidth="129.0" style="-fx-background-color: E4E0E1;" text="Restart Game" textAlignment="CENTER" textFill="#493628">
-            <font>
-                <Font name="System Bold" size="14.0" />
-            </font>
-        </Button>
-      <Button fx:id="endBtn" alignment="CENTER" contentDisplay="CENTER" layoutX="454.0" layoutY="356.0" mnemonicParsing="false" onAction="#handleEndBtn" prefHeight="35.0" prefWidth="129.0" style="-fx-background-color: E4E0E1;" text="End Game" textAlignment="CENTER" textFill="#493628">
-         <font>
-            <Font name="System Bold" size="14.0" />
-         </font>
-      </Button>
+      
+      <ImageView fx:id="endGameIconBtn" fitHeight="60.0" fitWidth="60.0" layoutX="683.75" layoutY="470.0" onMouseClicked="#endGameHandeler" pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@../../../../../../../Assets/Endgame.png" />
+            </image>
+        </ImageView>
+      <ImageView fitHeight="60.0" fitWidth="60.0" layoutX="56.25" layoutY="470.0" onMouseClicked="#restartGameHandeler" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../../../../../Assets/Repeat.png" />
+         </image>
+      </ImageView>
     </children>
+    
 </Pane>

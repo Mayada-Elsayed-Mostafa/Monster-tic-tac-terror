@@ -13,14 +13,16 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Hyperlink;
+import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
 import tic.tac.toe.game.iti.client.HomePageController;
-import tic.tac.toe.game.iti.client.OnlineRecordsController;
 import tic.tac.toe.game.iti.client.ServerSide.MassageType;
 import tic.tac.toe.game.iti.client.ServerSide.ServerHandler;
 import tic.tac.toe.game.iti.client.WelcomeController;
@@ -29,7 +31,7 @@ import tic.tac.toe.game.iti.client.player.Player;
 public class LoginPageController {
 
     private Stage stage;
-    
+
     @FXML
     private Button loginBtn;
     @FXML
@@ -39,7 +41,9 @@ public class LoginPageController {
     @FXML
     private Hyperlink creatAccount;
     @FXML
-    private Button backBtn;
+    private ImageView backIcon;
+    @FXML
+    private Label title;
 
     public void setStage(Stage stage) {
         this.stage = stage;
@@ -58,10 +62,10 @@ public class LoginPageController {
         String _password = password.getText();
         JSONObject loginData = new JSONObject();
         if (_username.length() < 3) {
-            showAlert(Alert.AlertType.WARNING, "Invalid", "Your username must be at least 3 characters");
+            showAlert(Alert.AlertType.ERROR, "Invalid", "Your username must be at least 3 characters");
         } else if (_password.length() < 6) {
-            showAlert(Alert.AlertType.WARNING, "Invalid", "Your password must be at least 6 characters");
-            
+            showAlert(Alert.AlertType.ERROR, "Invalid", "Your password must be at least 6 characters");
+
         } else {
             Player p = new Player(_username, _password);
             JSONObject player = new JSONObject();
@@ -84,7 +88,7 @@ public class LoginPageController {
                 ServerHandler.isLoggedIn = true;
                 navigateToHome(data.get("data"));
             } else if (data.get("type").equals(MassageType.LOGIN_FAIL_MSG)) {
-                showAlert(Alert.AlertType.WARNING, "unsuccessful", "Log in failed, try again");
+                showAlert(Alert.AlertType.ERROR, "unsuccessful", "Log in failed, try again");
             }
             ServerHandler.msg = null;
         }
@@ -97,16 +101,16 @@ public class LoginPageController {
 
             HomePageController controller = loader.getController();
             controller.setStage(stage);
-            
+
             JSONArray array = (JSONArray) data;
-            
+
             ArrayList<Player> dtoPlayers = new ArrayList<Player>();
-            for(int i = 0; i < array.size(); i++){
-                JSONObject obj = (JSONObject) JSONValue.parse((String)array.get(i));
-                dtoPlayers.add(new Player((String)obj.get("username"), "", "", ((Long)obj.get("score")).intValue()));
-                
+            for (int i = 0; i < array.size(); i++) {
+                JSONObject obj = (JSONObject) JSONValue.parse((String) array.get(i));
+                dtoPlayers.add(new Player((String) obj.get("username"), "", "", ((Long) obj.get("score")).intValue()));
+
             }
-            
+
             HomePageController.updateAvailablePlayers(dtoPlayers);
 
             stage.setScene(new Scene(root));
@@ -134,9 +138,9 @@ public class LoginPageController {
             alert.showAndWait();
         }
     }
-
+    
     @FXML
-    private void handleBackBtn(ActionEvent event) {
+    private void backIconHandler(MouseEvent event) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/tic/tac/toe/game/iti/client/Welcome.fxml"));
             Parent root = loader.load();

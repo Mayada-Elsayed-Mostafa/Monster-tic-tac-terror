@@ -5,16 +5,16 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import org.json.simple.JSONObject;
 import tic.tac.toe.game.iti.client.ServerSide.MassageType;
@@ -24,8 +24,6 @@ public class OptionsDisplayController extends Controller implements Initializabl
 
     Stage stage;
 
-    @FXML
-    private Label header;
     @FXML
     private Label players;
     @FXML
@@ -39,9 +37,13 @@ public class OptionsDisplayController extends Controller implements Initializabl
     @FXML
     private Label loserScore;
     @FXML
-    private Button restartGameBtn;
+    private ImageView endGameIconBtn;
     @FXML
-    private Button endGameBtn;
+    private ImageView restartGameIconBtn;
+    @FXML
+    private Label player1;
+    @FXML
+    private Label player2;
 
     public void setStage(Stage stage, String msg) {
         this.stage = stage;
@@ -52,9 +54,10 @@ public class OptionsDisplayController extends Controller implements Initializabl
     }
 
     @FXML
-    public void restartHandler() {
+    private void restartIConHandler(MouseEvent event) {
         restartRequest();
     }
+
 
     public void restartRequest() {
         JSONObject restart = new JSONObject();
@@ -84,7 +87,7 @@ public class OptionsDisplayController extends Controller implements Initializabl
             ServerHandler.stage.setScene(new Scene(root));
 
         } catch (IOException e) {
-            Alert alert = new Alert(Alert.AlertType.ERROR, "An error occurred, please try again", ButtonType.OK);
+            Alert alert = new Alert(Alert.AlertType.NONE, "An error occurred, please try again", ButtonType.OK);
             alert.showAndWait();
         }
     }
@@ -95,11 +98,12 @@ public class OptionsDisplayController extends Controller implements Initializabl
         loser.setText(OnlineGameController.loserName + "");
         winnerScore.setText(OnlineGameController.player1Score + "");
         loserScore.setText(OnlineGameController.player2Score + "");
-        header.setText(OnlineGameController.winnerName + " VS " + OnlineGameController.loserName);
+        player1.setText(OnlineGameController.winnerName);
+        player2.setText(OnlineGameController.loserName);
     }
 
     @FXML
-    private void endGameFunction(ActionEvent event) {
+    private void endGameFunction(MouseEvent event) {
         try {
             OnlineGameController.isGameFinished=true;
             FXMLLoader loader = new FXMLLoader(getClass().getResource("HomePage.fxml"));
@@ -114,7 +118,6 @@ public class OptionsDisplayController extends Controller implements Initializabl
             Logger.getLogger(OptionsDisplayController.class.getName()).log(Level.SEVERE, null, ex);
         }
         endGameRequest();
-
     }
 
     public void endGameRequest() {
@@ -126,5 +129,5 @@ public class OptionsDisplayController extends Controller implements Initializabl
             Logger.getLogger(OnlineGameController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
+    
 }

@@ -105,16 +105,17 @@ public class WelcomeController {
                 ServerHandler.setSocket(ip);
                 isIpEntered = true;
             } catch (IOException ex) {
-                Alert alert = new Alert(Alert.AlertType.WARNING, "Unable to connect to the server. Please try again later.", ButtonType.OK);
+                Alert alert = new Alert(Alert.AlertType.NONE, "Unable to connect to the server. Please try again later.", ButtonType.OK);
                 alert.setTitle("Connection Error");
                 alert.showAndWait();
             }
         } else {
-            Alert a = new Alert(Alert.AlertType.WARNING, "Please Enter IP to continue...", ButtonType.OK);
+            Alert a = new Alert(Alert.AlertType.NONE, "Please Enter IP to continue...", ButtonType.OK);
             a.showAndWait();
         }
     }
     
+    @FXML
     public void offlineRcdsBtnHandle(ActionEvent event){
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("OfflineRecords.fxml"));

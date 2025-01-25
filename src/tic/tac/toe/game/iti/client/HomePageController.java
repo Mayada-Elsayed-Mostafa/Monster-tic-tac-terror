@@ -11,6 +11,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import org.json.simple.JSONObject;
@@ -37,6 +39,8 @@ public class HomePageController extends Controller{
     private Button recordsBtn;
     
     public static List<Player> currentPlayers;
+    @FXML
+    private ImageView logoutIcon;
 
     public void setStage(Stage stage) {
         this.stage = stage;
@@ -51,29 +55,6 @@ public class HomePageController extends Controller{
         sScores = scores;
         sChallenges = challenges;
         updateAvailablePlayers(currentPlayers);
-    }
-
-    @FXML
-    public void handleLogout(ActionEvent event) {
-        JSONObject output = new JSONObject();
-        output.put("type", MassageType.LOGOUT_MSG);
-        try {
-            ServerHandler.massageOut.writeUTF(output.toJSONString());
-        } catch (IOException ex) {
-            Logger.getLogger(HomePageController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("Registeration/LoginPage.fxml"));
-            Parent root = loader.load();
-
-            LoginPageController controller = loader.getController();
-            controller.setStage(stage);
-
-            stage.setScene(new Scene(root));
-            stage.setTitle("Login Page");
-        } catch (IOException ex) {
-            Logger.getLogger(WelcomeController.class.getName()).log(Level.SEVERE, null, ex);
-        }
     }
 
     public static void updateAvailablePlayers(List<Player> players) {
@@ -126,6 +107,29 @@ public class HomePageController extends Controller{
 
     @Override
     public void askReplay() {
+    }
+
+    @FXML
+    private void handleLogout(MouseEvent event) {
+        JSONObject output = new JSONObject();
+        output.put("type", MassageType.LOGOUT_MSG);
+        try {
+            ServerHandler.massageOut.writeUTF(output.toJSONString());
+        } catch (IOException ex) {
+            Logger.getLogger(HomePageController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("Registeration/LoginPage.fxml"));
+            Parent root = loader.load();
+
+            LoginPageController controller = loader.getController();
+            controller.setStage(stage);
+
+            stage.setScene(new Scene(root));
+            stage.setTitle("Login Page");
+        } catch (IOException ex) {
+            Logger.getLogger(WelcomeController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
 }

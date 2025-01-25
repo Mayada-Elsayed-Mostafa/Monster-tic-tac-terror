@@ -4,19 +4,12 @@ import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-
 import java.io.File;
-import java.io.IOException;
 import java.nio.file.Files;
 import java.util.Timer;
 import java.util.TimerTask;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javafx.event.ActionEvent;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
-
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -24,8 +17,6 @@ import org.json.simple.JSONValue;
 
 public class RecordController {
 
-    @FXML
-    private Label namesLabel;
     @FXML
     private Button cell_1_btn;
     @FXML
@@ -44,6 +35,11 @@ public class RecordController {
     private Button cell_8_btn;
     @FXML
     private Button cell_9_btn;
+    
+    @FXML
+    private Label player_1;
+    @FXML
+    private Label player_2;
 
     private Stage stage;
     private Timer replayTimer;
@@ -80,7 +76,9 @@ public class RecordController {
             String player1Symbol = (String) player1.get("symbol");
             String player2Name = (String) player2.get("name");
             String player2Symbol = (String) player2.get("symbol");
-            namesLabel.setText(player1Name + " (" + player1Symbol + ") " +  "vs " + player2Name + " (" + player2Symbol + ")");
+            //namesLabel.setText(player1Name + " (" + player1Symbol + ") " +  "vs " + player2Name + " (" + player2Symbol + ")");
+            player_1.setText(player1Name);
+            player_2.setText(player2Name);
             replayGame();
         } catch (Exception e) {
             e.printStackTrace();
@@ -130,7 +128,7 @@ public class RecordController {
     }
 
     @FXML
-    private void handleBack(ActionEvent event) {
-            stage.setScene(prevScene); 
+    private void backIconhandler(MouseEvent event) {
+        stage.setScene(prevScene);
     }
 }

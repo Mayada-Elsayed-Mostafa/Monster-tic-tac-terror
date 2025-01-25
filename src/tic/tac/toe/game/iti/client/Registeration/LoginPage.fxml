@@ -5,32 +5,38 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tic.tac.toe.game.iti.client.Registeration.LoginPageController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" stylesheets="@../../../../../../../StyleSheet.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tic.tac.toe.game.iti.client.Registeration.LoginPageController">
    <children>
-      <Label layoutX="222.0" layoutY="61.0" text="Welcome Back!" textAlignment="CENTER">
+      <Label fx:id="title" alignment="CENTER" contentDisplay="CENTER" layoutX="172.0" layoutY="24.0" text="Welcome Back!" textAlignment="CENTER">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
-      <TextField fx:id="username" layoutX="100.0" layoutY="147.0" prefHeight="34.0" prefWidth="400.0" promptText="Enter your username...">
+      <TextField fx:id="username" layoutX="100.0" layoutY="148.0" prefHeight="34.0" prefWidth="400.0" promptText="Enter your username...">
          <font>
             <Font size="14.0" />
          </font></TextField>
-      <PasswordField fx:id="password" layoutX="100.0" layoutY="201.0" prefHeight="34.0" prefWidth="400.0" promptText="Enter your Password...">
+      <PasswordField fx:id="password" layoutX="100.0" layoutY="219.0" prefHeight="34.0" prefWidth="400.0" promptText="Enter your Password...">
          <font>
             <Font size="14.0" />
          </font>
       </PasswordField>
-      <Button fx:id="loginBtn" layoutX="240.0" layoutY="270.0" mnemonicParsing="false" onAction="#loginButtonHandler" prefWidth="120.0" text="Login" textAlignment="CENTER">
+      <Button fx:id="loginBtn" layoutX="223.0" layoutY="291.0" mnemonicParsing="false" onAction="#loginButtonHandler" prefWidth="120.0" text="Login" textAlignment="CENTER">
          <font>
             <Font size="18.0" />
          </font>
       </Button>
-      <Label layoutX="155.0" layoutY="335.0" text="Haven’t any account?" textFill="#d2cece" />
-      <Hyperlink fx:id="creatAccount" layoutX="300.0" layoutY="331.0" onAction="#createAccountHandler" text="Create account" />
-      <Button fx:id="backBtn" layoutX="74.0" layoutY="36.0" mnemonicParsing="false" onAction="#handleBackBtn" text="back" />
+      <Label layoutX="141.0" layoutY="349.0" text="Haven’t any account?" textFill="#d2cece" />
+      <Hyperlink fx:id="creatAccount" layoutX="306.0" layoutY="345.0" onAction="#createAccountHandler" text="Create account" />
+      <ImageView fx:id="backIcon" fitHeight="50.0" fitWidth="50.0" layoutX="24.0" layoutY="24.0" onMouseClicked="#backIconHandler" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../../../../../Assets/BackIcon.png" />
+         </image>
+      </ImageView>
    </children>
 </Pane>
