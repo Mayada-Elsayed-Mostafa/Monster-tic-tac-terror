@@ -42,6 +42,14 @@ public class TicTacToeGameITIClient extends Application {
             primaryStage.setTitle("Splash Screen");
             primaryStage.show();
 
+            primaryStage.setFullScreen(false);
+            primaryStage.fullScreenProperty().addListener((observable, oldValue, newValue) -> {
+                if (newValue) {
+                    primaryStage.setFullScreen(false);
+                }
+            });
+
+            primaryStage.setResizable(false);
 
             PauseTransition pause = new PauseTransition(Duration.seconds(2));
             pause.setOnFinished(event -> {

@@ -18,9 +18,9 @@
                 <Image url="@../../../../../../Assets/gameBG.png" />
             </image>
         </ImageView>
-        <Label id="title" fx:id="player_1" alignment="CENTER" contentDisplay="CENTER" layoutX="245.0" layoutY="24.0" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="100.0" text="Player1" textAlignment="CENTER" />
+        <Label id="title" fx:id="player_1" alignment="CENTER" contentDisplay="CENTER" layoutX="218.0" layoutY="22.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="150.0" text="Player1" textAlignment="CENTER" />
         <Label id="vs-title" alignment="CENTER" contentDisplay="CENTER" layoutX="375.0" layoutY="13.0" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="50.0" text="VS" textAlignment="CENTER" />
-        <Label id="title" fx:id="player_2" alignment="CENTER" contentDisplay="CENTER" layoutX="455.0" layoutY="24.0" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="100.0" text="Player2" textAlignment="CENTER" />
+        <Label id="title" fx:id="player_2" alignment="CENTER" contentDisplay="CENTER" layoutX="431.0" layoutY="22.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="150.0" text="Player2" textAlignment="CENTER" />
       
         <Rectangle arcHeight="40.0" arcWidth="40.0" fill="#caeaf7" height="325.0" layoutX="237.5" layoutY="138.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="325.0" />
         <GridPane alignment="CENTER" hgap="0" layoutX="250.0" layoutY="150.0" maxHeight="300.0" maxWidth="300.0" minHeight="300.0" minWidth="300.0" prefHeight="300.0" prefWidth="300.0" vgap="0">

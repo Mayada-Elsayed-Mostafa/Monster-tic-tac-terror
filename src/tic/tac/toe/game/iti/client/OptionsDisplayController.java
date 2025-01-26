@@ -87,7 +87,8 @@ public class OptionsDisplayController extends Controller implements Initializabl
             ServerHandler.stage.setScene(new Scene(root));
 
         } catch (IOException e) {
-            Alert alert = new Alert(Alert.AlertType.NONE, "An error occurred, please try again", ButtonType.OK);
+            Alert alert = new Alert(Alert.AlertType.ERROR, "An error occurred, please try again", ButtonType.OK);
+            alert.initOwner(stage.getScene().getWindow());
             alert.showAndWait();
         }
     }
@@ -129,5 +130,4 @@ public class OptionsDisplayController extends Controller implements Initializabl
             Logger.getLogger(OnlineGameController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
 }

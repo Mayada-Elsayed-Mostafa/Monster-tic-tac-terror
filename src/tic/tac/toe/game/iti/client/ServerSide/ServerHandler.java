@@ -7,8 +7,10 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -53,28 +55,22 @@ public class ServerHandler {
                             });
 
                         } else if (respone.get("type").equals(MassageType.UPDATE_LIST_MSG) && isLoggedIn) {
-                            JSONArray array = (JSONArray) respone.get("data");
-                            ArrayList<Player> dtoPlayers = new ArrayList<Player>();
-                            for (int i = 0; i < array.size(); i++) {
-                                JSONObject obj = (JSONObject) JSONValue.parse((String) array.get(i));
-                                dtoPlayers.add(new Player((String) obj.get("username"), "", "", ((Long) obj.get("score")).intValue()));
-                            }
-                            HomePageController.currentPlayers = dtoPlayers;
+                            HomePageController.currentPlayers = responseMsg;
                             Platform.runLater(new Runnable() {
                                 @Override
                                 public void run() {
-                                    HomePageController.updateAvailablePlayers(dtoPlayers);
+                                    HomePageController.updateAvailablePlayers(responseMsg);
                                 }
                             });
                         } else if (respone.get("type").equals(MassageType.CHALLENGE_REQUEST_MSG)) {
                             String challengerUsername = (String) respone.get("data");
 
                             Platform.runLater(() -> {
-                                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
                                 alert.setTitle("Challenge Request");
                                 alert.setHeaderText(challengerUsername + " has challenged you to a game!");
                                 alert.setContentText("Do you want to accept the challenge?");
-
+                                alert.initOwner(stage.getScene().getWindow());
                                 ButtonType acceptButton = new ButtonType("Accept");
                                 ButtonType rejectButton = new ButtonType("Reject");
 
@@ -89,8 +85,10 @@ public class ServerHandler {
                                             ServerHandler.massageOut.writeUTF(reply.toJSONString());
                                         } catch (IOException e) {
                                             e.printStackTrace();
+
                                         }
                                     }
+                                    
                                     
                                 });
                             });
@@ -104,7 +102,7 @@ public class ServerHandler {
                                     alert.setTitle("Challenge Accepted");
                                     alert.setHeaderText("Your challenge has been accepted!");
                                     alert.setContentText(opponentUsername + " is ready to play.");
-
+                                    alert.initOwner(stage.getScene().getWindow());
                                     alert.showAndWait();
                                 });
                             }
@@ -113,13 +111,7 @@ public class ServerHandler {
                             });
 
                         } else if (respone.get("type").equals(MassageType.UPDATE_LIST_MSG)) {
-                            JSONArray array = (JSONArray) respone.get("data");
-                            ArrayList<Player> dtoPlayers = new ArrayList<Player>();
-                            for (int i = 0; i < array.size(); i++) {
-                                JSONObject obj = (JSONObject) JSONValue.parse((String) array.get(i));
-                                dtoPlayers.add(new Player((String) obj.get("username"), "", "", ((Long) obj.get("score")).intValue()));
-                            }
-                            HomePageController.currentPlayers = dtoPlayers;
+                            HomePageController.currentPlayers = responseMsg;
                         } else if (respone.get("type").equals(MassageType.CHALLENGE_ACCEPT_MSG)) {
 
                         } else {
@@ -163,18 +155,18 @@ public class ServerHandler {
 
     private static void serverDisconnection() {
 
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        Alert alert = new Alert(Alert.AlertType.WARNING);
         alert.setTitle("Connection Lost");
         alert.setContentText("You will be redirected to the home page");
+        alert.initOwner(stage.getScene().getWindow());
         alert.showAndWait();
-
         try {
             FXMLLoader loader = new FXMLLoader(ServerHandler.class.getResource("/tic/tac/toe/game/iti/client/Welcome.fxml"));
             Parent root = loader.load();
 
             WelcomeController controller = loader.getController();
             controller.setStage(stage);
-
+            isLoggedIn=false;
             stage.setScene(new Scene(root));
             stage.setTitle("Welcome Page");
         } catch (IOException ex) {

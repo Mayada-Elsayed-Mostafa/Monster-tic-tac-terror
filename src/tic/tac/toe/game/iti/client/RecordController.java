@@ -35,7 +35,7 @@ public class RecordController {
     private Button cell_8_btn;
     @FXML
     private Button cell_9_btn;
-    
+
     @FXML
     private Label player_1;
     @FXML
@@ -51,9 +51,9 @@ public class RecordController {
 
     public void initialize() {
         board = new Button[][]{
-                {cell_1_btn, cell_2_btn, cell_3_btn},
-                {cell_4_btn, cell_5_btn, cell_6_btn},
-                {cell_7_btn, cell_8_btn, cell_9_btn}
+            {cell_1_btn, cell_2_btn, cell_3_btn},
+            {cell_4_btn, cell_5_btn, cell_6_btn},
+            {cell_7_btn, cell_8_btn, cell_9_btn}
         };
 
         clearBoard();
@@ -61,7 +61,7 @@ public class RecordController {
 
     public void setStage(Stage stage) {
         this.stage = stage;
-        prevScene=stage.getScene();
+        prevScene = stage.getScene();
     }
 
     public void loadGameRecord(File jsonFile) {
@@ -119,7 +119,13 @@ public class RecordController {
                 int col = ((Long) position.get(1)).intValue();
 
                 Platform.runLater(() -> {
-                    board[row][col].setText(player.equals(((JSONObject) ((JSONObject) gameRecord.get("players")).get("player1")).get("name")) ? "X" : "O");
+                    String go = player.equals(((JSONObject) ((JSONObject) gameRecord.get("players")).get("player1")).get("name")) ? "X" : "O";
+                    if (go.equals("X")) {
+                        board[row][col].setStyle("-fx-text-fill: #F45162;");
+                    } else {
+                        board[row][col].setStyle("-fx-text-fill: #497F5B;");
+                    }
+                    board[row][col].setText(go);
                 });
 
                 currentMoveIndex++;

@@ -14,14 +14,14 @@
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" stylesheets="@../../../../../../StyleSheet.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tic.tac.toe.game.iti.client.GameController">
     <children>
-        <ImageView fitHeight="600.0" fitWidth="800.0" pickOnBounds="true" preserveRatio="true">
+        <ImageView fitHeight="600.0" fitWidth="800.0" pickOnBounds="true" preserveRatio="true" styleClass="green-rounded-Btn">
             <image>
                 <Image url="@../../../../../../Assets/gameBG.png" />
             </image>
         </ImageView>
-        <Label id="title" fx:id="player1" alignment="CENTER" contentDisplay="CENTER" layoutX="245.0" layoutY="24.0" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="100.0" text="Player1" textAlignment="CENTER" />
+        <Label id="title" fx:id="player1" alignment="CENTER" contentDisplay="CENTER" layoutX="220.0" layoutY="24.0" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="150.0" text="Player1" textAlignment="CENTER" />
         <Label id="vs-title" alignment="CENTER" contentDisplay="CENTER" layoutX="375.0" layoutY="13.0" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="50.0" text="VS" textAlignment="CENTER" />
-        <Label id="title" fx:id="player2" alignment="CENTER" contentDisplay="CENTER" layoutX="455.0" layoutY="24.0" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="100.0" text="Player2" textAlignment="CENTER" />
+        <Label id="title" fx:id="player2" alignment="CENTER" contentDisplay="CENTER" layoutX="430.0" layoutY="25.0" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="150.0" text="Player2" textAlignment="CENTER" />
       <Rectangle arcHeight="40.0" arcWidth="40.0" fill="#caeaf7" height="325.0" layoutX="237.5" layoutY="138.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="325.0" />
         <GridPane alignment="CENTER" hgap="0" layoutX="250.0" layoutY="150.0" maxHeight="300.0" maxWidth="300.0" minHeight="300.0" minWidth="300.0" prefHeight="300.0" prefWidth="300.0" vgap="0">
             <columnConstraints>
@@ -60,15 +60,23 @@
                 <Font name="System Bold" size="14.0" />
             </font>
         </Label>
-      <ImageView fx:id="recordIConBtn" fitHeight="65.0" fitWidth="65.0" layoutX="56.25" layoutY="470.0" onMouseClicked="#recordIconHandeler" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../../../../../../Assets/Record.png" />
-         </image>
-      </ImageView>
-      <ImageView fx:id="endGameIconBtn" fitHeight="65.0" fitWidth="65.0" layoutX="683.75" layoutY="470.0" onMouseClicked="#endGameHandeler" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../../../../../../Assets/Endgame.png" />
-         </image>
-      </ImageView>
+      <Button fx:id="endBtn" layoutX="628.0" layoutY="480.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#endGameHandeler" prefHeight="50.0" prefWidth="132.0" style="-fx-font-size: 16;" styleClass="red-rounded-Btn" text="End" textAlignment="CENTER">
+         <graphic>
+            <ImageView fitHeight="35.0" fitWidth="35.0" pickOnBounds="true">
+               <image>
+                  <Image url="@../../../../../../Assets/Endgame.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+      <Button fx:id="recoedBtn" alignment="CENTER" layoutX="40.0" layoutY="480.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#recordIconHandeler" prefHeight="50.0" prefWidth="132.0" style="-fx-font-size: 16;" styleClass="green-rounded-Btn" text="Record" textAlignment="CENTER">
+         <graphic>
+            <ImageView fitHeight="35.0" fitWidth="35.0" pickOnBounds="true">
+               <image>
+                  <Image url="@../../../../../../Assets/Record.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
     </children>
 </Pane>

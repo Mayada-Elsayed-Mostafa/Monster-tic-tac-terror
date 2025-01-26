@@ -52,17 +52,25 @@
                 <Insets />
             </opaqueInsets>
         </GridPane>
-      
-      <ImageView fx:id="endGameIconBtn" fitHeight="60.0" fitWidth="60.0" layoutX="683.75" layoutY="470.0" onMouseClicked="#endGameHandeler" pickOnBounds="true" preserveRatio="true">
-            <image>
-                <Image url="@../../../../../../../Assets/Endgame.png" />
-            </image>
-        </ImageView>
-      <ImageView fitHeight="60.0" fitWidth="60.0" layoutX="56.25" layoutY="470.0" onMouseClicked="#restartGameHandeler" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../../../../../../../Assets/Repeat.png" />
-         </image>
-      </ImageView>
+      <Button layoutX="40.0" layoutY="489.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#restartGameHandeler" prefHeight="50.0" prefWidth="132.0" style="-fx-font-size: 16;" styleClass="green-rounded-Btn" text="Restart">
+         <graphic>
+            <ImageView fitHeight="35.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../../../../../Assets/Repeat.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+      <Button fx:id="endGameIconBtn" layoutX="628.0" layoutY="480.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#endGameHandeler" prefHeight="50.0" prefWidth="132.0" style="-fx-font-size: 16;" styleClass="red-rounded-Btn" text="End" textAlignment="CENTER">
+         <graphic>
+            
+            <ImageView fitHeight="35.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
+                  <image>
+                      <Image url="@../../../../../../../Assets/Endgame.png" />
+                  </image>
+              </ImageView>
+         </graphic>
+      </Button>
     </children>
     
 </Pane>

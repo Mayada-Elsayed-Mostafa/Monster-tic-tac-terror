@@ -12,31 +12,45 @@
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" stylesheets="@../../../../../../../StyleSheet.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tic.tac.toe.game.iti.client.Registeration.LoginPageController">
    <children>
-      <Label fx:id="title" alignment="CENTER" contentDisplay="CENTER" layoutX="172.0" layoutY="24.0" text="Welcome Back!" textAlignment="CENTER">
-         <font>
-            <Font size="18.0" />
-         </font>
-      </Label>
-      <TextField fx:id="username" layoutX="100.0" layoutY="148.0" prefHeight="34.0" prefWidth="400.0" promptText="Enter your username...">
+      <ImageView fitHeight="600.0" fitWidth="800.0" pickOnBounds="true">
+         <image>
+            <Image url="@../../../../../../../Assets/welcome.jpg" />
+         </image>
+      </ImageView>
+      <TextField fx:id="username" layoutX="200.0" layoutY="250.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="400.0" promptText="Enter your username..." styleClass="text-input">
          <font>
             <Font size="14.0" />
          </font></TextField>
-      <PasswordField fx:id="password" layoutX="100.0" layoutY="219.0" prefHeight="34.0" prefWidth="400.0" promptText="Enter your Password...">
+      <PasswordField fx:id="password" layoutX="200.0" layoutY="330.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="400.0" promptText="Enter your Password..." styleClass="text-input">
          <font>
             <Font size="14.0" />
          </font>
       </PasswordField>
-      <Button fx:id="loginBtn" layoutX="223.0" layoutY="291.0" mnemonicParsing="false" onAction="#loginButtonHandler" prefWidth="120.0" text="Login" textAlignment="CENTER">
+      <Button fx:id="loginBtn" layoutX="325.0" layoutY="410.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#loginButtonHandler" prefHeight="45.0" prefWidth="150.0" styleClass="blue-registration-Btn" text="Login" textAlignment="CENTER">
          <font>
             <Font size="18.0" />
          </font>
       </Button>
-      <Label layoutX="141.0" layoutY="349.0" text="Haven’t any account?" textFill="#d2cece" />
-      <Hyperlink fx:id="creatAccount" layoutX="306.0" layoutY="345.0" onAction="#createAccountHandler" text="Create account" />
-      <ImageView fx:id="backIcon" fitHeight="50.0" fitWidth="50.0" layoutX="24.0" layoutY="24.0" onMouseClicked="#backIconHandler" pickOnBounds="true" preserveRatio="true">
+      <Label layoutX="235.0" layoutY="490.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="175.0" text="Haven’t any account?" textFill="#f45162" />
+      <Hyperlink fx:id="creatAccount" layoutX="410.0" layoutY="490.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onAction="#createAccountHandler" prefHeight="40.0" prefWidth="150.0" text="Create account" />
+      <ImageView fitHeight="232.0" fitWidth="428.0" layoutX="300.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" styleClass="text-input">
          <image>
-            <Image url="@../../../../../../../Assets/BackIcon.png" />
+            <Image url="@../../../../../../../Assets/signup_welcome.png" />
          </image>
       </ImageView>
+      <ImageView fitHeight="50.0" fitWidth="32.0" layoutX="381.0" layoutY="136.0" pickOnBounds="true">
+         <image>
+            <Image url="@../../../../../../../Assets/welcome%20icon.jpg" />
+         </image>
+      </ImageView>
+      <Button fx:id="backBtn" layoutX="40.0" layoutY="30.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onAction="#handleBackBtn" prefHeight="50.0" prefWidth="50.0" styleClass="home-btn" textAlignment="CENTER">
+         <graphic>
+            <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true">
+               <image>
+                  <Image url="@../../../../../../../Assets/HomeIcon.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
    </children>
 </Pane>

@@ -12,11 +12,8 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Hyperlink;
-import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
@@ -39,9 +36,7 @@ public class SignupPageController {
     @FXML
     private Hyperlink haveanAcountHT;
     @FXML
-    private Label title;
-    @FXML
-    private ImageView backIcon;
+    private Button backBtn;
 
     public void setStage(Stage stage) {
         this.stage = stage;
@@ -92,7 +87,7 @@ public class SignupPageController {
             } else if (data.get("type").equals(MassageType.REGISTER_FAIL_MSG)) {
                 showAlert("unsuccessful", "please, try again");
             }
-            ServerHandler.msg = null;
+            ServerHandler.msg=null;
         } catch (Exception e) {
             e.printStackTrace();
             showAlert("Error", "connect to server" + e.getMessage());
@@ -111,15 +106,17 @@ public class SignupPageController {
             stage.setScene(new Scene(root));
             stage.setTitle("LoginPage");
         } catch (IOException e) {
-            Alert alert = new Alert(Alert.AlertType.NONE, "please try again", ButtonType.OK);
+            Alert alert = new Alert(Alert.AlertType.ERROR, "please try again", ButtonType.OK);
+            alert.initOwner(stage.getScene().getWindow());
             alert.showAndWait();
         }
     }
 
     private void showAlert(String title, String message) {
-        Alert alert = new Alert(Alert.AlertType.NONE);
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle(title);
         alert.setContentText(message);
+        alert.initOwner(stage.getScene().getWindow());
         alert.showAndWait();
     }
 
@@ -134,10 +131,8 @@ public class SignupPageController {
         stage.setTitle("LoginPage");
     }
 
-
     @FXML
-    private void handleiconBtn(MouseEvent event) {
-        
+    private void handleBackBtn(ActionEvent event) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/tic/tac/toe/game/iti/client/Welcome.fxml"));
             Parent root = loader.load();

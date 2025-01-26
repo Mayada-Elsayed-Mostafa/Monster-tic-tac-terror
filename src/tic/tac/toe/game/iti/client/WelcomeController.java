@@ -96,6 +96,7 @@ public class WelcomeController {
         TextInputDialog ipTI = new TextInputDialog();
         ipTI.setTitle("IP Address");
         ipTI.setHeaderText("Enter the IP Address...");
+        ipTI.initOwner(stage.getScene().getWindow());
 
         Optional<String> ipInput = ipTI.showAndWait();
 
@@ -105,17 +106,18 @@ public class WelcomeController {
                 ServerHandler.setSocket(ip);
                 isIpEntered = true;
             } catch (IOException ex) {
-                Alert alert = new Alert(Alert.AlertType.NONE, "Unable to connect to the server. Please try again later.", ButtonType.OK);
+                Alert alert = new Alert(Alert.AlertType.WARNING, "Unable to connect to the server. Please try again later.", ButtonType.OK);
                 alert.setTitle("Connection Error");
+                alert.initOwner(onlineBtn.getScene().getWindow());
                 alert.showAndWait();
             }
         } else {
-            Alert a = new Alert(Alert.AlertType.NONE, "Please Enter IP to continue...", ButtonType.OK);
+            Alert a = new Alert(Alert.AlertType.WARNING, "Please Enter IP to continue...", ButtonType.OK);
+            a.initOwner(onlineBtn.getScene().getWindow());
             a.showAndWait();
         }
     }
     
-    @FXML
     public void offlineRcdsBtnHandle(ActionEvent event){
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("OfflineRecords.fxml"));

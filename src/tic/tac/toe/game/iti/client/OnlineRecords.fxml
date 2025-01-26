@@ -12,12 +12,12 @@
 <?import javafx.scene.text.Text?>
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" stylesheets="@../../../../../../StyleSheet.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tic.tac.toe.game.iti.client.OnlineRecordsController">
-    <ImageView fitHeight="600.0" fitWidth="800.0" pickOnBounds="true" preserveRatio="true">
+    <ImageView fitHeight="600.0" fitWidth="800.0" pickOnBounds="true">
         <image>
             <Image url="@../../../../../../Assets/homeBackground.png" />
         </image>
     </ImageView>
-   <ImageView accessibleRole="BUTTON" fitHeight="60.0" fitWidth="60.0" layoutX="40.0" layoutY="20.0" onMouseClicked="#handleBackIconBtn" pickOnBounds="true" preserveRatio="true">
+   <ImageView accessibleRole="BUTTON" fitHeight="53.0" fitWidth="53.0" layoutX="14.0" layoutY="14.0" onMouseClicked="#handleBackIconBtn" pickOnBounds="true" preserveRatio="true">
       <image>
          <Image url="@../../../../../../Assets/BackIcon.png" />
       </image>
@@ -40,28 +40,21 @@
             
          </center>
       <center>
-            <HBox prefHeight="251.0" prefWidth="493.0" style="-fx-background-color: transparent;" BorderPane.alignment="CENTER">
+            <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="600.0" style="-fx-background-color: transparent;" BorderPane.alignment="CENTER">
                <children>
-                  <VBox fx:id="filesList" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="440.0" prefWidth="350.0" style="-fx-background-color: transparent;">
+                  <VBox fx:id="filesList" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="440.0" prefWidth="400.0" style="-fx-background-color: transparent;">
                      <children>
-                        <Label id="title" alignment="CENTER_RIGHT" contentDisplay="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="32.0" prefWidth="355.0" style="-fx-background-color: #F45162; -fx-border-color: white; -fx-border-width: 0 2px 0 0;" text="Files" textAlignment="CENTER" textFill="WHITE">
+                        <Label id="title" alignment="CENTER" contentDisplay="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="600.0" style="-fx-background-color: #F45162; -fx-border-width: 0 2px 0 0;" text="Files" textAlignment="CENTER" textFill="WHITE">
                            <font>
                               <Font name="System Bold Italic" size="24.0" />
                            </font>
-                        <padding>
-                           <Insets right="25.0" />
-                        </padding>
                         </Label>
                      </children>
                   </VBox>
-                  <VBox fx:id="buttonsList" alignment="TOP_CENTER" prefHeight="251.0" prefWidth="142.0" style="-fx-background-color: transparent;">
-                     <children>
-                        <Label alignment="CENTER" contentDisplay="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="32.0" prefWidth="246.0" style="-fx-background-color: #F45162;" textAlignment="CENTER">
-                           <font>
-                              <Font name="System Bold Italic" size="24.0" />
-                           </font>
-                        </Label>
-                     </children>
+                  <VBox fx:id="buttonsList" alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="200.0" style="-fx-background-color: transparent;">
+                  <HBox.margin>
+                     <Insets right="40.0" top="40.0" />
+                  </HBox.margin>
                   </VBox>
                </children>
             </HBox>
