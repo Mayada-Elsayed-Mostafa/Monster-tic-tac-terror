@@ -294,6 +294,7 @@ public class OnlineGameController {
         cell_7_btn.setDisable(false);
         cell_8_btn.setDisable(false);
         cell_9_btn.setDisable(false);
+        recordIConBtn.setDisable(false);
         moveCount = 0;
         isRecording = false;
         fileObject = new JSONObject();

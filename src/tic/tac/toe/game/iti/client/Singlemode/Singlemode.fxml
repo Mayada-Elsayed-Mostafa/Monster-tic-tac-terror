@@ -28,14 +28,29 @@
                 <Font size="18.0" />
             </font>
         </Button>
-        <Button fx:id="backBtn" layoutX="40.0" layoutY="30.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onAction="#handleBackBtn" prefHeight="50.0" prefWidth="50.0" styleClass="home-btn" textAlignment="CENTER">
+        <Button fx:id="backBtn" layoutX="10.0" layoutY="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onAction="#handleBackBtn" prefHeight="54.0" prefWidth="54.0" styleClass="home-btn" textAlignment="CENTER">
          <graphic>
-            <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true">
+            <ImageView fitHeight="54.0" fitWidth="54.0" pickOnBounds="true">
                <image>
                   <Image url="@../../../../../../../Assets/HomeIcon.png" />
                </image>
             </ImageView>
          </graphic>
       </Button>
+      <ImageView fitHeight="60.0" fitWidth="60.0" layoutX="247.0" layoutY="174.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../../../../../Assets/easyModeIcon.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="60.0" fitWidth="60.0" layoutX="494.0" layoutY="254.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../../../../../Assets/intermediateMode.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="60.0" fitWidth="60.0" layoutX="247.0" layoutY="335.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../../../../../Assets/hardModeIcon.png" />
+         </image>
+      </ImageView>
     </children>
 </Pane>

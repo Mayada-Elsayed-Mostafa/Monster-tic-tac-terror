@@ -49,12 +49,7 @@ public class ServerHandler {
                     try {
                         String responseMsg = massageIn.readUTF();
                         JSONObject respone = (JSONObject) JSONValue.parse(responseMsg);
-                        if (respone.get("type").equals(MassageType.SERVER_CLOSE_MSG)) {
-                            Platform.runLater(() -> {
-                                serverDisconnection();
-                            });
-
-                        } else if (respone.get("type").equals(MassageType.UPDATE_LIST_MSG) && isLoggedIn) {
+                        if (respone.get("type").equals(MassageType.UPDATE_LIST_MSG) && isLoggedIn) {
                             HomePageController.currentPlayers = responseMsg;
                             Platform.runLater(new Runnable() {
                                 @Override
@@ -88,8 +83,7 @@ public class ServerHandler {
 
                                         }
                                     }
-                                    
-                                    
+
                                 });
                             });
                         } else if (respone.get("type").equals(MassageType.CHALLENGE_START_MSG)) {
@@ -166,7 +160,7 @@ public class ServerHandler {
 
             WelcomeController controller = loader.getController();
             controller.setStage(stage);
-            isLoggedIn=false;
+            isLoggedIn = false;
             stage.setScene(new Scene(root));
             stage.setTitle("Welcome Page");
         } catch (IOException ex) {
