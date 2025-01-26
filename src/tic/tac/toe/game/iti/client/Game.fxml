@@ -71,7 +71,7 @@
       </Button>
       <Button fx:id="recoedBtn" alignment="CENTER" layoutX="40.0" layoutY="480.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#recordIconHandeler" prefHeight="50.0" prefWidth="132.0" style="-fx-font-size: 16;" styleClass="green-rounded-Btn" text="Record" textAlignment="CENTER">
          <graphic>
-            <ImageView fitHeight="35.0" fitWidth="35.0" pickOnBounds="true">
+            <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true">
                <image>
                   <Image url="@../../../../../../Assets/Record.png" />
                </image>

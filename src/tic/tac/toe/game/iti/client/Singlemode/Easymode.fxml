@@ -54,7 +54,7 @@
         </GridPane>
       <Button layoutX="40.0" layoutY="489.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#restartGameHandeler" prefHeight="50.0" prefWidth="132.0" style="-fx-font-size: 16;" styleClass="green-rounded-Btn" text="Restart">
          <graphic>
-            <ImageView fitHeight="35.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../../../../../../Assets/Repeat.png" />
                </image>

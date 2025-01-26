@@ -17,7 +17,7 @@
             <Image url="@../../../../../../Assets/homeBackground.png" />
         </image>
     </ImageView>
-   <ImageView accessibleRole="BUTTON" fitHeight="53.0" fitWidth="53.0" layoutX="14.0" layoutY="14.0" onMouseClicked="#handleBackIconBtn" pickOnBounds="true" preserveRatio="true">
+   <ImageView accessibleRole="BUTTON" fitHeight="53.0" fitWidth="53.0" layoutX="10.0" layoutY="10.0" onMouseClicked="#handleBackIconBtn" pickOnBounds="true" preserveRatio="true">
       <image>
          <Image url="@../../../../../../Assets/BackIcon.png" />
       </image>

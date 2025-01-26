@@ -5,6 +5,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -37,10 +38,6 @@ public class OptionsDisplayController extends Controller implements Initializabl
     @FXML
     private Label loserScore;
     @FXML
-    private ImageView endGameIconBtn;
-    @FXML
-    private ImageView restartGameIconBtn;
-    @FXML
     private Label player1;
     @FXML
     private Label player2;
@@ -52,12 +49,6 @@ public class OptionsDisplayController extends Controller implements Initializabl
     @Override
     public void askReplay() {
     }
-
-    @FXML
-    private void restartIConHandler(MouseEvent event) {
-        restartRequest();
-    }
-
 
     public void restartRequest() {
         JSONObject restart = new JSONObject();
@@ -103,8 +94,18 @@ public class OptionsDisplayController extends Controller implements Initializabl
         player2.setText(OnlineGameController.loserName);
     }
 
+    public void endGameRequest() {
+        JSONObject end = new JSONObject();
+        end.put("type", MassageType.END_GAME_MSG);
+        try {
+            ServerHandler.massageOut.writeUTF(end.toJSONString());
+        } catch (IOException ex) {
+            Logger.getLogger(OnlineGameController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
     @FXML
-    private void endGameFunction(MouseEvent event) {
+    private void endGameFunction(ActionEvent event) {
         try {
             OnlineGameController.isGameFinished=true;
             FXMLLoader loader = new FXMLLoader(getClass().getResource("HomePage.fxml"));
@@ -121,13 +122,8 @@ public class OptionsDisplayController extends Controller implements Initializabl
         endGameRequest();
     }
 
-    public void endGameRequest() {
-        JSONObject end = new JSONObject();
-        end.put("type", MassageType.END_GAME_MSG);
-        try {
-            ServerHandler.massageOut.writeUTF(end.toJSONString());
-        } catch (IOException ex) {
-            Logger.getLogger(OnlineGameController.class.getName()).log(Level.SEVERE, null, ex);
-        }
+    @FXML
+    private void restartIConHandler(ActionEvent event) {
+        restartRequest();
     }
 }
