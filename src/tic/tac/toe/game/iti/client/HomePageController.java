@@ -2,7 +2,6 @@ package tic.tac.toe.game.iti.client;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.event.ActionEvent;
@@ -36,7 +35,9 @@ public class HomePageController extends Controller {
     private static VBox sUserNames;
     private static VBox sScores;
     private static VBox sChallenges;
+    @FXML
     private static Label myUsername;
+    @FXML
     private static Label myScore;
 
     @FXML
@@ -99,12 +100,16 @@ public class HomePageController extends Controller {
 
         for (Player player : players) {
             Label user = new Label(player.getUserName());
+            user.setStyle("-fx-text-fill:#1a7bcc; -fx-font-weight: bold; -fx-font-family: 'Pacifico'; -fx-font-size: 28px;");
             sUserNames.getChildren().add(user);
 
             Label score = new Label(String.valueOf(player.getScore()));
+            score.setStyle("-fx-text-fill:#f45162; -fx-font-weight: bold; -fx-font-family: 'Pacifico'; -fx-font-size: 28px;");
             sScores.getChildren().add(score);
 
             Button challengeBtn = new Button("Send Request");
+            challengeBtn.getStyleClass().add("blue-request-Btn");
+            
             challengeBtn.setOnAction(event -> {
                 sendRequestHandler(player);
             });

@@ -37,5 +37,20 @@
             </ImageView>
          </graphic>
       </Button>
+      <ImageView fitHeight="60.0" fitWidth="60.0" layoutX="247.0" layoutY="174.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../../../../../Assets/easyModeIcon.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="60.0" fitWidth="60.0" layoutX="494.0" layoutY="254.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../../../../../Assets/intermediateMode.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="60.0" fitWidth="60.0" layoutX="247.0" layoutY="335.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../../../../../Assets/hardModeIcon.png" />
+         </image>
+      </ImageView>
     </children>
 </Pane>

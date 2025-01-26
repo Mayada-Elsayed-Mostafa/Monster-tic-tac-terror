@@ -67,10 +67,15 @@
 .button.blue-request-Btn {
     -fx-background-color: #279DFF;
     -fx-text-fill: white;
-    -fx-font-size: 14px;
+    -fx-font-size: 16px;
     -fx-font-weight: bold;
     -fx-background-radius: 20px;
     -fx-border-radius: 15;
+    -fx-padding:15px 10px 15px 10px;
+}
+
+.button.blue-request-Btn:hover {
+    -fx-background-color: #1A7BCC;
 }
 
 .button.blue-rounded-Btn:hover {
