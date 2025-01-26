@@ -37,5 +37,25 @@
             <Font size="18.0" />
          </font>
       </Button>
+      <ImageView fitHeight="60.0" fitWidth="60.0" layoutX="248.0" layoutY="144.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../../../../Assets/onlineModeIcon.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="60.0" fitWidth="60.0" layoutX="494.0" layoutY="223.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../../../../Assets/multiModeIcon.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="60.0" fitWidth="60.0" layoutX="248.0" layoutY="306.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../../../../Assets/singleModeIcon.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="60.0" fitWidth="60.0" layoutX="494.0" layoutY="386.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../../../../Assets/offlineRecordsIcon.png" />
+         </image>
+      </ImageView>
     </children>
 </Pane>

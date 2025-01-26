@@ -67,10 +67,15 @@
 .button.blue-request-Btn {
     -fx-background-color: #279DFF;
     -fx-text-fill: white;
-    -fx-font-size: 14px;
+    -fx-font-size: 16px;
     -fx-font-weight: bold;
     -fx-background-radius: 20px;
     -fx-border-radius: 15;
+    -fx-padding:15px 10px 15px 10px;
+}
+
+.button.blue-request-Btn:hover {
+    -fx-background-color: #1A7BCC;
 }
 
 .button.blue-rounded-Btn:hover {
@@ -163,6 +168,12 @@
     -fx-font-weight: bold;
 }
 #score{
+/*<<<<<<< HEAD
+    -fx-font-size: 20px;
+    -fx-text-fill: #f45162;
+    -fx-font-weight: bold;
+}
+=======*/
     -fx-font-size: 32px;
     -fx-text-fill: #f45162;
     -fx-font-weight: bold;
@@ -209,7 +220,7 @@
     -fx-text-fill: white; 
     -fx-background-color: #F45162;
     -fx-background-radius: 10px;
-    -fx-padding: 5px 10px;
+    -fx-padding: 5px 10px 5px 10px;
 }
 .text-fileBtn-name:hover {
     -fx-background-color: #D63E54;
@@ -233,4 +244,3 @@
     -fx-background-color: -fx-background; 
     -fx-text-fill: -fx-text-base-color; 
 }
-

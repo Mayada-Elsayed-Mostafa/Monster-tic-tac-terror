@@ -28,7 +28,6 @@ public class TicTacToeGameITIClient extends Application {
 
             primaryStage.setWidth(800);
             primaryStage.setHeight(600);
-
             ImageView splashBG = new ImageView();
             splashBG.setImage(new Image(getClass().getResourceAsStream("/Assets/splashBG.png")));
             splashBG.setFitWidth(primaryStage.getWidth());
