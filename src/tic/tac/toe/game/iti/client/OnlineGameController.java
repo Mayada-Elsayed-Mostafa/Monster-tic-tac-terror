@@ -17,6 +17,9 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -49,22 +52,27 @@ public class OnlineGameController {
 
     @FXML
     private Button cell_1_btn, cell_2_btn, cell_3_btn, cell_4_btn, cell_5_btn, cell_6_btn, cell_7_btn, cell_8_btn, cell_9_btn;
-    @FXML
-    private Button recordBtn;
-    @FXML
-    private Button endGameBtn;
+
     @FXML
     private Label score1Number;
     @FXML
     private Label score2Number;
-    @FXML
-    private Label namesLabel;
 
     private boolean isRecording = false;
 
     JSONObject fileObject;
 
     JSONArray moves;
+    Image image1 = new Image(getClass().getResource("/Assets/Record.png").toExternalForm());
+    Image image2 = new Image(getClass().getResource("/Assets/Recorded.png").toExternalForm());
+    @FXML
+    private Label player1;
+    @FXML
+    private Label player2;
+    @FXML
+    private Button recordIConBtn;
+    @FXML
+    private Button endGameIconBtn;
 
     public void setStage(Stage stage, String msg) {
         this.stage = stage;
@@ -126,7 +134,11 @@ public class OnlineGameController {
                     move.put("position", cell);
                     moves.add(move);
                 }
-                clickedButton.setStyle("-fx-text-fill: #D4A5A5;");
+                if (isX) {
+                    clickedButton.setStyle("-fx-text-fill: #F45162;");
+                } else {
+                    clickedButton.setStyle("-fx-text-fill: #497F5B;");
+                }
                 clickedButton.setText(myChar);
                 clickedButton.setDisable(true);
                 isMyTurn = !isMyTurn;
@@ -255,38 +267,6 @@ public class OnlineGameController {
         return false;
     }
 
-    @FXML
-    private void recordHandeler(ActionEvent event) {
-
-        if (!isRecording) {
-            isRecording = true;
-            recordBtn.setDisable(true);
-        }
-    }
-
-    @FXML
-    private void endHandeler(ActionEvent event) {
-        JSONObject end = new JSONObject();
-        end.put("type", MassageType.WITHDRAW_GAME_MSG);
-        try {
-            ServerHandler.massageOut.writeUTF(end.toJSONString());
-        } catch (IOException ex) {
-            Logger.getLogger(OnlineGameController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("HomePage.fxml"));
-            Parent root = loader.load();
-
-            HomePageController controller = loader.getController();
-            controller.setCurrentStage(stage);
-
-            stage.setScene(new Scene(root));
-            stage.setTitle("Home Page");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
     public void resetGame() {
         returnToGame();
         if (doIStart) {
@@ -314,7 +294,7 @@ public class OnlineGameController {
         cell_7_btn.setDisable(false);
         cell_8_btn.setDisable(false);
         cell_9_btn.setDisable(false);
-        recordBtn.setDisable(false);
+        recordIConBtn.setDisable(false);
         moveCount = 0;
         isRecording = false;
         fileObject = new JSONObject();
@@ -332,7 +312,7 @@ public class OnlineGameController {
     }
 
     public void restartResponse() {
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Play again?");
         alert.setContentText("Do you want to play again?");
         alert.initOwner(stage.getScene().getWindow());
@@ -375,7 +355,8 @@ public class OnlineGameController {
         JSONObject object = (JSONObject) JSONValue.parse((String) mainObject.get("data"));
         player1Name = (String) object.get("player1");
         player2Name = (String) object.get("player2");
-        namesLabel.setText(player1Name + " (X)" + " vs " + player2Name + " (O)");
+        player1.setText(player1Name + " (X)");
+        player2.setText(player2Name + " (O)");
         boolean start = (boolean) object.get("isStarted");
         doIStart = start;
         isMyTurn = start;
@@ -442,7 +423,11 @@ public class OnlineGameController {
                     }
                     Platform.runLater(() -> {
                         cells[cellNumber].setDisable(true);
-                        cells[cellNumber].setStyle("-fx-text-fill: #D4A5A5;");
+                        if (!isX) {
+                            cells[cellNumber].setStyle("-fx-text-fill: #F45162;");
+                        } else {
+                            cells[cellNumber].setStyle("-fx-text-fill: #497F5B;");
+                        }
                         cells[cellNumber].setText(opponentChar);
                         isMyTurn = !isMyTurn;
                         moveCount++;
@@ -528,14 +513,13 @@ public class OnlineGameController {
                     ServerHandler.msg = null;
                     isGameFinished = true;
                     Platform.runLater(() -> {
-                        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                        Alert alert = new Alert(Alert.AlertType.INFORMATION);
                         alert.setTitle("End Game");
                         alert.setContentText("Game ended...");
                         alert.initOwner(stage.getScene().getWindow());
                         alert.showAndWait();
 
                         try {
-                            //Return to home page
                             FXMLLoader loader = new FXMLLoader(getClass().getResource("HomePage.fxml"));
                             Parent root = loader.load();
 
@@ -597,9 +581,34 @@ public class OnlineGameController {
         }
     }
 
-    private void endGame() {
-        // Update the scores for each player in the DB and dashboard
-        // Update the scores for each player in the dashboard
+    @FXML
+    private void endGameHandeler(ActionEvent event) {
+        JSONObject end = new JSONObject();
+        end.put("type", MassageType.WITHDRAW_GAME_MSG);
+        try {
+            ServerHandler.massageOut.writeUTF(end.toJSONString());
+        } catch (IOException ex) {
+            Logger.getLogger(OnlineGameController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("HomePage.fxml"));
+            Parent root = loader.load();
 
+            HomePageController controller = loader.getController();
+            controller.setCurrentStage(stage);
+
+            stage.setScene(new Scene(root));
+            stage.setTitle("Home Page");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    private void recordIconHandeler(ActionEvent event) {
+        if (!isRecording) {
+            isRecording = true;
+            recordIConBtn.setDisable(true);
+        }
     }
 }

@@ -3,12 +3,16 @@ package tic.tac.toe.game.iti.client;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.animation.PauseTransition;
 import javafx.application.Application;
-import static javafx.application.Application.launch;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import tic.tac.toe.game.iti.client.ServerSide.ServerHandler;
 
 public class TicTacToeGameITIClient extends Application {
@@ -17,32 +21,25 @@ public class TicTacToeGameITIClient extends Application {
 
     @Override
     public void start(Stage primaryStage) {
+        
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("Welcome.fxml"));
-            Parent root = loader.load();
-
-            WelcomeController controller = loader.getController();
-            controller.setStage(primaryStage);
-
-            ServerHandler.stage = primaryStage;
             
+            primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("/Assets/icon.png")));
+
             primaryStage.setWidth(800);
             primaryStage.setHeight(600);
+            ImageView splashBG = new ImageView();
+            splashBG.setImage(new Image(getClass().getResourceAsStream("/Assets/splashBG.png")));
+            splashBG.setFitWidth(primaryStage.getWidth());
+            splashBG.setFitHeight(primaryStage.getHeight());
+            splashBG.setPreserveRatio(true);
 
-            primaryStage.setOnCloseRequest(event -> {
-                isClosed = true;
-                if (ServerHandler.socket != null) {
-                    try {
-                        ServerHandler.closeSocket();
-                    } catch (IOException ex) {
-                        Logger.getLogger(TicTacToeGameITIClient.class.getName())
-                              .log(Level.SEVERE, "Error closing socket", ex);
-                    }
-                }
-            });
+            StackPane splashRoot = new StackPane(splashBG);
 
-            primaryStage.setScene(new Scene(root));
-            primaryStage.setTitle("Welcome Page");
+            Scene splashScene = new Scene(splashRoot);
+            primaryStage.setScene(splashScene);
+            primaryStage.setTitle("Splash Screen");
+            primaryStage.show();
 
             primaryStage.setFullScreen(false);
             primaryStage.fullScreenProperty().addListener((observable, oldValue, newValue) -> {
@@ -53,12 +50,38 @@ public class TicTacToeGameITIClient extends Application {
 
             primaryStage.setResizable(false);
 
-            primaryStage.show();
+            PauseTransition pause = new PauseTransition(Duration.seconds(2));
+            pause.setOnFinished(event -> {
 
-        } catch (IOException e) {
-            Logger.getLogger(TicTacToeGameITIClient.class.getName())
-                  .log(Level.SEVERE, "Failed to load Welcome.fxml", e);
-            System.err.println("Error: Unable to load the Welcome page. Please check the FXML file.");
+                try {
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("Welcome.fxml"));
+                    Parent root = loader.load();
+
+                    WelcomeController controller = loader.getController();
+                    controller.setStage(primaryStage);
+                    ServerHandler.stage = primaryStage;
+
+                    primaryStage.setOnCloseRequest((closeEvent) -> {
+                        isClosed = true;
+                        if (ServerHandler.socket != null) {
+                            try {
+                                ServerHandler.closeSocket();
+                            } catch (IOException ex) {
+                                Logger.getLogger(TicTacToeGameITIClient.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                        }
+                    });
+
+                    primaryStage.setScene(new Scene(root));
+                    primaryStage.setTitle("Welcome Page");
+                } catch (IOException ex) {
+                    Logger.getLogger(TicTacToeGameITIClient.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            });
+            pause.play();
+
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 

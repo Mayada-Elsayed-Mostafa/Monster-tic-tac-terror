@@ -11,6 +11,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import org.json.simple.JSONArray;
@@ -35,21 +37,25 @@ public class HomePageController extends Controller {
     private static VBox sUserNames;
     private static VBox sScores;
     private static VBox sChallenges;
-    @FXML
-    private static Label myUsername;
-    @FXML
-    private static Label myScore;
+    private static Label sUsername;
+    private static Label sScore;
 
     @FXML
     private Button recordsBtn;
 
     public static String currentPlayers;
+    @FXML
+    private Label myUsername;
+    @FXML
+    private Label myScore;
 
     public void setStage(Stage stage) {
         this.stage = stage;
         sUserNames = usernames;
         sScores = scores;
         sChallenges = challenges;
+        sUsername = myUsername;
+        sScore = myScore;
     }
 
     public void setCurrentStage(Stage stage) {
@@ -57,6 +63,8 @@ public class HomePageController extends Controller {
         sUserNames = usernames;
         sScores = scores;
         sChallenges = challenges;
+        sUsername = myUsername;
+        sScore = myScore;
         updateAvailablePlayers(currentPlayers);
     }
 
@@ -86,8 +94,8 @@ public class HomePageController extends Controller {
     public static void updateAvailablePlayers(String msg) {
         JSONObject obj = (JSONObject) JSONValue.parse(msg);
         JSONObject data = (JSONObject) obj.get("data");
-        //myUsername.setText((String) data.get("username"));
-        //myScore.setText((String) data.get("score"));
+        sUsername.setText((String) data.get("username"));
+        sScore.setText("" + data.get("score"));
         ArrayList<Player> players = new ArrayList();
         JSONArray array = (JSONArray) data.get("players");
         for (int i = 0; i < array.size(); i++) {
@@ -147,6 +155,28 @@ public class HomePageController extends Controller {
 
     @Override
     public void askReplay() {
+    }
+
+    private void handleLogout(MouseEvent event) {
+        JSONObject output = new JSONObject();
+        output.put("type", MassageType.LOGOUT_MSG);
+        try {
+            ServerHandler.massageOut.writeUTF(output.toJSONString());
+        } catch (IOException ex) {
+            Logger.getLogger(HomePageController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("Registeration/LoginPage.fxml"));
+            Parent root = loader.load();
+
+            LoginPageController controller = loader.getController();
+            controller.setStage(stage);
+
+            stage.setScene(new Scene(root));
+            stage.setTitle("Login Page");
+        } catch (IOException ex) {
+            Logger.getLogger(WelcomeController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
 }

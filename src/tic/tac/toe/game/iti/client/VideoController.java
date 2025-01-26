@@ -17,6 +17,8 @@ public class VideoController {
 
     public void setStage(Stage stage) {
         this.stage = stage;
+        video.setFitWidth(800);
+        video.setFitHeight(600);
         video.setPreserveRatio(false);
     }
 

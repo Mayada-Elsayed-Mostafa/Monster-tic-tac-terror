@@ -4,19 +4,12 @@ import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-
 import java.io.File;
-import java.io.IOException;
 import java.nio.file.Files;
 import java.util.Timer;
 import java.util.TimerTask;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javafx.event.ActionEvent;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
-
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -24,8 +17,6 @@ import org.json.simple.JSONValue;
 
 public class RecordController {
 
-    @FXML
-    private Label namesLabel;
     @FXML
     private Button cell_1_btn;
     @FXML
@@ -45,6 +36,11 @@ public class RecordController {
     @FXML
     private Button cell_9_btn;
 
+    @FXML
+    private Label player_1;
+    @FXML
+    private Label player_2;
+
     private Stage stage;
     private Timer replayTimer;
     private JSONObject gameRecord;
@@ -55,9 +51,9 @@ public class RecordController {
 
     public void initialize() {
         board = new Button[][]{
-                {cell_1_btn, cell_2_btn, cell_3_btn},
-                {cell_4_btn, cell_5_btn, cell_6_btn},
-                {cell_7_btn, cell_8_btn, cell_9_btn}
+            {cell_1_btn, cell_2_btn, cell_3_btn},
+            {cell_4_btn, cell_5_btn, cell_6_btn},
+            {cell_7_btn, cell_8_btn, cell_9_btn}
         };
 
         clearBoard();
@@ -65,7 +61,7 @@ public class RecordController {
 
     public void setStage(Stage stage) {
         this.stage = stage;
-        prevScene=stage.getScene();
+        prevScene = stage.getScene();
     }
 
     public void loadGameRecord(File jsonFile) {
@@ -80,7 +76,9 @@ public class RecordController {
             String player1Symbol = (String) player1.get("symbol");
             String player2Name = (String) player2.get("name");
             String player2Symbol = (String) player2.get("symbol");
-            namesLabel.setText(player1Name + " (" + player1Symbol + ") " +  "vs " + player2Name + " (" + player2Symbol + ")");
+            //namesLabel.setText(player1Name + " (" + player1Symbol + ") " +  "vs " + player2Name + " (" + player2Symbol + ")");
+            player_1.setText(player1Name);
+            player_2.setText(player2Name);
             replayGame();
         } catch (Exception e) {
             e.printStackTrace();
@@ -121,7 +119,13 @@ public class RecordController {
                 int col = ((Long) position.get(1)).intValue();
 
                 Platform.runLater(() -> {
-                    board[row][col].setText(player.equals(((JSONObject) ((JSONObject) gameRecord.get("players")).get("player1")).get("name")) ? "X" : "O");
+                    String go = player.equals(((JSONObject) ((JSONObject) gameRecord.get("players")).get("player1")).get("name")) ? "X" : "O";
+                    if (go.equals("X")) {
+                        board[row][col].setStyle("-fx-text-fill: #F45162;");
+                    } else {
+                        board[row][col].setStyle("-fx-text-fill: #497F5B;");
+                    }
+                    board[row][col].setText(go);
                 });
 
                 currentMoveIndex++;
@@ -130,7 +134,7 @@ public class RecordController {
     }
 
     @FXML
-    private void handleBack(ActionEvent event) {
-            stage.setScene(prevScene); 
+    private void backIconhandler(MouseEvent event) {
+        stage.setScene(prevScene);
     }
 }

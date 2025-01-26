@@ -12,9 +12,10 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import org.json.simple.JSONObject;
 import tic.tac.toe.game.iti.client.ServerSide.MassageType;
@@ -24,8 +25,6 @@ public class OptionsDisplayController extends Controller implements Initializabl
 
     Stage stage;
 
-    @FXML
-    private Label header;
     @FXML
     private Label players;
     @FXML
@@ -39,9 +38,9 @@ public class OptionsDisplayController extends Controller implements Initializabl
     @FXML
     private Label loserScore;
     @FXML
-    private Button restartGameBtn;
+    private Label player1;
     @FXML
-    private Button endGameBtn;
+    private Label player2;
 
     public void setStage(Stage stage, String msg) {
         this.stage = stage;
@@ -49,11 +48,6 @@ public class OptionsDisplayController extends Controller implements Initializabl
 
     @Override
     public void askReplay() {
-    }
-
-    @FXML
-    public void restartHandler() {
-        restartRequest();
     }
 
     public void restartRequest() {
@@ -96,7 +90,18 @@ public class OptionsDisplayController extends Controller implements Initializabl
         loser.setText(OnlineGameController.loserName + "");
         winnerScore.setText(OnlineGameController.player1Score + "");
         loserScore.setText(OnlineGameController.player2Score + "");
-        header.setText(OnlineGameController.winnerName + " VS " + OnlineGameController.loserName);
+        player1.setText(OnlineGameController.winnerName);
+        player2.setText(OnlineGameController.loserName);
+    }
+
+    public void endGameRequest() {
+        JSONObject end = new JSONObject();
+        end.put("type", MassageType.END_GAME_MSG);
+        try {
+            ServerHandler.massageOut.writeUTF(end.toJSONString());
+        } catch (IOException ex) {
+            Logger.getLogger(OnlineGameController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     @FXML
@@ -115,17 +120,10 @@ public class OptionsDisplayController extends Controller implements Initializabl
             Logger.getLogger(OptionsDisplayController.class.getName()).log(Level.SEVERE, null, ex);
         }
         endGameRequest();
-
     }
 
-    public void endGameRequest() {
-        JSONObject end = new JSONObject();
-        end.put("type", MassageType.END_GAME_MSG);
-        try {
-            ServerHandler.massageOut.writeUTF(end.toJSONString());
-        } catch (IOException ex) {
-            Logger.getLogger(OnlineGameController.class.getName()).log(Level.SEVERE, null, ex);
-        }
+    @FXML
+    private void restartIConHandler(ActionEvent event) {
+        restartRequest();
     }
-
 }

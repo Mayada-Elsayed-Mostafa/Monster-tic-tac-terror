@@ -96,7 +96,7 @@ public class WelcomeController {
         TextInputDialog ipTI = new TextInputDialog();
         ipTI.setTitle("IP Address");
         ipTI.setHeaderText("Enter the IP Address...");
-        ipTI.initOwner(onlineBtn.getScene().getWindow());
+        ipTI.initOwner(stage.getScene().getWindow());
 
         Optional<String> ipInput = ipTI.showAndWait();
 

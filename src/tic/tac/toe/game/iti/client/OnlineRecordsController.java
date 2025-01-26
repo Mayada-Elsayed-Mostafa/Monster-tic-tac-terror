@@ -2,20 +2,17 @@ package tic.tac.toe.game.iti.client;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.URL;
-import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
@@ -26,8 +23,6 @@ public class OnlineRecordsController  {
     private VBox filesList;
     @FXML
     private VBox buttonsList;
-    @FXML
-    private Button backBtn;
     public void setStage(Stage stage) {
         this.stage = stage;
         startController();
@@ -38,11 +33,9 @@ public class OnlineRecordsController  {
         for(File json : jsonFiles){
             Button button = new Button();
             button.setMnemonicParsing(false);
-            button.setStyle("-fx-background-color: white; -fx-border-color: #946E3D; -fx-border-width: 2px; -fx-border-radius: 5px;");
+            button.getStyleClass().add("text-fileBtn-name");
             button.setText("Display Record");
-            button.setTextFill(javafx.scene.paint.Color.valueOf("#946e3d"));
-            VBox.setMargin(button, new Insets(5.0, 0.0, 0.0, 0.0));
-            button.setFont(new Font("System Bold", 14.0));
+            buttonsList.setMargin(button, new Insets(5.0, 0.0, 0.0, 0.0));
             button.setOnAction((event) -> {
                 handleFileRecored(json);
             });
@@ -50,10 +43,10 @@ public class OnlineRecordsController  {
             Text text = new Text();
             text.setStrokeType(javafx.scene.shape.StrokeType.OUTSIDE);
             text.setStrokeWidth(0.0);
-            text.setText(json.getName().substring(0, json.getName().length()-5));
+            text.getStyleClass().add("text-file-name");
+            text.setText(json.getName().substring(0, json.getName().length() - 5));
             text.setWrappingWidth(348.6708984375);
-            VBox.setMargin(text, new Insets(6.0, 0.0, 0.0, 2.0));
-            text.setFont(new Font("System Bold", 23.0));
+            filesList.setMargin(text, new Insets(10.0, 0.0, 4.0, 7.0));
             filesList.getChildren().add(text);
        }
     }
@@ -74,8 +67,23 @@ public class OnlineRecordsController  {
         }
     }
 
-    @FXML
     private void handleBackBtn(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/tic/tac/toe/game/iti/client/HomePage.fxml"));
+            Parent root = loader.load();
+
+            HomePageController controller = loader.getController();
+            controller.setCurrentStage(stage);
+
+            stage.setScene(new Scene(root));
+            stage.setTitle("Home Page");
+        } catch (IOException ex) {
+            Logger.getLogger(OnlineRecordsController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    @FXML
+    private void handleBackIconBtn(MouseEvent event) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/tic/tac/toe/game/iti/client/HomePage.fxml"));
             Parent root = loader.load();

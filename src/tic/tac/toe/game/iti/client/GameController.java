@@ -16,8 +16,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextInputDialog;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
-import jdk.nashorn.api.scripting.JSObject;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
@@ -31,20 +32,25 @@ public class GameController extends Controller {
     private String player1Name = "Player 1";
     private String player2Name = "Player 2";
     private boolean isRecording = false;
+    Image image1 = new Image(getClass().getResource("/Assets/Record.png").toExternalForm());
+    Image image2 = new Image(getClass().getResource("/Assets/Recorded.png").toExternalForm());
+    
     @FXML
     private Button cell_1_btn, cell_2_btn, cell_3_btn, cell_4_btn, cell_5_btn, cell_6_btn, cell_7_btn, cell_8_btn, cell_9_btn;
     private Button[] buttons;
 
     @FXML
-    private Button recordBtn;
-    @FXML
-    private Button endGameBtn;
-    @FXML
     private Label score1Number;
     @FXML
     private Label score2Number;
     @FXML
-    private Label namesLabel;
+    private Label player1;
+    @FXML
+    private Label player2;
+    @FXML
+    private Button endBtn;
+    @FXML
+    private Button recoedBtn;
 
     public void setStage(Stage stage) {
         this.stage = stage;
@@ -73,7 +79,7 @@ public class GameController extends Controller {
 
             move.put("position", cell);
             if (isPlayer1Turn) {
-                clickedButton.setStyle("-fx-text-fill: #D4A5A5;");
+                clickedButton.setStyle("-fx-text-fill: #F45162;");
                 clickedButton.setText("X");
                 move.put("player", player1Name);
 
@@ -124,7 +130,7 @@ public class GameController extends Controller {
                     LocalDateTime now = LocalDateTime.now();
                     String time = dtf.format(now);
 
-                    File record = new File("onlineRecords/" + player1Name + " Vs " + player2Name + " " + time + ".json");
+                    File record = new File("offlineRecords/" + player1Name + " Vs " + player2Name + " " + time + ".json");
                     try {
                         if (record.createNewFile()) {
                             FileWriter myWriter = new FileWriter(record);
@@ -175,16 +181,6 @@ public class GameController extends Controller {
         return false;
     }
 
-    @FXML
-    private void recordHandeler() {
-        if (!isRecording) {
-            isRecording = true;
-            recordBtn.setDisable(true);
-
-        }
-    }
-
-    @FXML
     private void endHandeler() {
         try {
 
@@ -220,7 +216,6 @@ public class GameController extends Controller {
         cell_7_btn.setDisable(false);
         cell_8_btn.setDisable(false);
         cell_9_btn.setDisable(false);
-        recordBtn.setDisable(false);
         moveCount = 0;
         isPlayer1Turn = true;
         board = new String[3][3];
@@ -244,7 +239,7 @@ public class GameController extends Controller {
         TextInputDialog playerNameDialog = new TextInputDialog();
         playerNameDialog.initOwner(stage.getScene().getWindow());
         playerNameDialog.setTitle("Enter Player Names");
-        playerNameDialog.setHeaderText("Please enter names for both players.");
+        playerNameDialog.setHeaderText("Please enter the name of the first Player");
 
         playerNameDialog.getEditor().setPromptText("Player 1 Name");
 
@@ -253,6 +248,7 @@ public class GameController extends Controller {
             this.player1Name = player1NameInput.get();
         }
 
+        playerNameDialog.setHeaderText("Please enter the name of the second Player");
         playerNameDialog.getEditor().setPromptText("Player 2 Name");
         playerNameDialog.getEditor().clear();
         Optional<String> player2NameInput = playerNameDialog.showAndWait();
@@ -293,7 +289,7 @@ public class GameController extends Controller {
     }
 
     public void askReplay() {
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Do you want to play again?", ButtonType.YES, ButtonType.NO);
+        Alert alert = new Alert(Alert.AlertType.NONE, "Do you want to play again?", ButtonType.YES, ButtonType.NO);
         alert.setTitle("Play Again?");
         alert.initOwner(stage.getScene().getWindow());
         alert.showAndWait().ifPresent(response -> {
@@ -309,7 +305,37 @@ public class GameController extends Controller {
         showAlertForPlayerNames();
         fileObject = new JSONObject();
         moves = new JSONArray();
-        namesLabel.setText(player1Name + " (X)" + " vs " + player2Name + " (O)");
+        player1.setText(player1Name + " (X)");
+        player2.setText(player2Name + " (O)");
         resetGame();
     }
+
+    @FXML
+    private void endGameHandeler(ActionEvent event) {
+        try {
+
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("Welcome.fxml"));
+            Parent root = loader.load();
+
+            WelcomeController controller = loader.getController();
+            controller.setStage(stage);
+
+            stage.setScene(new Scene(root));
+            stage.setTitle("Welcome Page");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    private void recordIconHandeler(ActionEvent event) {
+        if (!isRecording) {
+            isRecording = true;
+            recoedBtn.setDisable(true);
+        } else {
+            isRecording = false;
+            recoedBtn.setDisable(false);
+        }
+    }
+
 }
