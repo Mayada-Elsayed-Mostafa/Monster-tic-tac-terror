@@ -17,7 +17,7 @@
                 <Image url="@../../../../../../../Assets/welcome.jpg" />
             </image>
         </ImageView>
-        <Label id="title" alignment="CENTER" contentDisplay="CENTER" layoutX="150.0" layoutY="18.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="70.0" prefWidth="500.0" styleClass="red" text="Register a new account">
+        <Label id="title" alignment="CENTER" contentDisplay="CENTER" layoutX="138.0" layoutY="-104.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="70.0" prefWidth="500.0" styleClass="red" text="Register a new account">
             <font>
                 <Font size="18.0" />
             </font>
@@ -45,14 +45,19 @@
         <Label alignment="CENTER" contentDisplay="CENTER" layoutX="242.5" layoutY="490.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="195.0" text="Already have an account?  " textAlignment="CENTER" textFill="#f45162" />
         <Hyperlink fx:id="haveanAcountHT" layoutX="437.5" layoutY="490.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onAction="#haveanAcountHTHandler" prefHeight="40.0" prefWidth="120.0" text="Login here" />
       
-        <Button fx:id="backBtn" layoutX="40.0" layoutY="30.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onAction="#handleBackBtn" prefHeight="50.0" prefWidth="50.0" styleClass="home-btn" textAlignment="CENTER">
+        <Button fx:id="backBtn" layoutX="10.0" layoutY="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onAction="#handleBackBtn" prefHeight="54.0" prefWidth="54.0" styleClass="home-btn" textAlignment="CENTER">
             <graphic>
-                <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true">
+                <ImageView fitHeight="54.0" fitWidth="54.0" pickOnBounds="true">
                     <image>
                         <Image url="@../../../../../../../Assets/HomeIcon.png" />
                     </image>
                 </ImageView>
             </graphic>
         </Button>
+      <ImageView fitHeight="150.0" fitWidth="500.0" layoutX="150.0" layoutY="50.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../../../../../Assets/register.png" />
+         </image>
+      </ImageView>
     </children>
 </Pane>
