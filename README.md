@@ -1,6 +1,6 @@
 ## Overview
 
-The client application allows users to interact with //project name. Users can play in three modes: Online (over network) after registering or logging in, vs. computer, and vs. guest (local), record their games and replay them.
+The client application allows users to interact with Monster tic-tac-terror. Users can play in three modes: Online (over network) after registering or logging in, vs. computer, and vs. guest (local), record their games and replay them.
 
 
 
@@ -52,7 +52,7 @@ cd client
    - onlineRecords
 3. Run the client:
    ```bash
-   java -cp bin //project_Name
+   java -cp bin Monster tic-tac-terror
    ```
 
 
@@ -70,6 +70,46 @@ cd client
    - *Vs. Guest:* Play locally with another user.
 3. Enjoy the game and use the replay feature to review recorded matches.
 
+## Screenshots
+
+Here are some screenshots to showcase the application's features:
+
+## 1. Welcome Page
+![Splash Page](images/Client_1.png)
+![Welcome Page](images/Client_2.png)
+
+## 2. Single Mode
+![Single Mode](images/Client_3.png)
+![Single Mode](images/Client_4.png)
+
+## 3. Two Players Mode
+![Two Players Mode](images/Client_5.png)
+![Two Players Mode](images/Client_6.png)
+![Two Players Mode](images/Client_7.png)
+
+
+## 4. Login Page
+![Login Page](images/Client_8.png)
+![Login Page](images/Client_9.png)
+
+## 5. Signup Page
+![Signup Page](images/Client_10.png)
+
+## 6. Online Mode
+![Online Mode](images/Client_11.png)
+
+## 7. In Game Pages
+![In Game Pages](images/Client_12.png)
+![In Game Pages](images/Client_13.png)
+![In Game Pages](images/Client_14.png)
+![In Game Pages](images/Client_15.png)
+![In Game Pages](images/Client_16.png)
+![In Game Pages](images/Client_17.png)
+![In Game Pages](images/Client_18.png)
+
+## 8. Records
+![Records](images/Client_19.png)
+![Records](images/Client_20.png)
 
 
 ## Contributors
