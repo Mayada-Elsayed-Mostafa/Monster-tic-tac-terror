@@ -52,7 +52,7 @@ cd client
    - onlineRecords
 3. Run the client:
    ```bash
-   java -cp bin Monster tic-tac-terror
+   java -cp bin TicTacToeGameITIClient
    ```
 
 
