@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" stylesheets="@../../../../../../StyleSheet.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tic.tac.toe.game.iti.client.HomePageController">
+   <ImageView fitHeight="600.0" fitWidth="800.0" pickOnBounds="true">
+      <image>
+         <Image url="@../../../../../../Assets/homeBackground.png" />
+      </image>
+   </ImageView>
+    <BorderPane layoutX="300.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="500.0" BorderPane.alignment="CENTER">
+         <BorderPane.margin>
+            <Insets bottom="30.0" left="50.0" right="50.0" top="20.0" />
+         </BorderPane.margin>
+         <left>
+            <VBox fx:id="usernames" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="490.0" prefWidth="200.0" spacing="30.0" BorderPane.alignment="TOP_CENTER">
+               <BorderPane.margin>
+                  <Insets top="10.0" />
+               </BorderPane.margin>
+               <children>
+                  <Text fill="#1a7bcc" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="title" text="User">
+                     <font>
+                        <Font size="36.0" />
+                     </font>
+                  <VBox.margin>
+                     <Insets />
+                  </VBox.margin>
+                  </Text>
+               </children>
+            <padding>
+               <Insets left="10.0" />
+            </padding>
+            </VBox>
+         </left>
+         <center>
+            <VBox fx:id="scores" alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="490.0" prefWidth="100.0" spacing="30.0" BorderPane.alignment="TOP_CENTER">
+               <BorderPane.margin>
+                  <Insets top="10.0" />
+               </BorderPane.margin>
+               <children>
+                  <Text fill="#f45162" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="title" text="0" textAlignment="CENTER">
+                     <font>
+                        <Font size="36.0" />
+                     </font>
+                  </Text>
+               </children>
+            </VBox>
+         </center>
+         <right>
+            <VBox fx:id="challenges" alignment="TOP_RIGHT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="490.0" prefWidth="200.0" spacing="20.0" BorderPane.alignment="TOP_CENTER">
+               <BorderPane.margin>
+                  <Insets right="40.0" top="10.0" />
+               </BorderPane.margin>
+               <children>
+                  <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="50.0" prefWidth="134.0" style="-fx-font-size: 16;" styleClass="blue-request-Btn" text="Send Request">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets left="35.0" right="40.0" />
+                     </VBox.margin>
+                  </Button>
+               </children>
+            </VBox>
+         </right>
+      <top>
+         <Label alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="60.0" prefWidth="460.0" style="-fx-background-color: white;" styleClass="title" text="Available Players" textFill="#29d4b2" BorderPane.alignment="CENTER">
+            <BorderPane.margin>
+               <Insets bottom="20.0" right="40.0" top="20.0" />
+            </BorderPane.margin>
+         </Label>
+      </top>
+      </BorderPane>
+<Button layoutX="20.0" layoutY="500.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleLogout" prefHeight="50.0" prefWidth="132.0" style="-fx-font-size: 16;" styleClass="red-rounded-Btn" text="Logout" textAlignment="RIGHT" textFill="#946e3d">
+      <graphic>
+         <ImageView fitHeight="35.0" fitWidth="35.0" pickOnBounds="true">
+            <image>
+               <Image url="@../../../../../../Assets/LogoutIconRed.png" />
+            </image>
+         </ImageView>
+      </graphic></Button>
+<Button fx:id="recordsBtn" layoutX="20.0" layoutY="15.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleRecords" prefHeight="50.0" prefWidth="132.0" style="-fx-font-size: 16;" styleClass="green-rounded-Btn" text="History" textAlignment="CENTER" textFill="WHITE">
+      <graphic>
+         <ImageView fitHeight="35.0" fitWidth="35.0" pickOnBounds="true">
+            <image>
+               <Image url="@../../../../../../Assets/History.png" />
+            </image>
+         </ImageView>
+      </graphic></Button>
+<<<<<<< HEAD
+   <ImageView fitHeight="285.0" fitWidth="473.0" layoutX="13.0" layoutY="65.0" pickOnBounds="true" preserveRatio="true">
+      <image>
+         <Image url="@../../../../../../Assets/Group.png" />
+      </image></ImageView>
+   <Label fx:id="myUsername" layoutX="89.0" layoutY="306.0" styleClass="title" text="Username" textFill="#1a7bcc" />
+   <Label fx:id="myScore" layoutX="120.0" layoutY="342.0" styleClass="title" text="score" textFill="#f45162" />
+=======
+   <VBox alignment="TOP_CENTER" layoutY="75.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="300.0">
+      <children>
+         <ImageView fitHeight="250.0" fitWidth="400.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+               <Image url="@../../../../../../Assets/Group.png" />
+            </image>
+         </ImageView>
+         <Label fx:id="myUsername" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="70.0" prefWidth="300.0" styleClass="title" text="Username" textFill="#1a7bcc">
+            <padding>
+               <Insets left="10.0" right="10.0" />
+            </padding>
+         </Label>
+         <Label fx:id="myScore" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="70.0" prefWidth="300.0" styleClass="title" text="0" textFill="#f45162">
+            <padding>
+               <Insets left="10.0" right="10.0" />
+            </padding>
+         </Label>
+      </children>
+   </VBox>
+>>>>>>> 69259f4bea3798e07ff9417ef0ed5f45cfeb65d2
+</AnchorPane>

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.shape.Line?>
+
+<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" prefHeight="600.0" prefWidth="800.0" stylesheets="@../../../../../../StyleSheet.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tic.tac.toe.game.iti.client.OptionsDisplayController">
+   <children>
+      <ImageView fitHeight="600.0" fitWidth="800.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../../../../Assets/homeBackground.png" />
+         </image>
+      </ImageView>
+       <Label id="title" fx:id="player1" alignment="CENTER" contentDisplay="CENTER" layoutX="245.0" layoutY="24.0" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="100.0" text="Player1" textAlignment="CENTER" />
+        <Label id="vs-title" alignment="CENTER" contentDisplay="CENTER" layoutX="375.0" layoutY="13.0" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="50.0" text="VS" textAlignment="CENTER" />
+        <Label id="title" fx:id="player2" alignment="CENTER" contentDisplay="CENTER" layoutX="455.0" layoutY="24.0" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="100.0" text="Player2" textAlignment="CENTER" />
+      <FlowPane layoutX="116.0" layoutY="104.0" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="44.0" prefWidth="600.0">
+         <children>
+            <Label id="title" fx:id="players" alignment="CENTER" contentDisplay="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="45.0" prefWidth="300.0" text="Players" textAlignment="CENTER" />
+            <Label id="score" fx:id="score" alignment="CENTER" contentDisplay="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="45.0" prefWidth="300.0" text="Score" textAlignment="CENTER" />
+         </children>
+      </FlowPane>
+      <FlowPane layoutX="110.0" layoutY="170.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="600.0">
+         <children>
+            <Label fx:id="winner" alignment="CENTER" contentDisplay="CENTER" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="300.0" style="-fx-text-fill: white;" text="Player1" textAlignment="CENTER" />
+            <Label fx:id="winnerScore" alignment="CENTER" contentDisplay="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="300.0" style="-fx-text-fill: #f45162;" text="Score" textAlignment="CENTER" />
+         </children>
+      </FlowPane>
+      <FlowPane layoutX="110.0" layoutY="220.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="600.0">
+         <children>
+            <Label fx:id="loser" alignment="CENTER" contentDisplay="CENTER" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="300.0" style="-fx-text-fill: white;" text="Player2" textAlignment="CENTER" />
+            <Label fx:id="loserScore" alignment="CENTER" contentDisplay="CENTER" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="45.0" prefWidth="300.0" style="-fx-text-fill: #f45162;" text="Score" textAlignment="CENTER" />
+         </children>
+      </FlowPane>
+      <Line endX="410.0" layoutX="300.0" layoutY="150.0" startX="-190.0" stroke="WHITE" strokeWidth="2.0" />
+      <Button layoutX="628.0" layoutY="480.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#endGameFunction" prefHeight="50.0" prefWidth="132.0" style="-fx-font-size: 16;" styleClass="red-rounded-Btn" text="End" textAlignment="CENTER">
+         <graphic>
+            <ImageView fitHeight="35.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../../../../Assets/Endgame.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+      <Button layoutX="40.0" layoutY="480.0" maxHeight="-Infinity" maxWidth="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#restartIConHandler" prefWidth="132.0" style="-fx-font-size: 16;" styleClass="green-rounded-Btn" text="Again" textAlignment="CENTER">
+         <graphic>
+            <ImageView fitHeight="35.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../../../../Assets/Repeat.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+      <Line endX="416.0" endY="104.0" startX="416.66668701171875" startY="473.0" stroke="WHITE" strokeWidth="2.0" />
+   </children>
+</AnchorPane>
