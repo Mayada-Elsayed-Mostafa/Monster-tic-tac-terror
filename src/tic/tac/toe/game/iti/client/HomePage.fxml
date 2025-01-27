@@ -96,14 +96,6 @@
             </image>
          </ImageView>
       </graphic></Button>
-<<<<<<< HEAD
-   <ImageView fitHeight="285.0" fitWidth="473.0" layoutX="13.0" layoutY="65.0" pickOnBounds="true" preserveRatio="true">
-      <image>
-         <Image url="@../../../../../../Assets/Group.png" />
-      </image></ImageView>
-   <Label fx:id="myUsername" layoutX="89.0" layoutY="306.0" styleClass="title" text="Username" textFill="#1a7bcc" />
-   <Label fx:id="myScore" layoutX="120.0" layoutY="342.0" styleClass="title" text="score" textFill="#f45162" />
-=======
    <VBox alignment="TOP_CENTER" layoutY="75.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="300.0">
       <children>
          <ImageView fitHeight="250.0" fitWidth="400.0" pickOnBounds="true" preserveRatio="true">
@@ -123,5 +115,4 @@
          </Label>
       </children>
    </VBox>
->>>>>>> 69259f4bea3798e07ff9417ef0ed5f45cfeb65d2
 </AnchorPane>

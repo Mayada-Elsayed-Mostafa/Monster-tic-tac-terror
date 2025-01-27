@@ -1,10 +1,8 @@
 package tic.tac.toe.game.iti.client.Registeration;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.stream.Collectors;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -17,11 +15,9 @@ import javafx.scene.control.Hyperlink;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
 import tic.tac.toe.game.iti.client.HomePageController;
-import tic.tac.toe.game.iti.client.OnlineRecordsController;
 import tic.tac.toe.game.iti.client.ServerSide.MassageType;
 import tic.tac.toe.game.iti.client.ServerSide.ServerHandler;
 import tic.tac.toe.game.iti.client.WelcomeController;

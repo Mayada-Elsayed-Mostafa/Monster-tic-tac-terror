@@ -59,44 +59,5 @@
             <Image url="@../../../../../../../Assets/register.png" />
          </image>
       </ImageView>
-<<<<<<< HEAD
-      <Label id="title" alignment="CENTER" contentDisplay="CENTER" layoutX="150.0" layoutY="18.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="70.0" prefWidth="500.0" styleClass="red" text="Register a new account">
-         <font>
-            <Font size="18.0" />
-         </font>
-      </Label>
-      <TextField fx:id="userNameTF" layoutX="200.0" layoutY="180.0" maxHeight="-Infinity" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="400.0" promptText="Enter your User Name..." styleClass="text-input">
-         <font>
-            <Font size="14.0" />
-         </font></TextField>
-      <Button fx:id="signupBtn" layoutX="325.0" layoutY="420.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#signupHandler" prefHeight="45.0" prefWidth="150.0" styleClass="blue-registration-Btn" text="Signup" textAlignment="CENTER">
-         <font>
-            <Font size="18.0" />
-         </font>
-      </Button>
-      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="235.0" layoutY="500.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="250.0" text="Already have an account?  " textAlignment="CENTER" textFill="#f45162" />
-      <Hyperlink fx:id="haveanAcountHT" alignment="CENTER" contentDisplay="CENTER" layoutX="440.0" layoutY="500.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onAction="#haveanAcountHTHandler" prefHeight="40.0" prefWidth="150.0" text="Login here" textAlignment="CENTER" />
-      <PasswordField fx:id="passwordTF1" layoutX="200.0" layoutY="260.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="400.0" promptText="Enter your Password..." styleClass="text-input">
-         <font>
-            <Font size="14.0" />
-         </font>
-      </PasswordField>
-      <PasswordField fx:id="confirmTF1" layoutX="200.0" layoutY="340.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="400.0" promptText="Confirm password..." styleClass="text-input">
-         <font>
-            <Font size="14.0" />
-         </font>
-      </PasswordField>
-      <Button fx:id="backBtn" layoutX="40.0" layoutY="30.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onAction="#handleBackBtn" prefHeight="50.0" prefWidth="50.0" styleClass="home-btn" textAlignment="CENTER">
-         <graphic>
-            <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true">
-               <image>
-                  <Image url="@../../../../../../../Assets/HomeIcon.png" />
-               </image>
-            </ImageView>
-         </graphic>
-      </Button>
-   </children>
-=======
     </children>
->>>>>>> 69259f4bea3798e07ff9417ef0ed5f45cfeb65d2
 </Pane>
